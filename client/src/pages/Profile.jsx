@@ -2,28 +2,15 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MaterialIcon from "../components/common/MaterialIcon";
 import { StitchBottomNav, StitchSidebar } from "../components/stitch/StitchNav";
-import { getAnalyticsSummary } from "../api/analyticsApi";
-import { mockStats } from "../data/mockStats";
-import { FALLBACK_USER, getLevelProgress } from "../utils/stitch";
+import { getDashboardAnalytics } from "../api/analyticsApi";
+import { getMyBadges } from "../api/badgeApi";
 import useAuth from "../hooks/useAuth";
-import useHabits from "../hooks/useHabits";
+import { getBadgeIconName, getBadgeTone } from "../utils/stitch";
 
 const mobileAvatar =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuC9vVRzY1z1fLl0VYIxvhhE1UTJY4hU6XlpXkyNVDRj9rZULdPluIOpqR_T6hpFeeXQEXJ7Lq_vU9kXHu4anGFwBphGtyJnbuLt45-a4tjyksr5esqtupKZO7BaYkVXHOpRYzbkSkrEfBlGN1aCoPkwVkT7yqOl-BsaVKuhkfkszatr6GdpRsqw_5vKhMFjvHyfefk8QZieRG-Ybgv7E8WIQGRGdTJH6clsf9lqO3LI8di2R0_GnXzuWlH0abZuP0YIEGLcXaQ82mMI";
 const heroAvatar =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuCVws6qsFdwlHWywrl1o9SDEYkx2BF8Y0EXU4WUGN6VJXtRo1bvOkxVpLWxJBWuG7cDrnuXsQO4Ynt-WAZ9FwsyAz5EPShgJCRSvhxREeiWlbF_SChWusdk019JIzAV_nTGeydzfuKgDxEWhzqYdb_26CnIrB0DrsalKr6uNyhi4CiZe3b08wwgbhRjXKpKYex47NKoSCXNeQgI2sliNecUsUHHejYWoEG6gcctOEN4_upBJHt9z0if8sWuXFnKsPv7utpLTzT1e7lx";
-
-const badgeToneClasses = {
-  "secondary-fixed": "bg-secondary-fixed",
-  "tertiary-fixed": "bg-tertiary-fixed",
-  "primary-fixed": "bg-primary-fixed",
-};
-
-const badgeTextClasses = {
-  "on-secondary-fixed": "text-on-secondary-fixed",
-  "on-tertiary-fixed": "text-on-tertiary-fixed",
-  "on-primary-fixed": "text-on-primary-fixed",
-};
 
 const statDecorClasses = {
   "Total XP": "text-primary/5 group-hover:text-primary/10",
@@ -34,30 +21,43 @@ const statDecorClasses = {
 
 const Profile = () => {
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
-  const { habits } = useHabits({ autoFetch: true });
-  const [summary, setSummary] = useState(null);
+  const { user, logout, updateUser } = useAuth();
+  const [dashboard, setDashboard] = useState(null);
+  const [badges, setBadges] = useState([]);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    getAnalyticsSummary()
-      .then((data) => setSummary(data.summary))
-      .catch(() => setSummary(null));
-  }, []);
+    Promise.all([getDashboardAnalytics(), getMyBadges()])
+      .then(([dashboardData, badgeData]) => {
+        setDashboard(dashboardData);
+        setBadges(badgeData.badges || []);
+        updateUser(dashboardData.user);
+        setError("");
+      })
+      .catch((loadError) => {
+        setDashboard(null);
+        setBadges([]);
+        setError(loadError.message || "Could not load profile data.");
+      });
+  }, [updateUser]);
 
-  const safeUser = user || FALLBACK_USER;
-  const levelProgress = getLevelProgress(safeUser.totalXP || mockStats.user.totalXP);
-  const totalHabits = summary?.totalHabits ?? habits.length ?? 8;
-  const totalCompletions = summary?.totalCompletions ?? 142;
-  const bestStreak = summary?.longestStreak ?? Math.max(...habits.map((habit) => habit.longestStreak || 0), mockStats.user.longestStreak);
+  const safeUser = dashboard?.user || user;
+  const levelProgress = dashboard?.levelProgress;
+  const stats = dashboard?.stats;
+  const recentBadges = badges.slice(0, 3);
+  const progressMax = Math.max(
+    (levelProgress?.nextLevelXp || 0) - (levelProgress?.currentLevelXp || 0),
+    1
+  );
 
   const statCards = useMemo(
     () => [
-      { label: "Total XP", value: safeUser.totalXP || 3450, icon: "military_tech", tone: "text-primary" },
-      { label: "Best Streak", value: `${bestStreak}`, helper: "days", icon: "local_fire_department", tone: "text-secondary" },
-      { label: "Total Habits", value: `${totalHabits}`, icon: "task_alt", tone: "text-tertiary" },
-      { label: "Completions", value: `${totalCompletions}`, icon: "done_all", tone: "text-on-surface" },
+      { label: "Total XP", value: safeUser?.totalXP ?? 0, icon: "military_tech", tone: "text-primary" },
+      { label: "Best Streak", value: `${stats?.bestStreak ?? 0}`, helper: "days", icon: "local_fire_department", tone: "text-secondary" },
+      { label: "Total Habits", value: `${stats?.totalHabits ?? 0}`, icon: "task_alt", tone: "text-tertiary" },
+      { label: "Completions", value: `${stats?.totalCompletions ?? 0}`, icon: "done_all", tone: "text-on-surface" },
     ],
-    [bestStreak, safeUser.totalXP, totalCompletions, totalHabits]
+    [safeUser?.totalXP, stats?.bestStreak, stats?.totalCompletions, stats?.totalHabits]
   );
 
   const handleLogout = () => {
@@ -80,25 +80,31 @@ const Profile = () => {
         </header>
 
         <main className="mx-auto mb-20 w-full max-w-container_max_width flex-1 p-margin_mobile md:ml-[280px] md:mb-0 md:p-margin_desktop">
+          {error ? (
+            <div className="mb-6 rounded-xl border border-error-container bg-surface-container-lowest p-4 text-body-base text-error">
+              {error}
+            </div>
+          ) : null}
+
           <section className="group relative mb-8 flex flex-col items-center gap-8 overflow-hidden rounded-xl bg-surface-container-lowest p-8 shadow-[0px_4px_20px_rgba(15,23,42,0.05)] transition-all duration-300 hover:shadow-[0px_8px_30px_rgba(15,23,42,0.1)] md:flex-row">
             <div className="absolute -right-10 -top-10 h-48 w-48 rounded-full bg-primary/5 blur-2xl" />
             <div className="relative">
-              <img alt={`${safeUser.name || "Jesse"}'s Avatar`} className="relative z-10 h-32 w-32 rounded-full border-4 border-surface-container-lowest object-cover shadow-md" src={heroAvatar} />
+              <img alt={`${safeUser?.name || "Hero"}'s Avatar`} className="relative z-10 h-32 w-32 rounded-full border-4 border-surface-container-lowest object-cover shadow-md" src={heroAvatar} />
               <div className="absolute -bottom-2 -right-2 z-20 flex items-center gap-1 rounded-full border-2 border-surface-container-lowest bg-tertiary-fixed px-3 py-1 text-badge-xs text-on-tertiary-fixed shadow-sm">
                 <MaterialIcon className="text-[14px]" fill name="star" />
-                Lvl {safeUser.level || levelProgress.level}
+                Lvl {safeUser?.level ?? 1}
               </div>
             </div>
             <div className="z-10 flex-1 text-center md:text-left">
-              <h2 className="mb-1 text-headline-lg text-on-surface">{safeUser.name || "Jesse"}</h2>
-              <p className="mb-4 text-body-base text-on-surface-variant">{safeUser.email || FALLBACK_USER.email}</p>
+              <h2 className="mb-1 text-headline-lg text-on-surface">{safeUser?.name || "Hero"}</h2>
+              <p className="mb-4 text-body-base text-on-surface-variant">{safeUser?.email || ""}</p>
               <div className="mb-2 h-2 w-full overflow-hidden rounded-full bg-surface-container-high">
-                <div className="relative h-2 rounded-full bg-primary" style={{ width: `${Math.max(levelProgress.progressPercent, 33)}%` }}>
+                <div className="relative h-2 rounded-full bg-primary" style={{ width: `${Math.max(levelProgress?.progressPercent ?? 0, 0)}%` }}>
                   <div className="absolute inset-0 w-full animate-pulse bg-white/20" />
                 </div>
               </div>
               <p className="text-right text-label-sm text-outline">
-                {levelProgress.progressValue} / {levelProgress.progressMax} XP to Level {(safeUser.level || levelProgress.level) + 1}
+                {levelProgress?.xpIntoLevel ?? 0} / {progressMax} XP to Level {(safeUser?.level ?? 1) + 1}
               </p>
             </div>
             <button className="z-10 hidden items-center gap-2 rounded-xl border border-outline-variant px-6 py-3 text-label-sm text-error transition-colors hover:border-error-container hover:bg-error-container md:flex" onClick={handleLogout} type="button">
@@ -129,15 +135,22 @@ const Profile = () => {
               </button>
             </div>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-              {mockStats.recentBadges.map((badge) => (
-                <div className="flex cursor-pointer flex-col items-center rounded-xl border border-transparent bg-surface-container p-4 text-center transition-colors hover:border-outline-variant/50 hover:bg-surface-container-high" key={badge.id}>
-                  <div className={`mb-3 flex h-16 w-16 items-center justify-center rounded-full shadow-inner ${badgeToneClasses[badge.tone]}`}>
-                    <MaterialIcon className={`text-[32px] ${badgeTextClasses[badge.textTone]}`} name={badge.icon} />
-                  </div>
-                  <h4 className="mb-1 text-label-sm text-on-surface">{badge.title}</h4>
-                  <p className="text-[13px] text-on-surface-variant">{badge.description}</p>
-                </div>
-              ))}
+              {recentBadges.length === 0 ? (
+                <div className="md:col-span-3 text-body-base text-on-surface-variant">Complete habits to start unlocking badges.</div>
+              ) : (
+                recentBadges.map((badge) => {
+                  const tone = getBadgeTone(badge.name);
+                  return (
+                    <div className="flex cursor-pointer flex-col items-center rounded-xl border border-transparent bg-surface-container p-4 text-center transition-colors hover:border-outline-variant/50 hover:bg-surface-container-high" key={badge._id}>
+                      <div className={`mb-3 flex h-16 w-16 items-center justify-center rounded-full shadow-inner ${tone.bgClass}`}>
+                        <MaterialIcon className={`text-[32px] ${tone.textClass}`} name={getBadgeIconName(badge.name)} />
+                      </div>
+                      <h4 className="mb-1 text-label-sm text-on-surface">{badge.name}</h4>
+                      <p className="text-[13px] text-on-surface-variant">{badge.description}</p>
+                    </div>
+                  );
+                })
+              )}
             </div>
           </section>
 

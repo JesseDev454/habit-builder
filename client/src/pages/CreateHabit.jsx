@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import MaterialIcon from "../components/common/MaterialIcon";
 import { StitchBottomNav, StitchSidebar } from "../components/stitch/StitchNav";
 import { createHabit } from "../api/habitApi";
-import { habitCategories } from "../data/habitCategories";
+import { findHabitCategory, getCategorySlug, habitCategories, normalizeHabitCategory } from "../data/habitCategories";
 
 const avatarSrc =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuCmrWmqYp97uIdGAdRERWUJtZoxc4mlQq1akxjAAxGnR55KXAy90GU7WsMUPALwwKyGg_gjbMvWV8iiN2oFmW5Q8rgIVD-It7OsZe4wcckbDZToXnG9hjKU3g1gcoMysXvcrKehTtgi_PvHttXLnjxHjo65Ibba4DtrCyPfUoU1_1ZdozNfNLuUr1jEy4Dl4_7ccKADtEuvkvcgXvlmA9-uE9R7CXO39MM2C8gFAVvSg2iQsUZjtA3zswT8XdK6iriERsYkP8kNOgAQ";
@@ -27,15 +27,11 @@ const CreateHabit = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const queryCategory = searchParams.get("category");
-  const matchedCategory = habitCategories.find(
-    (category) =>
-      category.id === queryCategory ||
-      category.name.toLowerCase() === queryCategory?.toLowerCase()
-  );
+  const matchedCategory = findHabitCategory(queryCategory);
 
   const [form, setForm] = useState({
     name: "",
-    category: matchedCategory?.name || "Fitness",
+    category: matchedCategory?.name || habitCategories[0].name,
     frequency: "daily",
     difficulty: "medium",
     description: "",
@@ -44,7 +40,7 @@ const CreateHabit = () => {
   const [submitting, setSubmitting] = useState(false);
 
   const selectedCategory = useMemo(
-    () => habitCategories.find((category) => category.name === form.category) || matchedCategory || habitCategories[0],
+    () => findHabitCategory(form.category) || matchedCategory || habitCategories[0],
     [form.category, matchedCategory]
   );
 
@@ -83,7 +79,7 @@ const CreateHabit = () => {
       const data = await createHabit({
         name: form.name.trim(),
         description: form.description.trim(),
-        category: form.category,
+        category: normalizeHabitCategory(form.category),
         frequency: form.frequency,
         difficulty: form.difficulty,
         targetType: "simple",
@@ -91,8 +87,7 @@ const CreateHabit = () => {
         startDate: new Date().toISOString().slice(0, 10),
       });
       toast.success("Habit created.");
-      const nextCategory =
-        habitCategories.find((category) => category.name === form.category)?.id || "coding";
+      const nextCategory = getCategorySlug(form.category) || "coding";
       navigate(data?.habit?._id ? `/habits/${data.habit._id}` : `/daily-habits/${nextCategory}`);
     } catch (error) {
       toast.error(error.message || "Could not create habit.");

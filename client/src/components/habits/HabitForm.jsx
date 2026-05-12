@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import Button from "../common/Button";
 import Card from "../common/Card";
 import Input from "../common/Input";
+import { habitCategories } from "../../data/habitCategories";
 
-const categories = ["Coding", "Study", "Reading", "Fitness", "Water Intake", "Wellness", "Productivity", "Spiritual Growth", "Sleep"];
+const categories = habitCategories.map((category) => category.name);
 const frequencies = ["daily", "weekly"];
 const difficulties = ["easy", "medium", "hard"];
 

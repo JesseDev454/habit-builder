@@ -1,15 +1,19 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import MaterialIcon from "../components/common/MaterialIcon";
 import StitchCompletionOverlay from "../components/stitch/StitchCompletionOverlay";
 import { StitchBottomNav, StitchFooter, StitchSidebar } from "../components/stitch/StitchNav";
-import { getAnalyticsSummary, getWeeklyAnalytics } from "../api/analyticsApi";
-import { mockHabits } from "../data/mockHabits";
-import { mockStats } from "../data/mockStats";
+import { getDashboardAnalytics } from "../api/analyticsApi";
+import { completeHabit } from "../api/habitApi";
 import useAuth from "../hooks/useAuth";
-import useHabits from "../hooks/useHabits";
-import { FALLBACK_USER, formatWeeklyCompletionBars, getDifficultyXp, getHabitIcon, getLevelProgress } from "../utils/stitch";
+import {
+  formatWeeklyCompletionBars,
+  getBadgeIconName,
+  getBadgeTone,
+  getDifficultyXp,
+  getHabitIcon,
+} from "../utils/stitch";
 
 const mobileAvatar =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuCrxGlLbyt5tGxzM2rSp1rAzpSJG8G447Pu5Kuz9LvmkuXr5TwhbGwJWmPrm-bM23whE8cTDqHSj48i7og3dn7DU2wYCzGMwsfY95NcRN1MRbc7_wAEJsxjNG1gkAYl6d6n0KRavW_Z4QObEkmawAtpibYqE3YV3GZgA0OTKAgCtlzKuZLkOBx5Vodqsn5XPpNMgNvr-GlQbFE0nM4WFhqVh-OgcyMZ_jF7eVLpEGaN_f8kl4pJzrn3kbAQaV83wnXEqcFBy7pwDpJ1";
@@ -32,73 +36,74 @@ const statIconClass = {
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { user, updateUser } = useAuth();
-  const { habits, loading, markHabitComplete, completedToday, totalToday } = useHabits({ today: true });
-  const [summary, setSummary] = useState(null);
-  const [weekly, setWeekly] = useState([]);
+  const { updateUser } = useAuth();
+  const [dashboard, setDashboard] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [completingId, setCompletingId] = useState(null);
   const [overlayRewards, setOverlayRewards] = useState(null);
 
+  const loadDashboard = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError("");
+      const data = await getDashboardAnalytics();
+      setDashboard(data);
+      updateUser(data.user);
+    } catch (loadError) {
+      setError(loadError.message || "Could not load your dashboard.");
+      setDashboard(null);
+    } finally {
+      setLoading(false);
+    }
+  }, [updateUser]);
+
   useEffect(() => {
-    const loadAnalytics = async () => {
-      try {
-        const [summaryData, weeklyData] = await Promise.all([getAnalyticsSummary(), getWeeklyAnalytics()]);
-        setSummary(summaryData.summary);
-        setWeekly(weeklyData.weekly || []);
-      } catch {
-        setSummary(null);
-        setWeekly([]);
-      }
-    };
+    loadDashboard();
+  }, [loadDashboard]);
 
-    loadAnalytics();
-  }, []);
-
-  const safeUser = user || FALLBACK_USER;
-  const displayHabits = habits.length ? habits : mockHabits.map((habit) => ({
-    _id: String(habit.id),
-    name: habit.name,
-    category: habit.apiCategory,
-    difficulty: habit.difficulty,
-    currentStreak: habit.streak,
-    completedToday: habit.completedToday,
-    description: habit.description,
-  }));
-  const topHabits = displayHabits.slice(0, 3);
-  const levelProgress = getLevelProgress(safeUser.totalXP || mockStats.user.totalXP);
-  const weeklyBars = formatWeeklyCompletionBars(weekly);
-  const displayCompletedToday = totalToday ? completedToday : Number(mockStats.user.todaysProgress.split("/")[0]);
-  const displayTotalToday = totalToday || Number(mockStats.user.todaysProgress.split("/")[1]);
-  const todayPercent = displayTotalToday ? Math.round((displayCompletedToday / displayTotalToday) * 100) : mockStats.user.todaysPercent;
-  const bestStreak = summary?.longestStreak ?? Math.max(...displayHabits.map((habit) => habit.currentStreak || 0), mockStats.user.bestStreak);
-
-  const greetingName = safeUser.name || FALLBACK_USER.name;
-
-  const recentBadges = mockStats.recentBadges;
+  const dashboardUser = dashboard?.user;
+  const levelProgress = dashboard?.levelProgress;
+  const stats = dashboard?.stats;
+  const topHabits = (dashboard?.todayHabits || []).slice(0, 3);
+  const weeklyBars = formatWeeklyCompletionBars(dashboard?.weeklyCompletions || []);
+  const recentBadges = dashboard?.recentBadges || [];
+  const greetingName = dashboardUser?.name || "Hero";
+  const progressMax = Math.max(
+    (levelProgress?.nextLevelXp || 0) - (levelProgress?.currentLevelXp || 0),
+    1
+  );
 
   const desktopStats = useMemo(
     () => [
-      { label: "Total XP", value: safeUser.totalXP || mockStats.user.totalXP, icon: "workspace_premium" },
-      { label: "Current Level", value: safeUser.level || levelProgress.level, icon: "shield" },
-      { label: "Best Streak", value: `${bestStreak} days`, icon: "local_fire_department" },
-      { label: "Today's Progress", value: `${displayCompletedToday}/${displayTotalToday}`, icon: "donut_large" },
+      { label: "Total XP", value: dashboardUser?.totalXP ?? 0, icon: "workspace_premium" },
+      { label: "Current Level", value: dashboardUser?.level ?? 1, icon: "shield" },
+      { label: "Best Streak", value: `${stats?.bestStreak ?? 0} days`, icon: "local_fire_department" },
+      {
+        label: "Today's Progress",
+        value: `${stats?.completedToday ?? 0}/${stats?.totalTodayHabits ?? 0}`,
+        icon: "donut_large",
+      },
     ],
-    [bestStreak, displayCompletedToday, displayTotalToday, levelProgress.level, safeUser.level, safeUser.totalXP]
+    [dashboardUser?.level, dashboardUser?.totalXP, stats?.bestStreak, stats?.completedToday, stats?.totalTodayHabits]
   );
 
   const handleComplete = async (habitId) => {
-    if (!habits.length) return;
-
     try {
-      const data = await markHabitComplete(habitId);
+      setCompletingId(habitId);
+      const data = await completeHabit(habitId);
       if (data?.user) updateUser(data.user);
-      setOverlayRewards(data?.rewards || { xpEarned: getDifficultyXp(data?.habit?.difficulty) });
-    } catch (error) {
-      toast.error(error.message || "Could not complete habit.");
+      setOverlayRewards(data?.rewards || null);
+      toast.success(data?.message || "Habit completed successfully.");
+      await loadDashboard();
+    } catch (completeError) {
+      toast.error(completeError.message || "Could not complete habit.");
+    } finally {
+      setCompletingId(null);
     }
   };
 
   const goToHabit = (habitId) => {
-    if (!habitId || habitId.startsWith("fallback-")) return;
     navigate(`/habits/${habitId}`);
   };
 
@@ -122,28 +127,37 @@ const Dashboard = () => {
             <p className="text-body-base text-on-surface-variant">Ready to complete your daily quests?</p>
           </section>
 
+          {error ? (
+            <div className="rounded-xl border border-error-container bg-surface-container-lowest p-4 text-body-base text-error">
+              {error}
+            </div>
+          ) : null}
+
           <section className="flex flex-col gap-4">
             <div className="relative flex flex-col gap-4 overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container-lowest p-6 shadow-[0px_4px_20px_rgba(15,23,42,0.05)]">
               <MaterialIcon className="pointer-events-none absolute -bottom-4 -right-4 text-[120px] text-primary-fixed/20" fill name="workspace_premium" />
               <div className="z-10 flex items-start justify-between">
                 <div>
                   <span className="mb-1 block text-label-sm uppercase tracking-widest text-on-surface-variant">Current Level</span>
-                  <h3 className="text-display-xl text-primary">Lvl {safeUser.level || levelProgress.level}</h3>
+                  <h3 className="text-display-xl text-primary">Lvl {dashboardUser?.level ?? 1}</h3>
                 </div>
                 <div className="flex items-center gap-1 rounded-full bg-tertiary-fixed px-3 py-1 text-badge-xs text-tertiary">
                   <MaterialIcon className="text-[14px]" fill name="local_fire_department" />
-                  {summary?.bestCurrentStreak || bestStreak} Day Streak
+                  {stats?.bestStreak ?? 0} Day Streak
                 </div>
               </div>
               <div className="z-10 mt-2">
                 <div className="mb-2 flex justify-between text-label-sm text-on-surface-variant">
                   <span>XP Progress</span>
                   <span>
-                    {levelProgress.progressValue} / {levelProgress.progressMax} XP
+                    {levelProgress?.xpIntoLevel ?? 0} / {progressMax} XP
                   </span>
                 </div>
                 <div className="h-3 w-full overflow-hidden rounded-full bg-surface-container-high">
-                  <div className="h-full rounded-full bg-primary-container" style={{ width: `${Math.max(levelProgress.progressPercent, 12)}%` }} />
+                  <div
+                    className="h-full rounded-full bg-primary-container"
+                    style={{ width: `${Math.max(levelProgress?.progressPercent ?? 0, 0)}%` }}
+                  />
                 </div>
               </div>
             </div>
@@ -154,17 +168,21 @@ const Dashboard = () => {
                 <div className="relative flex h-20 w-20 items-center justify-center rounded-full border-4 border-surface-container-high">
                   <div className="absolute inset-0 rotate-45 rounded-full border-4 border-primary border-r-transparent border-t-transparent" />
                   <div className="flex flex-col items-center">
-                    <span className="text-title-md font-bold text-primary">{displayCompletedToday}/{displayTotalToday}</span>
+                    <span className="text-title-md font-bold text-primary">
+                      {stats?.completedToday ?? 0}/{stats?.totalTodayHabits ?? 0}
+                    </span>
                   </div>
                 </div>
-                <span className="rounded-full bg-primary-fixed/50 px-2 py-1 text-badge-xs text-primary">{todayPercent}% Done</span>
+                <span className="rounded-full bg-primary-fixed/50 px-2 py-1 text-badge-xs text-primary">
+                  {stats?.todayProgressPercent ?? 0}% Done
+                </span>
               </div>
 
               <div className="flex flex-col justify-between gap-2 rounded-xl border border-outline-variant/30 bg-surface-container-lowest p-5 shadow-[0px_4px_20px_rgba(15,23,42,0.05)]">
                 <span className="text-label-sm text-on-surface-variant">Total Gold</span>
                 <div className="flex items-center gap-2">
                   <MaterialIcon className="text-[28px] text-tertiary-container" fill name="monetization_on" />
-                  <span className="text-[32px] font-bold text-on-background">{safeUser.coins || 420}</span>
+                  <span className="text-[32px] font-bold text-on-background">{dashboardUser?.coins ?? 0}</span>
                 </div>
                 <button className="mt-auto w-full rounded-lg bg-surface-container-highest py-2 text-label-sm text-primary transition-transform active:scale-95" type="button">
                   Shop
@@ -181,6 +199,12 @@ const Dashboard = () => {
               </button>
             </div>
 
+            {!loading && topHabits.length === 0 ? (
+              <div className="rounded-xl border border-outline-variant/30 bg-surface-container-lowest p-5 text-body-base text-on-surface-variant shadow-[0px_4px_20px_rgba(15,23,42,0.05)]">
+                No active habits yet. Create your first quest to begin earning XP.
+              </div>
+            ) : null}
+
             {topHabits.map((habit) => {
               const done = Boolean(habit.completedToday);
               return (
@@ -191,10 +215,10 @@ const Dashboard = () => {
                   role="button"
                   tabIndex={0}
                 >
-                  <div className={`flex h-12 w-12 items-center justify-center rounded-full ${done ? "bg-secondary-fixed text-secondary" : "bg-primary-fixed text-primary"}`}>
+                  <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full ${done ? "bg-secondary-fixed text-secondary" : "bg-primary-fixed text-primary"}`}>
                     <MaterialIcon name={getHabitIcon(habit.category)} />
                   </div>
-                  <div className="flex-grow">
+                  <div className="min-w-0 flex-grow">
                     <h4 className={`text-[16px] ${done ? "line-through text-on-surface-variant" : "text-on-background"}`}>{habit.name}</h4>
                     <p className="text-[14px] text-on-surface-variant">{habit.description || habit.category}</p>
                   </div>
@@ -210,7 +234,13 @@ const Dashboard = () => {
                     }}
                     type="button"
                   >
-                    {done ? <MaterialIcon className="text-[24px]" fill name="check" /> : <div className="h-4 w-4 rounded-full border border-primary/50" />}
+                    {done ? (
+                      <MaterialIcon className="text-[24px]" fill name="check" />
+                    ) : completingId === habit._id ? (
+                      <span className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+                    ) : (
+                      <div className="h-4 w-4 rounded-full border border-primary/50" />
+                    )}
                   </button>
                 </div>
               );
@@ -255,6 +285,12 @@ const Dashboard = () => {
                 <p className="text-title-md text-on-surface-variant">Ready to keep your streak alive today?</p>
               </section>
 
+              {error ? (
+                <div className="mb-6 rounded-xl border border-error-container bg-surface-container-lowest p-4 text-body-base text-error">
+                  {error}
+                </div>
+              ) : null}
+
               <section className="mb-gutter grid grid-cols-2 gap-4 md:gap-gutter lg:grid-cols-4">
                 {desktopStats.map((stat) => (
                   <div className="group relative overflow-hidden rounded-xl bg-surface-container-lowest p-5 shadow-[0px_4px_20px_rgba(15,23,42,0.05)] transition-transform duration-200 hover:scale-[1.02] hover:shadow-lg" key={stat.label}>
@@ -266,7 +302,7 @@ const Dashboard = () => {
                     <div className="text-headline-lg text-on-background">{stat.value}</div>
                     {stat.label === "Today's Progress" ? (
                       <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-surface-container">
-                        <div className="h-full rounded-full bg-primary" style={{ width: `${todayPercent}%` }} />
+                        <div className="h-full rounded-full bg-primary" style={{ width: `${stats?.todayProgressPercent ?? 0}%` }} />
                       </div>
                     ) : null}
                   </div>
@@ -282,6 +318,12 @@ const Dashboard = () => {
                     </button>
                   </div>
 
+                  {!loading && topHabits.length === 0 ? (
+                    <div className="rounded-xl border border-outline-variant/30 bg-surface-container-lowest p-5 text-body-base text-on-surface-variant shadow-[0px_4px_20px_rgba(15,23,42,0.05)]">
+                      No active habits yet. Create your first quest to start building your streak.
+                    </div>
+                  ) : null}
+
                   {topHabits.map((habit) => {
                     const done = Boolean(habit.completedToday);
                     const xp = getDifficultyXp(habit.difficulty);
@@ -290,13 +332,13 @@ const Dashboard = () => {
                         className={`flex items-center justify-between rounded-xl border border-transparent bg-surface-container-lowest p-4 shadow-[0px_4px_20px_rgba(15,23,42,0.05)] transition-all ${done ? "opacity-80" : "hover:scale-[1.01] hover:border-primary/20 hover:shadow-md"}`}
                         key={habit._id}
                       >
-                        <div className="flex items-center gap-4">
-                          <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${done ? "bg-surface-container text-primary" : habit.category === "Water Intake" ? "bg-secondary-container/30 text-secondary" : "bg-surface-variant text-on-surface-variant"}`}>
+                        <div className="flex min-w-0 items-center gap-4">
+                          <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${done ? "bg-surface-container text-primary" : habit.category === "Water Intake" ? "bg-secondary-container/30 text-secondary" : "bg-surface-variant text-on-surface-variant"}`}>
                             <MaterialIcon fill name={getHabitIcon(habit.category)} />
                           </div>
-                          <div>
-                            <h4 className={`text-title-md ${done ? "line-through opacity-70" : ""}`}>{habit.name}</h4>
-                            <div className="mt-1 flex items-center gap-3">
+                          <div className="min-w-0">
+                            <h4 className={`truncate text-title-md ${done ? "line-through opacity-70" : ""}`}>{habit.name}</h4>
+                            <div className="mt-1 flex flex-wrap items-center gap-3">
                               <span className={`rounded-full px-2 py-0.5 text-badge-xs ${done ? "bg-tertiary-fixed text-on-tertiary-fixed opacity-70" : "bg-tertiary-fixed text-on-tertiary-fixed"}`}>+{xp} XP</span>
                               {habit.currentStreak ? (
                                 <span className={`flex items-center gap-1 text-label-sm text-on-surface-variant ${done ? "opacity-70" : ""}`}>
@@ -310,13 +352,19 @@ const Dashboard = () => {
                         <button
                           className={
                             done
-                              ? "flex h-8 w-8 items-center justify-center rounded-full bg-primary text-on-primary shadow-sm"
-                              : "flex h-8 w-8 items-center justify-center rounded-full border-2 border-outline-variant transition-colors hover:border-primary hover:bg-primary-container/20"
+                              ? "flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-on-primary shadow-sm"
+                              : "flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-outline-variant transition-colors hover:border-primary hover:bg-primary-container/20"
                           }
                           onClick={() => !done && handleComplete(habit._id)}
                           type="button"
                         >
-                          <MaterialIcon className={`text-[18px] ${done ? "" : "text-transparent group-hover:text-primary/50"}`} name="check" />
+                          {done ? (
+                            <MaterialIcon className="text-[18px]" name="check" />
+                          ) : completingId === habit._id ? (
+                            <span className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+                          ) : (
+                            <MaterialIcon className="text-[18px] text-transparent group-hover:text-primary/50" name="check" />
+                          )}
                         </button>
                       </div>
                     );
@@ -340,19 +388,26 @@ const Dashboard = () => {
 
                   <div className="rounded-xl bg-surface-container-lowest p-5 shadow-[0px_4px_20px_rgba(15,23,42,0.05)]">
                     <h3 className="mb-4 text-title-md font-bold text-on-background">Recent Glory</h3>
-                    <div className="space-y-4">
-                      {recentBadges.slice(0, 2).map((badge) => (
-                        <div className="flex items-center gap-3" key={badge.id}>
-                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-tertiary/10 text-tertiary">
-                            <MaterialIcon className="text-lg" fill name={badge.icon} />
-                          </div>
-                          <div>
-                            <h4 className="text-label-sm text-on-background">{badge.title}</h4>
-                            <p className="text-[12px] text-on-surface-variant">{badge.description}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+                    {recentBadges.length === 0 ? (
+                      <p className="text-body-base text-on-surface-variant">Complete a few quests to start unlocking badges.</p>
+                    ) : (
+                      <div className="space-y-4">
+                        {recentBadges.slice(0, 2).map((badge) => {
+                          const tone = getBadgeTone(badge.name);
+                          return (
+                            <div className="flex items-center gap-3" key={badge._id}>
+                              <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${tone.bgClass} ${tone.textClass}`}>
+                                <MaterialIcon className="text-lg" fill name={getBadgeIconName(badge.name)} />
+                              </div>
+                              <div>
+                                <h4 className="text-label-sm text-on-background">{badge.name}</h4>
+                                <p className="text-[12px] text-on-surface-variant">{badge.description}</p>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

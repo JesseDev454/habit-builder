@@ -222,7 +222,10 @@ const completeHabit = async (req, res, next) => {
     });
 
     if (existingLog) {
-      return res.status(400).json({ message: "Habit already completed today" });
+      return res.status(400).json({
+        message: "Habit already completed today.",
+        alreadyCompleted: true,
+      });
     }
 
     const xpEarned = getXPForDifficulty(habit.difficulty);

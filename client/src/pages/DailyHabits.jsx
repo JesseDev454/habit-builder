@@ -1,49 +1,64 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MaterialIcon from "../components/common/MaterialIcon";
 import { StitchBottomNav, StitchFooter, StitchSidebar } from "../components/stitch/StitchNav";
+import { getCategoryAnalytics } from "../api/analyticsApi";
 import { habitCategories } from "../data/habitCategories";
-import useHabits from "../hooks/useHabits";
 
 const avatarSrc =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuAws1WUkG-HvtpFqLZODaa_C5RbDJsumtQlsngw-BMdRAA0TRQYRYL6oqsYKTIeGSvQLwRxNPQbIgRozdzWbHCkZ8yHzJ7OWgpUS_DFzmhXZ-xnfdAxqNj7UNgV8m4qPFCVqaRoc7H0i_3TphGMBV8jiWN7qVFtLOM9djwSjWYJhf8-bCzsrdz5koNxQbmAy1tPaLOcibV04_s2ee3MibaFwIvdq32aHmiawuchZgtnWqWx8l5A9TyLWHFOcZBH7mh42saXHvKg4Haq";
 
 const cardStyles = {
-  study: { glow: "bg-primary-fixed/30", iconWrap: "bg-secondary-fixed text-on-secondary-fixed-variant", progress: 85 },
-  coding: { glow: "bg-tertiary-fixed/30", iconWrap: "bg-tertiary-container text-on-tertiary-container", progress: 60 },
-  reading: { glow: "bg-primary-container/20", iconWrap: "bg-primary-fixed-dim text-on-primary-fixed", progress: 90 },
-  fitness: { glow: "bg-error-container/30", iconWrap: "bg-error-container text-on-error-container", progress: 75 },
-  water: { glow: "bg-secondary-fixed/40", iconWrap: "bg-secondary-fixed-dim text-on-secondary-fixed", progress: 100 },
-  wellness: { glow: "bg-surface-container-high", iconWrap: "bg-surface-variant text-on-surface", progress: 50 },
-  productivity: { glow: "bg-primary/10", iconWrap: "bg-primary-container text-on-primary-container", progress: 80 },
-  "spiritual-growth": { glow: "bg-tertiary-fixed-dim/30", iconWrap: "bg-tertiary-fixed text-on-tertiary-fixed-variant", progress: 70 },
-  sleep: { glow: "bg-primary-fixed-dim/20", iconWrap: "bg-primary-fixed text-on-primary-fixed-variant", progress: 65 },
+  study: { glow: "bg-primary-fixed/30", iconWrap: "bg-secondary-fixed text-on-secondary-fixed-variant" },
+  coding: { glow: "bg-tertiary-fixed/30", iconWrap: "bg-tertiary-container text-on-tertiary-container" },
+  reading: { glow: "bg-primary-container/20", iconWrap: "bg-primary-fixed-dim text-on-primary-fixed" },
+  fitness: { glow: "bg-error-container/30", iconWrap: "bg-error-container text-on-error-container" },
+  water: { glow: "bg-secondary-fixed/40", iconWrap: "bg-secondary-fixed-dim text-on-secondary-fixed" },
+  wellness: { glow: "bg-surface-container-high", iconWrap: "bg-surface-variant text-on-surface" },
+  productivity: { glow: "bg-primary/10", iconWrap: "bg-primary-container text-on-primary-container" },
+  "spiritual-growth": { glow: "bg-tertiary-fixed-dim/30", iconWrap: "bg-tertiary-fixed text-on-tertiary-fixed-variant" },
+  sleep: { glow: "bg-primary-fixed-dim/20", iconWrap: "bg-primary-fixed text-on-primary-fixed-variant" },
 };
 
 const DailyHabits = () => {
   const navigate = useNavigate();
-  const { habits } = useHabits({ autoFetch: true });
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const categoryCards = useMemo(
-    () =>
-      habitCategories.map((category) => {
-        const matchingHabits = habits.filter((habit) => habit.category === category.name);
-        const habitCount = matchingHabits.length || category.activeHabits;
-        const bestStreak = matchingHabits.reduce((best, habit) => Math.max(best, habit.currentStreak || 0), 0) || category.bestStreak;
-        const completionPercent = matchingHabits.length
-          ? Math.round((matchingHabits.filter((habit) => habit.completedToday).length / matchingHabits.length) * 100)
-          : category.weeklyCompletion;
+  useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        setLoading(true);
+        setError("");
+        const data = await getCategoryAnalytics();
+        setCategories(data.categories || []);
+      } catch (loadError) {
+        setError(loadError.message || "Could not load category progress.");
+        setCategories([]);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-        return {
-          ...category,
-          habitCount,
-          bestStreak,
-          completionPercent,
-          styles: cardStyles[category.id],
-        };
-      }),
-    [habits]
-  );
+    loadCategories();
+  }, []);
+
+  const categoryCards = useMemo(() => {
+    const map = new Map(categories.map((category) => [category.slug, category]));
+
+    return habitCategories.map((category) => {
+      const liveCategory = map.get(category.id);
+
+      return {
+        ...category,
+        habitCount: liveCategory?.habitCount ?? 0,
+        bestStreak: liveCategory?.bestStreak ?? 0,
+        completionPercent: liveCategory?.weeklyCompletion ?? 0,
+        styles: cardStyles[category.id],
+      };
+    });
+  }, [categories]);
 
   return (
     <div className="min-h-screen bg-background text-on-background">
@@ -78,6 +93,12 @@ const DailyHabits = () => {
               <h2 className="mb-2 text-headline-lg text-on-background">Daily Habits</h2>
               <p className="text-body-base text-on-surface-variant">Choose a habit category to view progress.</p>
             </div>
+
+            {error ? (
+              <div className="mb-6 rounded-xl border border-error-container bg-surface-container-lowest p-4 text-body-base text-error">
+                {error}
+              </div>
+            ) : null}
 
             <div className="grid grid-cols-1 gap-gutter sm:grid-cols-2 lg:grid-cols-3">
               {categoryCards.map((category) => (
@@ -117,6 +138,10 @@ const DailyHabits = () => {
                 </button>
               ))}
             </div>
+
+            {loading ? (
+              <p className="mt-6 text-body-base text-on-surface-variant">Loading category progress...</p>
+            ) : null}
           </div>
 
           <StitchFooter />

@@ -14,6 +14,12 @@ const request = async (promise) => {
 
 export const getAnalyticsSummary = () => request(api.get("/analytics/summary"));
 
+export const getDashboardAnalytics = () => request(api.get("/analytics/dashboard"));
+
+export const getCategoryAnalytics = () => request(api.get("/analytics/categories"));
+
+export const getCategoryDetailAnalytics = (category) => request(api.get(`/analytics/categories/${category}`));
+
 export const getWeeklyAnalytics = () => request(api.get("/analytics/weekly"));
 
 export const getHeatmapData = (days = 90) => request(api.get("/analytics/heatmap", { params: { days } }));

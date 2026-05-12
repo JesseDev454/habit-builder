@@ -1,8 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import MaterialIcon from "../components/common/MaterialIcon";
 import { StitchBottomNav, StitchFooter, StitchSidebar } from "../components/stitch/StitchNav";
-import { getAnalyticsSummary, getHeatmapData, getWeeklyAnalytics } from "../api/analyticsApi";
-import { mockStats } from "../data/mockStats";
+import {
+  getAnalyticsSummary,
+  getCategoryAnalytics,
+  getHeatmapData,
+  getWeeklyAnalytics,
+} from "../api/analyticsApi";
 import { formatWeeklyCompletionBars } from "../utils/stitch";
 
 const avatarSrc =
@@ -22,33 +26,54 @@ const Analytics = () => {
   const [summary, setSummary] = useState(null);
   const [weekly, setWeekly] = useState([]);
   const [heatmap, setHeatmap] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    Promise.all([getAnalyticsSummary(), getWeeklyAnalytics(), getHeatmapData(7)])
-      .then(([summaryData, weeklyData, heatmapData]) => {
+    Promise.all([
+      getAnalyticsSummary(),
+      getWeeklyAnalytics(),
+      getHeatmapData(7),
+      getCategoryAnalytics(),
+    ])
+      .then(([summaryData, weeklyData, heatmapData, categoryData]) => {
         setSummary(summaryData.summary);
         setWeekly(weeklyData.weekly || []);
         setHeatmap(heatmapData.heatmap || []);
+        setCategories(categoryData.categories || []);
+        setError("");
       })
-      .catch(() => {
+      .catch((loadError) => {
         setSummary(null);
         setWeekly([]);
         setHeatmap([]);
+        setCategories([]);
+        setError(loadError.message || "Could not load analytics.");
       });
   }, []);
 
   const cards = useMemo(
     () => [
-      { label: "Total Habits", value: summary?.totalHabits ?? 12, icon: "checklist", tone: "text-primary" },
-      { label: "Total Completions", value: summary?.totalCompletions ?? 48, icon: "task_alt", tone: "text-success" },
-      { label: "Completion Rate", value: `${summary?.completionRate ?? 85}%`, icon: "pie_chart", tone: "text-on-surface" },
-      { label: "Best Streak", value: summary?.longestStreak ?? 14, icon: "local_fire_department", tone: "text-tertiary" },
+      { label: "Total Habits", value: summary?.totalHabits ?? 0, icon: "checklist", tone: "text-primary" },
+      { label: "Total Completions", value: summary?.totalCompletions ?? 0, icon: "task_alt", tone: "text-success" },
+      { label: "Completion Rate", value: `${summary?.completionRate ?? 0}%`, icon: "pie_chart", tone: "text-on-surface" },
+      { label: "Best Streak", value: summary?.longestStreak ?? 0, icon: "local_fire_department", tone: "text-tertiary" },
     ],
     [summary]
   );
 
-  const bars = formatWeeklyCompletionBars(weekly.length ? weekly : mockStats.weeklyCompletions);
-  const heatmapDisplay = heatmap.length ? heatmap.slice(-7) : mockStats.weeklyCompletions;
+  const topCategory = useMemo(
+    () =>
+      [...categories].sort(
+        (left, right) =>
+          (right.weeklyCompletion || 0) - (left.weeklyCompletion || 0) ||
+          (right.xpEarned || 0) - (left.xpEarned || 0)
+      )[0],
+    [categories]
+  );
+
+  const bars = formatWeeklyCompletionBars(weekly);
+  const heatmapDisplay = heatmap.slice(-7);
 
   return (
     <div className="min-h-screen bg-background text-on-background">
@@ -58,7 +83,7 @@ const Analytics = () => {
         <div className="flex min-h-screen flex-1 flex-col md:ml-[280px]">
           <header className="sticky top-0 z-40 bg-surface/90 shadow-sm backdrop-blur-md">
             <div className="mx-auto flex h-16 max-w-container_max_width items-center justify-between px-margin_mobile md:px-margin_desktop">
-              <div className="md:hidden text-headline-lg-mobile font-black text-primary">HabitQuest</div>
+              <div className="text-headline-lg-mobile font-black text-primary md:hidden">HabitQuest</div>
               <div className="mx-4 hidden max-w-[28rem] flex-1 md:flex" />
               <div className="flex items-center gap-4">
                 <button className="cursor-pointer text-on-surface-variant transition-colors hover:text-primary" type="button">
@@ -78,6 +103,12 @@ const Analytics = () => {
               <p className="text-body-base text-on-surface-variant">See how consistent you have been this week.</p>
             </header>
 
+            {error ? (
+              <div className="mb-6 rounded-xl border border-error-container bg-surface-container-lowest p-4 text-body-base text-error">
+                {error}
+              </div>
+            ) : null}
+
             <div className="mb-8 grid grid-cols-1 gap-gutter md:grid-cols-12">
               <div className="grid grid-cols-2 gap-gutter md:col-span-12 md:grid-cols-4">
                 {cards.map((card) => (
@@ -93,14 +124,18 @@ const Analytics = () => {
 
               <div className="flex flex-col rounded-xl bg-surface-container-lowest p-6 shadow-[0px_4px_20px_rgba(15,23,42,0.05)] md:col-span-8">
                 <h2 className="mb-6 text-title-md text-on-surface">Weekly Completions</h2>
-                <div className="mt-auto flex h-48 flex-1 items-end justify-between gap-2 border-b border-outline-variant/30 pb-2">
-                  {bars.map((entry, index) => (
-                    <div className="group flex w-full flex-col items-center gap-2" key={`${entry.day}-${index}`}>
-                      <div className={`w-full rounded-t-sm ${index % 2 ? "bg-success/80 group-hover:bg-success" : "bg-primary/80 group-hover:bg-primary"} transition-colors`} style={{ height: `${Math.max(entry.heightPercent, 15)}%` }} />
-                      <span className="text-badge-xs text-on-surface-variant">{entry.day}</span>
-                    </div>
-                  ))}
-                </div>
+                {bars.length === 0 ? (
+                  <p className="text-body-base text-on-surface-variant">No completion data yet this week.</p>
+                ) : (
+                  <div className="mt-auto flex h-48 flex-1 items-end justify-between gap-2 border-b border-outline-variant/30 pb-2">
+                    {bars.map((entry, index) => (
+                      <div className="group flex w-full flex-col items-center gap-2" key={`${entry.day}-${index}`}>
+                        <div className={`w-full rounded-t-sm ${index % 2 ? "bg-success/80 group-hover:bg-success" : "bg-primary/80 group-hover:bg-primary"} transition-colors`} style={{ height: `${Math.max(entry.heightPercent, 6)}%` }} />
+                        <span className="text-badge-xs text-on-surface-variant">{entry.day}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div className="flex flex-col gap-gutter md:col-span-4">
@@ -110,21 +145,31 @@ const Analytics = () => {
                   </div>
                   <h3 className="mb-2 text-title-md">Top Quest</h3>
                   <p className="mb-4 text-body-base">
-                    Your best habit is <strong className="font-bold">Morning Meditation</strong>.
+                    {topCategory ? (
+                      <>
+                        Your strongest category is <strong className="font-bold">{topCategory.name}</strong>.
+                      </>
+                    ) : (
+                      "Complete a few habits to reveal your strongest category."
+                    )}
                   </p>
                   <div className="inline-flex items-center gap-1 rounded-full bg-surface/20 px-3 py-1">
                     <MaterialIcon className="text-sm" name="trending_up" />
-                    <span className="text-badge-xs">95% Success</span>
+                    <span className="text-badge-xs">{topCategory?.weeklyCompletion ?? 0}% Success</span>
                   </div>
                 </div>
 
                 <div className="flex flex-1 flex-col justify-center rounded-xl bg-surface-container-lowest p-6 shadow-[0px_4px_20px_rgba(15,23,42,0.05)]">
                   <h3 className="mb-4 text-title-md text-on-surface">7-Day Heatmap</h3>
-                  <div className="flex justify-between gap-2">
-                    {heatmapDisplay.map((entry, index) => (
-                      <div className={`h-8 w-8 rounded-full ${heatTone(entry.count ?? entry.completions ?? 0)}`} key={`${index}-${entry.date || entry.day}`} />
-                    ))}
-                  </div>
+                  {heatmapDisplay.length === 0 ? (
+                    <p className="text-body-base text-on-surface-variant">No recent completions yet.</p>
+                  ) : (
+                    <div className="flex justify-between gap-2">
+                      {heatmapDisplay.map((entry) => (
+                        <div className={`h-8 w-8 rounded-full ${heatTone(entry.count ?? 0)}`} key={entry.date} />
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
