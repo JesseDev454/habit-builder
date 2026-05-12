@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>What do you want to build? - HabitQuest</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "error": "#ba1a1a",
+                      "outline": "#787586",
+                      "text-muted": "#94A3B8",
+                      "on-tertiary-fixed-variant": "#464555",
+                      "on-background": "#1c1b23",
+                      "surface-bright": "#fcf8ff",
+                      "surface": "#fcf8ff",
+                      "on-tertiary-fixed": "#1b1a28",
+                      "error-container": "#ffdad6",
+                      "background": "#fcf8ff",
+                      "outline-variant": "#c8c4d7",
+                      "on-surface": "#1c1b23",
+                      "on-error": "#ffffff",
+                      "dark-bg": "#0F172A",
+                      "xp-gold": "#FBBF24",
+                      "on-secondary-fixed": "#120068",
+                      "tertiary-fixed": "#e4e0f4",
+                      "badge-pink": "#EC4899",
+                      "surface-container-highest": "#e5e0ed",
+                      "inverse-surface": "#312f38",
+                      "info-blue": "#3B82F6",
+                      "surface-tint": "#5847d2",
+                      "surface-variant": "#e5e0ed",
+                      "tertiary-fixed-dim": "#c8c4d7",
+                      "streak-orange": "#F97316",
+                      "text-primary": "#0F172A",
+                      "quest-blue": "#38BDF8",
+                      "secondary-fixed-dim": "#c4c0ff",
+                      "primary": "#5341cd",
+                      "dark-border": "#334155",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-high": "#ebe6f2",
+                      "on-secondary-container": "#fffbff",
+                      "primary-container": "#6c5ce7",
+                      "dark-surface": "#1E293B",
+                      "warning-amber": "#F59E0B",
+                      "tertiary-container": "#727081",
+                      "surface-dim": "#dcd8e4",
+                      "secondary-container": "#6960ee",
+                      "text-secondary": "#64748B",
+                      "inverse-primary": "#c6bfff",
+                      "secondary-fixed": "#e3dfff",
+                      "primary-fixed-dim": "#c6bfff",
+                      "border-neutral": "#E2E8F0",
+                      "tertiary": "#595868",
+                      "card-surface": "#FFFFFF",
+                      "surface-container": "#f0ecf8",
+                      "on-error-container": "#93000a",
+                      "on-tertiary": "#ffffff",
+                      "error-red": "#EF4444",
+                      "on-secondary-fixed-variant": "#3929be",
+                      "primary-fixed": "#e4dfff",
+                      "inverse-on-surface": "#f3effb",
+                      "on-primary-fixed-variant": "#4029ba",
+                      "on-surface-variant": "#474554",
+                      "on-primary-container": "#faf6ff",
+                      "on-tertiary-container": "#fbf6ff",
+                      "surface-container-low": "#f6f2fe",
+                      "secondary": "#5045d4",
+                      "success-green": "#22C55E",
+                      "on-secondary": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "on-primary-fixed": "#160066",
+                      "app-bg": "#F8FAFC"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "tiny": "4px",
+                      "sidebar-width": "240px",
+                      "hero": "48px",
+                      "xl": "32px",
+                      "sm": "12px",
+                      "md": "16px",
+                      "lg": "24px",
+                      "xs": "8px",
+                      "grid-gutter": "24px"
+              },
+              "fontFamily": {
+                      "card-heading": [
+                              "Inter"
+                      ],
+                      "hero-heading-mobile": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "section-heading": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "hero-heading": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "page-heading-mobile": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "label-sm": [
+                              "Inter"
+                      ],
+                      "page-heading": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "card-heading": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "hero-heading-mobile": [
+                              "42px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "section-heading": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "hero-heading": [
+                              "64px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "page-heading-mobile": [
+                              "30px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-sm": [
+                              "13px",
+                              {
+                                      "lineHeight": "1",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "page-heading": [
+                              "36px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+</head>
+<body class="bg-app-bg text-text-primary font-body-md min-h-screen flex items-center justify-center p-md">
+<main class="w-full max-w-4xl bg-card-surface rounded-xl shadow-[0_4px_24px_rgba(15,23,42,0.08)] overflow-hidden flex flex-col md:flex-row">
+<!-- Left Side: Hero Image / Graphic (Hidden on mobile) -->
+<div class="hidden md:block md:w-1/3 bg-surface-container-low relative">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="A focused young student sitting at a modern desk with a laptop and open notebooks. The environment is well-lit with soft, natural sunlight streaming through a nearby window. They are wearing casual, comfortable clothing and holding a brightly colored pen, looking thoughtful. The scene feels aspirational, calm, and productive, perfectly matching a bright, modern SaaS aesthetic with subtle playful undertones." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD2IvEzcJedzWTlvWV7FMRTGtn4lxjKhfUCXQlp04Kyshndv9mKjfbMRfhBeyNJAtcxbFQvqTiYbWQ5-HU_2SdJ4fv-9Js_zux3A0uxxk1V7Bns91VGhiSAFwPG1L6fAIxuE5-K5dG5WgAggR4oU8n-LtQHG_GvgPIUh6PQcBDo8H-i_87Oxl_LTVmiEMh3JZL4u4d2rMFF0e1Os9UPyfskemmJWoNIg8WaT6Eh9SrKUk8NcZPp-Nj7A8fxZTDNfx3SYlOFabE1hl2B')"></div>
+<div class="absolute inset-0 bg-primary/20 backdrop-blur-[2px]"></div>
+<div class="absolute bottom-xl left-lg right-lg text-on-primary">
+<p class="font-label-sm text-label-sm uppercase tracking-wider mb-sm opacity-80">Step 1 of 2</p>
+<h2 class="font-section-heading text-section-heading text-on-primary mb-sm">Embark on Your Quest</h2>
+<p class="font-body-md text-body-md opacity-90 text-on-primary">Set your intentions and let's craft a journey that levels up your daily routine.</p>
+</div>
+</div>
+<!-- Right Side: Content Area -->
+<div class="w-full md:w-2/3 p-lg md:p-xl flex flex-col">
+<div class="mb-xl text-center md:text-left">
+<span class="inline-block md:hidden font-label-sm text-label-sm text-primary mb-sm uppercase tracking-wide">Step 1 of 2</span>
+<h1 class="font-page-heading text-page-heading text-text-primary mb-xs">What do you want to build?</h1>
+<p class="font-body-md text-body-md text-text-secondary">Choose your focus areas. We'll suggest starter habits for you.</p>
+</div>
+<!-- Goal Cards Grid -->
+<div class="grid grid-cols-2 md:grid-cols-3 gap-md mb-xl flex-grow">
+<!-- Card: Study (Selected) -->
+<button class="flex flex-col items-center justify-center p-md bg-surface-container-lowest border-2 border-primary rounded-xl shadow-[0_4px_12px_rgba(15,23,42,0.05)] relative group transition-all duration-200">
+<div class="absolute top-sm right-sm text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="w-12 h-12 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center mb-sm group-hover:scale-110 transition-transform duration-200">
+<span class="material-symbols-outlined text-xl">menu_book</span>
+</div>
+<span class="font-card-heading text-card-heading text-text-primary text-center">Study</span>
+</button>
+<!-- Card: Coding -->
+<button class="flex flex-col items-center justify-center p-md bg-surface-container-lowest border border-border-neutral rounded-xl shadow-[0_4px_12px_rgba(15,23,42,0.02)] hover:shadow-[0_8px_16px_rgba(15,23,42,0.08)] hover:-translate-y-1 transition-all duration-200 group">
+<div class="w-12 h-12 rounded-full bg-surface-container text-text-secondary flex items-center justify-center mb-sm group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors duration-200">
+<span class="material-symbols-outlined text-xl">code</span>
+</div>
+<span class="font-card-heading text-card-heading text-text-primary text-center">Coding</span>
+</button>
+<!-- Card: Reading -->
+<button class="flex flex-col items-center justify-center p-md bg-surface-container-lowest border border-border-neutral rounded-xl shadow-[0_4px_12px_rgba(15,23,42,0.02)] hover:shadow-[0_8px_16px_rgba(15,23,42,0.08)] hover:-translate-y-1 transition-all duration-200 group">
+<div class="w-12 h-12 rounded-full bg-surface-container text-text-secondary flex items-center justify-center mb-sm group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors duration-200">
+<span class="material-symbols-outlined text-xl">auto_stories</span>
+</div>
+<span class="font-card-heading text-card-heading text-text-primary text-center">Reading</span>
+</button>
+<!-- Card: Fitness -->
+<button class="flex flex-col items-center justify-center p-md bg-surface-container-lowest border border-border-neutral rounded-xl shadow-[0_4px_12px_rgba(15,23,42,0.02)] hover:shadow-[0_8px_16px_rgba(15,23,42,0.08)] hover:-translate-y-1 transition-all duration-200 group">
+<div class="w-12 h-12 rounded-full bg-surface-container text-text-secondary flex items-center justify-center mb-sm group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors duration-200">
+<span class="material-symbols-outlined text-xl">fitness_center</span>
+</div>
+<span class="font-card-heading text-card-heading text-text-primary text-center">Fitness</span>
+</button>
+<!-- Card: Water Intake (Selected) -->
+<button class="flex flex-col items-center justify-center p-md bg-surface-container-lowest border-2 border-primary rounded-xl shadow-[0_4px_12px_rgba(15,23,42,0.05)] relative group transition-all duration-200">
+<div class="absolute top-sm right-sm text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="w-12 h-12 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center mb-sm group-hover:scale-110 transition-transform duration-200">
+<span class="material-symbols-outlined text-xl">water_drop</span>
+</div>
+<span class="font-card-heading text-card-heading text-text-primary text-center">Water Intake</span>
+</button>
+<!-- Card: Wellness -->
+<button class="flex flex-col items-center justify-center p-md bg-surface-container-lowest border border-border-neutral rounded-xl shadow-[0_4px_12px_rgba(15,23,42,0.02)] hover:shadow-[0_8px_16px_rgba(15,23,42,0.08)] hover:-translate-y-1 transition-all duration-200 group">
+<div class="w-12 h-12 rounded-full bg-surface-container text-text-secondary flex items-center justify-center mb-sm group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors duration-200">
+<span class="material-symbols-outlined text-xl">spa</span>
+</div>
+<span class="font-card-heading text-card-heading text-text-primary text-center">Wellness</span>
+</button>
+<!-- Card: Productivity -->
+<button class="flex flex-col items-center justify-center p-md bg-surface-container-lowest border border-border-neutral rounded-xl shadow-[0_4px_12px_rgba(15,23,42,0.02)] hover:shadow-[0_8px_16px_rgba(15,23,42,0.08)] hover:-translate-y-1 transition-all duration-200 group">
+<div class="w-12 h-12 rounded-full bg-surface-container text-text-secondary flex items-center justify-center mb-sm group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors duration-200">
+<span class="material-symbols-outlined text-xl">trending_up</span>
+</div>
+<span class="font-card-heading text-card-heading text-text-primary text-center">Productivity</span>
+</button>
+<!-- Card: Spiritual Growth -->
+<button class="flex flex-col items-center justify-center p-md bg-surface-container-lowest border border-border-neutral rounded-xl shadow-[0_4px_12px_rgba(15,23,42,0.02)] hover:shadow-[0_8px_16px_rgba(15,23,42,0.08)] hover:-translate-y-1 transition-all duration-200 group">
+<div class="w-12 h-12 rounded-full bg-surface-container text-text-secondary flex items-center justify-center mb-sm group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors duration-200">
+<span class="material-symbols-outlined text-xl">self_improvement</span>
+</div>
+<span class="font-card-heading text-card-heading text-text-primary text-center">Spiritual Growth</span>
+</button>
+<!-- Card: Sleep -->
+<button class="flex flex-col items-center justify-center p-md bg-surface-container-lowest border border-border-neutral rounded-xl shadow-[0_4px_12px_rgba(15,23,42,0.02)] hover:shadow-[0_8px_16px_rgba(15,23,42,0.08)] hover:-translate-y-1 transition-all duration-200 group">
+<div class="w-12 h-12 rounded-full bg-surface-container text-text-secondary flex items-center justify-center mb-sm group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors duration-200">
+<span class="material-symbols-outlined text-xl">bedtime</span>
+</div>
+<span class="font-card-heading text-card-heading text-text-primary text-center">Sleep</span>
+</button>
+</div>
+<!-- Actions -->
+<div class="flex flex-col md:flex-row-reverse justify-between items-center gap-md mt-auto pt-lg border-t border-border-neutral">
+<button class="w-full md:w-auto px-xl py-sm bg-primary text-on-primary font-label-sm text-label-sm rounded-[12px] shadow-sm hover:bg-secondary transition-colors duration-200 flex items-center justify-center gap-xs">
+                    Continue
+                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+<button class="w-full md:w-auto px-lg py-sm text-text-secondary hover:text-primary font-label-sm text-label-sm rounded-[12px] transition-colors duration-200">
+                    Skip for Now
+                </button>
+</div>
+</div>
+</main>
+</body></html>

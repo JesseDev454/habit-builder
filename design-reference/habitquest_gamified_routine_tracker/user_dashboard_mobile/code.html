@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HabitQuest - Dashboard</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config from Brand Anchors -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#1c1b23",
+                        "surface": "#fcf8ff",
+                        "streak-orange": "#F97316",
+                        "on-secondary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "inverse-surface": "#312f38",
+                        "secondary": "#5045d4",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#c6bfff",
+                        "card-surface": "#FFFFFF",
+                        "outline": "#787586",
+                        "background": "#fcf8ff",
+                        "primary": "#5341cd",
+                        "app-bg": "#F8FAFC",
+                        "secondary-fixed-dim": "#c4c0ff",
+                        "on-primary-fixed": "#160066",
+                        "surface-dim": "#dcd8e4",
+                        "secondary-container": "#6960ee",
+                        "tertiary-fixed-dim": "#c8c4d7",
+                        "quest-blue": "#38BDF8",
+                        "error-red": "#EF4444",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed-variant": "#3929be",
+                        "border-neutral": "#E2E8F0",
+                        "on-tertiary-container": "#fbf6ff",
+                        "tertiary-fixed": "#e4e0f4",
+                        "on-tertiary-fixed": "#1b1a28",
+                        "xp-gold": "#FBBF24",
+                        "on-primary-fixed-variant": "#4029ba",
+                        "dark-bg": "#0F172A",
+                        "tertiary": "#595868",
+                        "primary-container": "#6c5ce7",
+                        "on-surface-variant": "#474554",
+                        "on-tertiary-fixed-variant": "#464555",
+                        "text-primary": "#0F172A",
+                        "on-primary-container": "#faf6ff",
+                        "outline-variant": "#c8c4d7",
+                        "inverse-on-surface": "#f3effb",
+                        "text-secondary": "#64748B",
+                        "error": "#ba1a1a",
+                        "badge-pink": "#EC4899",
+                        "dark-border": "#334155",
+                        "surface-container-highest": "#e5e0ed",
+                        "on-secondary-fixed": "#120068",
+                        "on-background": "#1c1b23",
+                        "on-secondary-container": "#fffbff",
+                        "info-blue": "#3B82F6",
+                        "primary-fixed": "#e4dfff",
+                        "surface-container": "#f0ecf8",
+                        "surface-tint": "#5847d2",
+                        "surface-container-low": "#f6f2fe",
+                        "surface-container-high": "#ebe6f2",
+                        "on-primary": "#ffffff",
+                        "success-green": "#22C55E",
+                        "tertiary-container": "#727081",
+                        "surface-bright": "#fcf8ff",
+                        "dark-surface": "#1E293B",
+                        "secondary-fixed": "#e3dfff",
+                        "on-error-container": "#93000a",
+                        "text-muted": "#94A3B8",
+                        "inverse-primary": "#c6bfff",
+                        "warning-amber": "#F59E0B",
+                        "surface-variant": "#e5e0ed",
+                        "on-tertiary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "hero": "48px",
+                        "xl": "32px",
+                        "lg": "24px",
+                        "xs": "8px",
+                        "grid-gutter": "24px",
+                        "sm": "12px",
+                        "tiny": "4px",
+                        "sidebar-width": "240px",
+                        "md": "16px"
+                    },
+                    "fontFamily": {
+                        "hero-heading-mobile": ["Plus Jakarta Sans"],
+                        "page-heading-mobile": ["Plus Jakarta Sans"],
+                        "section-heading": ["Plus Jakarta Sans"],
+                        "card-heading": ["Inter"],
+                        "page-heading": ["Plus Jakarta Sans"],
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "hero-heading": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "hero-heading-mobile": ["42px", {"lineHeight": "1.1", "fontWeight": "800"}],
+                        "page-heading-mobile": ["30px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "section-heading": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "card-heading": ["18px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "page-heading": ["36px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "label-sm": ["13px", {"lineHeight": "1", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "hero-heading": ["64px", {"lineHeight": "1.1", "fontWeight": "800"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-app-bg text-text-primary font-body-md text-body-md antialiased pb-24 md:pb-0">
+<!-- TopAppBar (Web) / Header Anchor -->
+<header class="bg-surface dark:bg-dark-bg shadow-sm docked full-width top-0 h-16 flex justify-between items-center w-full px-lg md:px-xl sticky top-0 z-40 hidden md:flex">
+<div class="font-page-heading text-page-heading-mobile md:text-page-heading text-primary dark:text-primary-fixed-dim tracking-tight">HabitQuest</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant dark:text-text-secondary hover:bg-surface-container-low dark:hover:bg-dark-surface transition-colors scale-95 active:scale-90 transition-transform duration-200 p-2 rounded-full">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant dark:text-text-secondary hover:bg-surface-container-low dark:hover:bg-dark-surface transition-colors scale-95 active:scale-90 transition-transform duration-200 p-2 rounded-full">
+<span class="material-symbols-outlined">local_fire_department</span>
+</button>
+<button class="text-on-surface-variant dark:text-text-secondary hover:bg-surface-container-low dark:hover:bg-dark-surface transition-colors scale-95 active:scale-90 transition-transform duration-200 p-2 rounded-full">
+<span class="material-symbols-outlined">stars</span>
+</button>
+<img alt="Student avatar" class="w-10 h-10 rounded-full border-2 border-primary-fixed" data-alt="A stylized 3D avatar of a student looking eager, with a bright, clean aesthetic matching a premium productivity tool. The character is illuminated with soft, high-key lighting against a pastel purple background. The overall mood is energetic and academic. The style is modern, approachable, and slightly gamified." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8X51XSsHILlD8a_p6kCRNKVlGAhf3JvKPoSyx-Dehqhe-2ozoE8GStuyN-DHgngp6uwG8HF1QnNyCeRxYVSXzYFUOJU2x8JAkYOFltaRArFZCusTVC9CaceVnAG7HoCBpBnR_GcL-YRSESK9s17qnspsjeWeYiatz3KIV1ebXf4hxBkqH8TKmVpfpm5gba1kcNfa4DrVGYLskhusPJSnbfVHqpO__XJmQKYooC1uADN9uWgbI1-slIAmGWsGkZReLhjTLa_OCX-qq"/>
+</div>
+</header>
+<!-- SideNavBar (Web) -->
+<nav class="bg-white dark:bg-dark-surface shadow-md fixed left-0 top-0 h-full w-[240px] hidden md:flex flex-col py-xl gap-md z-30">
+<div class="px-lg pb-md mb-md border-b border-border-neutral dark:border-dark-border">
+<div class="flex items-center gap-3 mb-6">
+<img alt="User Level Profile" class="w-12 h-12 rounded-full border-2 border-xp-gold" data-alt="A clean, modern avatar illustration of a user in a gamified productivity app. The avatar features subtle glowing accents in gold and purple, signifying a high-level user. The background is a clean white to maintain the UI's airy aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKilNLees05t0NRRMqUsigzfEoT_vPi7-OYzNYKF8lKcl24oS11Z_4KTNC7Et5d7iyqfzuT-V3j4GLhh8JF7XEj2Atc6xJdsDiGyi9fiUv0zlovJtlsOvP7nVczWzMF3RH7m9GGl5PSsCUvUC0CnHCmubuEOcDUVRaD2CCxq2SeZwMgmLBG8gKn4lE63hcl0cyXeVSqvpYo0ST5HhppoOsegtMYhpJI1UgctjNRWi42Gw5TC5GeNSgnZaymyGCn5z-Q_ArKMP9v1uZ"/>
+<div>
+<h2 class="font-card-heading text-card-heading text-text-primary">HabitQuest</h2>
+<p class="font-label-sm text-label-sm text-text-secondary">Level 14 Trailblazer</p>
+</div>
+</div>
+<button class="w-full bg-primary text-white font-label-sm text-label-sm py-3 rounded-lg hover:bg-surface-tint transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                Start New Habit
+            </button>
+</div>
+<div class="flex-1 flex flex-col gap-1 px-sm">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-primary dark:text-primary-fixed-dim font-bold border-r-4 border-primary dark:border-primary-fixed-dim bg-surface-container-low dark:bg-dark-bg transition-all translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-label-sm text-label-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-text-muted hover:bg-surface-container dark:hover:bg-dark-bg hover:text-primary transition-all duration-200" href="#">
+<span class="material-symbols-outlined">check_circle</span>
+<span class="font-label-sm text-label-sm">Daily Habits</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-text-muted hover:bg-surface-container dark:hover:bg-dark-bg hover:text-primary transition-all duration-200" href="#">
+<span class="material-symbols-outlined">military_tech</span>
+<span class="font-label-sm text-label-sm">Epic Quests</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-text-muted hover:bg-surface-container dark:hover:bg-dark-bg hover:text-primary transition-all duration-200" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span class="font-label-sm text-label-sm">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-text-muted hover:bg-surface-container dark:hover:bg-dark-bg hover:text-primary transition-all duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-sm text-label-sm">Settings</span>
+</a>
+</div>
+<div class="px-sm mt-auto">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-text-muted hover:bg-surface-container dark:hover:bg-dark-bg hover:text-primary transition-all duration-200" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-sm text-label-sm">Help Center</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area (Mobile First, Desktop Padded) -->
+<main class="md:ml-[240px] p-md md:p-lg lg:p-xl max-w-3xl mx-auto space-y-lg">
+<!-- Mobile Header / Greeting -->
+<div class="flex items-center justify-between md:hidden mb-xs">
+<div>
+<h1 class="font-section-heading text-section-heading text-text-primary">Good Morning, Alex!</h1>
+<p class="font-body-md text-body-md text-text-secondary mt-1">Ready to conquer your quests?</p>
+</div>
+<img alt="Student avatar" class="w-12 h-12 rounded-full border-2 border-primary-fixed" data-alt="A stylized 3D avatar of a student looking eager, with a bright, clean aesthetic matching a premium productivity tool. The character is illuminated with soft, high-key lighting against a pastel purple background. The overall mood is energetic and academic. The style is modern, approachable, and slightly gamified." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCK93iMdyKPFBzGKHvT76wUHcs0dXv_ng_XdL7RV_tx_iCvKhvp9g6MS9EPv3aMmmo2OapCEKGXd-usLAy4JinsT8R7CjLNOye511ojv92OA8oXAxaxqd-rdqI58-1C_aqZsmuSJ02EVFEeOQdfR2LvlaZl_0-Jvjti_cOqzX_LzYlWf0ST88eG8k7sAJSbPD8yBevtdVCVUZt0IDGaNsfXAlgznlRmwtnRbIWZ3DLG_0M2jl8FvacV6p_F6CKXzsIVeOr1R9lCOgGC"/>
+</div>
+<!-- Desktop Greeting (Hidden on Mobile) -->
+<div class="hidden md:block mb-xl">
+<h1 class="font-page-heading-mobile md:font-page-heading text-page-heading-mobile md:text-page-heading text-text-primary">Good Morning, Alex!</h1>
+<p class="font-body-md text-body-md text-text-secondary mt-2">Ready to conquer your quests today?</p>
+</div>
+<!-- Progress Bento Box -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md md:gap-lg">
+<!-- XP & Level Card -->
+<div class="bg-card-surface rounded-xl p-md md:p-lg shadow-[0_4px_12px_rgba(15,23,42,0.05)] hover:shadow-[0_8px_24px_rgba(15,23,42,0.08)] hover:-translate-y-1 transition-all duration-200 border border-border-neutral">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">military_tech</span>
+</div>
+<div>
+<h3 class="font-card-heading text-card-heading text-text-primary">Level 14</h3>
+<p class="font-label-sm text-label-sm text-text-secondary">Trailblazer</p>
+</div>
+</div>
+<div class="text-right">
+<span class="font-section-heading text-section-heading text-xp-gold">2,450</span>
+<span class="font-label-sm text-label-sm text-text-secondary">XP</span>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between font-label-sm text-label-sm">
+<span class="text-text-secondary">Progress to Level 15</span>
+<span class="text-primary font-semibold">82%</span>
+</div>
+<div class="h-3 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-xp-gold rounded-full w-[82%] relative">
+<!-- Sparkle pseudo-element indication -->
+<div class="absolute right-0 top-0 bottom-0 w-4 bg-white/30 blur-[2px]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Streak Card -->
+<div class="bg-card-surface rounded-xl p-md md:p-lg shadow-[0_4px_12px_rgba(15,23,42,0.05)] hover:shadow-[0_8px_24px_rgba(15,23,42,0.08)] hover:-translate-y-1 transition-all duration-200 border border-border-neutral flex flex-col justify-between relative overflow-hidden">
+<!-- Subtle background flame gradient -->
+<div class="absolute -right-8 -top-8 w-32 h-32 bg-streak-orange/10 rounded-full blur-2xl"></div>
+<div class="flex items-start justify-between relative z-10">
+<div>
+<h3 class="font-card-heading text-card-heading text-text-primary">Current Streak</h3>
+<p class="font-label-sm text-label-sm text-text-secondary mt-1">Keep the fire burning!</p>
+</div>
+<span class="material-symbols-outlined text-streak-orange text-[32px]" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+<div class="flex items-end gap-2 relative z-10 mt-4 md:mt-0">
+<span class="font-hero-heading-mobile text-hero-heading-mobile text-text-primary">12</span>
+<span class="font-card-heading text-card-heading text-text-secondary pb-1">Days</span>
+</div>
+</div>
+</div>
+<!-- Today's Habits Stack -->
+<div>
+<div class="flex items-center justify-between mb-md">
+<h2 class="font-section-heading text-section-heading text-text-primary">Today's Quests</h2>
+<span class="font-label-sm text-label-sm text-primary bg-primary-container/10 px-3 py-1 rounded-full">3 Remaining</span>
+</div>
+<div class="space-y-sm">
+<!-- Incomplete Habit -->
+<div class="bg-card-surface rounded-xl p-md shadow-[0_4px_12px_rgba(15,23,42,0.05)] border border-border-neutral flex items-center justify-between gap-4">
+<div class="flex items-center gap-4 flex-1">
+<div class="w-12 h-12 rounded-lg bg-info-blue/10 flex items-center justify-center text-info-blue flex-shrink-0">
+<span class="material-symbols-outlined">water_drop</span>
+</div>
+<div>
+<h4 class="font-card-heading text-card-heading text-text-primary">Drink Water</h4>
+<div class="flex items-center gap-3 mt-1">
+<span class="flex items-center text-xp-gold font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px] mr-1" style="font-variation-settings: 'FILL' 1;">stars</span> +10 XP
+                                </span>
+<span class="flex items-center text-text-secondary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px] mr-1">schedule</span> 8 Glasses
+                                </span>
+</div>
+</div>
+</div>
+<button class="bg-primary text-white font-label-sm text-label-sm px-6 py-3 rounded-lg hover:bg-surface-tint transition-colors shadow-sm flex-shrink-0 whitespace-nowrap">
+                        Complete
+                    </button>
+</div>
+<!-- Incomplete Habit -->
+<div class="bg-card-surface rounded-xl p-md shadow-[0_4px_12px_rgba(15,23,42,0.05)] border border-border-neutral flex items-center justify-between gap-4">
+<div class="flex items-center gap-4 flex-1">
+<div class="w-12 h-12 rounded-lg bg-badge-pink/10 flex items-center justify-center text-badge-pink flex-shrink-0">
+<span class="material-symbols-outlined">menu_book</span>
+</div>
+<div>
+<h4 class="font-card-heading text-card-heading text-text-primary">Read 30 Pages</h4>
+<div class="flex items-center gap-3 mt-1">
+<span class="flex items-center text-xp-gold font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px] mr-1" style="font-variation-settings: 'FILL' 1;">stars</span> +25 XP
+                                </span>
+<span class="flex items-center text-streak-orange font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px] mr-1" style="font-variation-settings: 'FILL' 1;">local_fire_department</span> 4 Day Streak
+                                </span>
+</div>
+</div>
+</div>
+<button class="bg-primary text-white font-label-sm text-label-sm px-6 py-3 rounded-lg hover:bg-surface-tint transition-colors shadow-sm flex-shrink-0 whitespace-nowrap">
+                        Complete
+                    </button>
+</div>
+<!-- Completed Habit -->
+<div class="bg-surface-container-low rounded-xl p-md border border-border-neutral flex items-center justify-between gap-4 opacity-75">
+<div class="flex items-center gap-4 flex-1">
+<div class="w-12 h-12 rounded-lg bg-success-green/10 flex items-center justify-center text-success-green flex-shrink-0">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div>
+<h4 class="font-card-heading text-card-heading text-text-secondary line-through">Morning Workout</h4>
+<div class="flex items-center gap-3 mt-1">
+<span class="flex items-center text-success-green font-label-sm text-label-sm">
+                                    Done!
+                                </span>
+</div>
+</div>
+</div>
+<button class="bg-surface-variant text-text-muted font-label-sm text-label-sm px-6 py-3 rounded-lg cursor-not-allowed flex-shrink-0 whitespace-nowrap" disabled="">
+                        Completed
+                    </button>
+</div>
+</div>
+</div>
+<!-- Weekly Consistency Heatmap Preview -->
+<div class="bg-card-surface rounded-xl p-md shadow-[0_4px_12px_rgba(15,23,42,0.05)] border border-border-neutral mt-lg">
+<h3 class="font-card-heading text-card-heading text-text-primary mb-4">Weekly Consistency</h3>
+<div class="flex items-center justify-between max-w-sm mx-auto">
+<div class="flex flex-col items-center gap-2">
+<span class="font-label-sm text-label-sm text-text-secondary">M</span>
+<div class="w-8 h-8 rounded bg-primary"></div>
+</div>
+<div class="flex flex-col items-center gap-2">
+<span class="font-label-sm text-label-sm text-text-secondary">T</span>
+<div class="w-8 h-8 rounded bg-primary-fixed-dim"></div>
+</div>
+<div class="flex flex-col items-center gap-2">
+<span class="font-label-sm text-label-sm text-text-secondary">W</span>
+<div class="w-8 h-8 rounded bg-primary"></div>
+</div>
+<div class="flex flex-col items-center gap-2">
+<span class="font-label-sm text-label-sm text-text-primary font-bold">T</span>
+<div class="w-8 h-8 rounded bg-surface-variant border-2 border-primary"></div>
+</div>
+<div class="flex flex-col items-center gap-2">
+<span class="font-label-sm text-label-sm text-text-secondary">F</span>
+<div class="w-8 h-8 rounded bg-surface-container-highest"></div>
+</div>
+<div class="flex flex-col items-center gap-2">
+<span class="font-label-sm text-label-sm text-text-secondary">S</span>
+<div class="w-8 h-8 rounded bg-surface-container-highest"></div>
+</div>
+<div class="flex flex-col items-center gap-2">
+<span class="font-label-sm text-label-sm text-text-secondary">S</span>
+<div class="w-8 h-8 rounded bg-surface-container-highest"></div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="bg-surface dark:bg-dark-surface shadow-[0_-4px_12px_rgba(15,23,42,0.08)] fixed bottom-0 left-0 w-full z-50 md:hidden rounded-t-xl fixed bottom-0 w-full flex justify-around items-center px-4 py-2 h-16">
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-secondary-container text-on-primary-container dark:text-on-secondary-container rounded-xl px-4 py-2 scale-110 transition-transform duration-300" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-sm text-label-sm text-[10px]">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-text-muted px-4 py-2 hover:bg-surface-container-high dark:hover:bg-dark-bg transition-transform duration-300" href="#">
+<span class="material-symbols-outlined">task_alt</span>
+<span class="font-label-sm text-label-sm text-[10px]">Habits</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-text-muted px-4 py-2 hover:bg-surface-container-high dark:hover:bg-dark-bg transition-transform duration-300" href="#">
+<span class="material-symbols-outlined">workspace_premium</span>
+<span class="font-label-sm text-label-sm text-[10px]">Quests</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-text-muted px-4 py-2 hover:bg-surface-container-high dark:hover:bg-dark-bg transition-transform duration-300" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<span class="font-label-sm text-label-sm text-[10px]">Stats</span>
+</a>
+</nav>
+</body></html>

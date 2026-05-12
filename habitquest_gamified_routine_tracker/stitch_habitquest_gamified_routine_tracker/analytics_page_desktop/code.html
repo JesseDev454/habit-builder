@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HabitQuest - Your Progress</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-container": "#faf6ff",
+                      "on-tertiary-container": "#fbf6ff",
+                      "on-tertiary-fixed": "#1b1a28",
+                      "text-secondary": "#64748B",
+                      "error": "#ba1a1a",
+                      "secondary": "#5045d4",
+                      "card-surface": "#FFFFFF",
+                      "on-error": "#ffffff",
+                      "inverse-surface": "#312f38",
+                      "surface-bright": "#fcf8ff",
+                      "app-bg": "#F8FAFC",
+                      "surface-container-low": "#f6f2fe",
+                      "tertiary": "#595868",
+                      "text-muted": "#94A3B8",
+                      "on-error-container": "#93000a",
+                      "on-background": "#1c1b23",
+                      "outline": "#787586",
+                      "surface-container-highest": "#e5e0ed",
+                      "secondary-fixed-dim": "#c4c0ff",
+                      "inverse-on-surface": "#f3effb",
+                      "on-primary-fixed": "#160066",
+                      "tertiary-fixed": "#e4e0f4",
+                      "on-primary-fixed-variant": "#4029ba",
+                      "dark-border": "#334155",
+                      "on-secondary-container": "#fffbff",
+                      "surface-container-lowest": "#ffffff",
+                      "quest-blue": "#38BDF8",
+                      "surface-container": "#f0ecf8",
+                      "surface": "#fcf8ff",
+                      "on-tertiary-fixed-variant": "#464555",
+                      "secondary-fixed": "#e3dfff",
+                      "dark-surface": "#1E293B",
+                      "surface-dim": "#dcd8e4",
+                      "error-container": "#ffdad6",
+                      "primary": "#5341cd",
+                      "primary-fixed": "#e4dfff",
+                      "tertiary-container": "#727081",
+                      "on-primary": "#ffffff",
+                      "warning-amber": "#F59E0B",
+                      "dark-bg": "#0F172A",
+                      "xp-gold": "#FBBF24",
+                      "info-blue": "#3B82F6",
+                      "background": "#fcf8ff",
+                      "on-secondary-fixed-variant": "#3929be",
+                      "primary-fixed-dim": "#c6bfff",
+                      "on-surface-variant": "#474554",
+                      "badge-pink": "#EC4899",
+                      "success-green": "#22C55E",
+                      "error-red": "#EF4444",
+                      "on-secondary": "#ffffff",
+                      "border-neutral": "#E2E8F0",
+                      "inverse-primary": "#c6bfff",
+                      "surface-variant": "#e5e0ed",
+                      "tertiary-fixed-dim": "#c8c4d7",
+                      "surface-tint": "#5847d2",
+                      "on-surface": "#1c1b23",
+                      "on-tertiary": "#ffffff",
+                      "streak-orange": "#F97316",
+                      "on-secondary-fixed": "#120068",
+                      "text-primary": "#0F172A",
+                      "surface-container-high": "#ebe6f2",
+                      "primary-container": "#6c5ce7",
+                      "outline-variant": "#c8c4d7",
+                      "secondary-container": "#6960ee"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "lg": "24px",
+                      "md": "16px",
+                      "xl": "32px",
+                      "sidebar-width": "240px",
+                      "sm": "12px",
+                      "hero": "48px",
+                      "xs": "8px",
+                      "grid-gutter": "24px",
+                      "tiny": "4px"
+              },
+              "fontFamily": {
+                      "section-heading": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "label-sm": [
+                              "Inter"
+                      ],
+                      "page-heading-mobile": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "page-heading": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "hero-heading-mobile": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "card-heading": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "hero-heading": [
+                              "Plus Jakarta Sans"
+                      ]
+              },
+              "fontSize": {
+                      "section-heading": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-sm": [
+                              "13px",
+                              {
+                                      "lineHeight": "1",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "page-heading-mobile": [
+                              "30px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "page-heading": [
+                              "36px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "hero-heading-mobile": [
+                              "42px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "card-heading": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "hero-heading": [
+                              "64px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "fontWeight": "800"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+</head>
+<body class="bg-app-bg text-text-primary font-body-md text-body-md antialiased overflow-hidden">
+<div class="flex h-screen w-full">
+<!-- SideNavBar -->
+<nav class="hidden lg:flex flex-col h-full p-md gap-md overflow-y-auto bg-surface-container-lowest dark:bg-dark-surface shadow-md fixed left-0 top-0 w-sidebar-width z-30">
+<!-- Header/Profile -->
+<div class="flex flex-col items-center p-md mb-xs">
+<div class="w-20 h-20 rounded-full bg-primary-container flex items-center justify-center mb-sm shadow-md overflow-hidden ring-4 ring-surface-container-low">
+<img alt="User avatar" class="w-full h-full object-cover" data-alt="A brightly lit, close-up portrait of a professional individual looking confident, set against a soft, neutral studio background. The lighting is high-key and flattering, emphasizing a modern, approachable aesthetic suitable for a high-end application profile avatar. The overall tone is positive and clear, fitting a premium productivity dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_jkW91IeO-cyrs-AmOzrUJ2kxnLVkC8oOdfBxbU-BYS2-TiyM7-vnUnUb5ueFwSlbCRRWaI8EsuVXulleVzNdB3bNDzMcwTmgNEX9rW-ewbmk6C2UwKryT6Sk5KxgMOZ8nSDEpCzan9cy1lc1j59zsAZJs4SChg5zJR8hvXTwXFCUcbRWW4agV4tfkb8Lk-bQ-7aLQb3B3q7-o51VIkOSx8PS8lSKPnUo10Yf-tu4a-esBmTDdcCxSezl4L0rE8-dJbKpqRYvNcpa"/>
+</div>
+<h2 class="font-card-heading text-card-heading text-text-primary text-center">Alex Weaver</h2>
+<span class="font-label-sm text-label-sm text-primary flex items-center mt-tiny bg-primary-fixed px-sm py-tiny rounded-full">
+<span class="material-symbols-outlined text-[14px] mr-tiny" style="font-variation-settings: 'FILL' 1;">stars</span>
+                    Level 24 Guardian
+                </span>
+</div>
+<!-- CTA -->
+<button class="w-full bg-primary hover:bg-secondary text-on-primary font-label-sm text-label-sm py-sm rounded-xl shadow-md transition-all duration-200 active:scale-95 flex items-center justify-center mb-sm">
+<span class="material-symbols-outlined mr-xs">add</span>
+                New Habit
+            </button>
+<!-- Navigation Links -->
+<div class="flex-1 flex flex-col gap-xs">
+<a class="flex items-center p-sm rounded-xl text-text-secondary hover:text-primary hover:bg-surface-container-low transition-all duration-200 active:translate-x-1" href="#">
+<span class="material-symbols-outlined mr-sm">dashboard</span>
+<span class="font-label-sm text-label-sm">Dashboard</span>
+</a>
+<a class="flex items-center p-sm rounded-xl text-text-secondary hover:text-primary hover:bg-surface-container-low transition-all duration-200 active:translate-x-1" href="#">
+<span class="material-symbols-outlined mr-sm">explore</span>
+<span class="font-label-sm text-label-sm">Quests</span>
+</a>
+<a class="flex items-center p-sm rounded-xl bg-primary-container text-on-primary-container font-bold shadow-sm transition-all duration-200 active:translate-x-1" href="#">
+<span class="material-symbols-outlined mr-sm" style="font-variation-settings: 'FILL' 1;">repeat</span>
+<span class="font-label-sm text-label-sm">Habits</span>
+</a>
+<a class="flex items-center p-sm rounded-xl text-text-secondary hover:text-primary hover:bg-surface-container-low transition-all duration-200 active:translate-x-1" href="#">
+<span class="material-symbols-outlined mr-sm">emoji_events</span>
+<span class="font-label-sm text-label-sm">Leaderboard</span>
+</a>
+<a class="flex items-center p-sm rounded-xl text-text-secondary hover:text-primary hover:bg-surface-container-low transition-all duration-200 active:translate-x-1" href="#">
+<span class="material-symbols-outlined mr-sm">settings</span>
+<span class="font-label-sm text-label-sm">Settings</span>
+</a>
+</div>
+<!-- Footer Links -->
+<div class="flex flex-col gap-xs pt-sm border-t border-surface-container-highest">
+<a class="flex items-center p-sm rounded-xl text-text-secondary hover:text-primary hover:bg-surface-container-low transition-all duration-200 active:translate-x-1" href="#">
+<span class="material-symbols-outlined mr-sm">help</span>
+<span class="font-label-sm text-label-sm">Help</span>
+</a>
+<a class="flex items-center p-sm rounded-xl text-text-secondary hover:text-error hover:bg-error-container transition-all duration-200 active:translate-x-1" href="#">
+<span class="material-symbols-outlined mr-sm">logout</span>
+<span class="font-label-sm text-label-sm">Logout</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col lg:ml-sidebar-width h-screen overflow-hidden">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center h-16 px-lg w-full z-40 bg-surface-container-lowest shadow-sm docked full-width top-0">
+<div class="flex items-center">
+<span class="font-page-heading text-section-heading font-extrabold text-primary mr-lg hidden lg:block">HabitQuest</span>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-xs rounded-full text-text-secondary hover:bg-surface-container-low transition-colors active:scale-95 duration-200 relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-xs rounded-full text-text-secondary hover:bg-surface-container-low transition-colors active:scale-95 duration-200 flex items-center gap-xs">
+<span class="material-symbols-outlined text-streak-orange" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+<span class="font-label-sm text-label-sm font-bold text-streak-orange">12</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden lg:hidden ml-xs">
+<img alt="User profile avatar with level indicator" class="w-full h-full object-cover" data-alt="A brightly lit, close-up portrait of a professional individual looking confident, set against a soft, neutral studio background. The lighting is high-key and flattering, emphasizing a modern, approachable aesthetic suitable for a high-end application profile avatar." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDU2Ya3LLyRYgy5iYTwbP5rZ7zcpyFWkEuLzhzkf9c7F7XMlCNKBqyB0xqTRr4fDKAuryeD197Cy2OKjyrNOk3wluKc94PaXDCl_r8pkpdmkfqoFG-RK_qI5Kh_KzBbbG0F7jZhit0A2pDu3_bw0xpvUuxO2tw0IoAXtGhZ6Ozh60SRofqirX0rzS477XN3jWvSmKBRO6GTH8I9v2brfhBHgtMZABOSCWCdroB-heMKSOQCImSsXGhzdVrCut5LD8fVrzYwS0c-eSfY"/>
+</div>
+</div>
+</header>
+<!-- Scrollable Page Content -->
+<main class="flex-1 overflow-y-auto p-md lg:p-lg bg-app-bg">
+<!-- Page Header & Filters -->
+<div class="flex flex-col md:flex-row md:justify-between md:items-end mb-lg gap-md">
+<div>
+<h1 class="font-page-heading text-page-heading text-text-primary">Your Progress</h1>
+<p class="font-body-md text-body-md text-text-secondary mt-tiny">Track your journey and consistency over time.</p>
+</div>
+<div class="flex bg-surface-container-lowest p-tiny rounded-lg shadow-[0_4px_12px_rgba(15,23,42,0.05)] border border-surface-container">
+<button class="px-md py-sm rounded-md font-label-sm text-label-sm text-text-secondary hover:bg-surface-container-low transition-colors">This Week</button>
+<button class="px-md py-sm rounded-md font-label-sm text-label-sm bg-primary-container text-on-primary-container font-bold shadow-sm">This Month</button>
+<button class="px-md py-sm rounded-md font-label-sm text-label-sm text-text-secondary hover:bg-surface-container-low transition-colors">All Time</button>
+</div>
+</div>
+<!-- Summary Stat Cards (Bento Grid) -->
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-md mb-lg">
+<!-- Completion Rate -->
+<div class="col-span-2 md:col-span-2 lg:col-span-1 bg-surface-container-lowest p-md rounded-xl shadow-[0_4px_12px_rgba(15,23,42,0.05)] border border-surface-container flex flex-col justify-between hover:-translate-y-1 transition-transform duration-200 group">
+<div class="flex justify-between items-start mb-sm">
+<span class="material-symbols-outlined text-success-green bg-success-green/10 p-xs rounded-lg group-hover:scale-110 transition-transform">check_circle</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-text-secondary mb-tiny uppercase tracking-wide">Completion Rate</p>
+<div class="flex items-baseline gap-xs">
+<h3 class="font-hero-heading-mobile text-hero-heading-mobile text-text-primary">82%</h3>
+<span class="font-label-sm text-label-sm text-success-green flex items-center"><span class="material-symbols-outlined text-[14px]">arrow_upward</span>5%</span>
+</div>
+</div>
+</div>
+<!-- Total Habits Completed -->
+<div class="col-span-2 md:col-span-2 lg:col-span-1 bg-surface-container-lowest p-md rounded-xl shadow-[0_4px_12px_rgba(15,23,42,0.05)] border border-surface-container flex flex-col justify-between hover:-translate-y-1 transition-transform duration-200 group">
+<div class="flex justify-between items-start mb-sm">
+<span class="material-symbols-outlined text-primary bg-primary/10 p-xs rounded-lg group-hover:scale-110 transition-transform">task_alt</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-text-secondary mb-tiny uppercase tracking-wide">Total Completed</p>
+<h3 class="font-hero-heading-mobile text-hero-heading-mobile text-text-primary">87</h3>
+</div>
+</div>
+<!-- Longest Streak -->
+<div class="col-span-2 md:col-span-2 lg:col-span-1 bg-surface-container-lowest p-md rounded-xl shadow-[0_4px_12px_rgba(15,23,42,0.05)] border border-surface-container flex flex-col justify-between hover:-translate-y-1 transition-transform duration-200 group relative overflow-hidden">
+<div class="absolute -right-4 -top-4 w-24 h-24 bg-streak-orange/10 rounded-full blur-2xl"></div>
+<div class="flex justify-between items-start mb-sm relative z-10">
+<span class="material-symbols-outlined text-streak-orange bg-streak-orange/10 p-xs rounded-lg group-hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+<div class="relative z-10">
+<p class="font-label-sm text-label-sm text-text-secondary mb-tiny uppercase tracking-wide">Current Streak</p>
+<div class="flex items-baseline gap-xs">
+<h3 class="font-hero-heading-mobile text-hero-heading-mobile text-text-primary">12</h3>
+<span class="font-body-md text-body-md text-text-secondary">days</span>
+</div>
+</div>
+</div>
+<!-- Best & Weakest (Stacked in 1 column on large screens) -->
+<div class="col-span-2 md:col-span-2 lg:col-span-2 flex flex-col gap-md">
+<!-- Best Habit -->
+<div class="flex-1 bg-gradient-to-r from-surface-container-lowest to-surface-bright p-md rounded-xl shadow-[0_4px_12px_rgba(15,23,42,0.05)] border border-surface-container flex items-center justify-between hover:-translate-y-1 transition-transform duration-200">
+<div>
+<p class="font-label-sm text-label-sm text-text-secondary mb-tiny uppercase tracking-wide">Best Habit</p>
+<h4 class="font-card-heading text-card-heading text-text-primary flex items-center gap-xs">
+<span class="material-symbols-outlined text-xp-gold" style="font-variation-settings: 'FILL' 1;">star</span>
+                                    Coding
+                                </h4>
+</div>
+<div class="text-right">
+<span class="font-label-sm text-label-sm bg-success-green/10 text-success-green px-sm py-tiny rounded-full">100% this month</span>
+</div>
+</div>
+<!-- Weakest Habit -->
+<div class="flex-1 bg-surface-container-lowest p-md rounded-xl shadow-[0_4px_12px_rgba(15,23,42,0.05)] border border-surface-container flex items-center justify-between hover:-translate-y-1 transition-transform duration-200">
+<div>
+<p class="font-label-sm text-label-sm text-text-secondary mb-tiny uppercase tracking-wide">Needs Focus</p>
+<h4 class="font-card-heading text-card-heading text-text-primary flex items-center gap-xs">
+<span class="material-symbols-outlined text-text-muted">self_improvement</span>
+                                    Wellness
+                                </h4>
+</div>
+<div class="text-right">
+<span class="font-label-sm text-label-sm bg-surface-container-highest text-text-secondary px-sm py-tiny rounded-full">45% this month</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Visuals & Insights Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-lg">
+<!-- Consistency Heatmap -->
+<div class="lg:col-span-2 bg-surface-container-lowest p-lg rounded-xl shadow-[0_4px_12px_rgba(15,23,42,0.05)] border border-surface-container">
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-card-heading text-card-heading text-text-primary">Consistency Heatmap</h3>
+<button class="text-text-secondary hover:text-primary transition-colors"><span class="material-symbols-outlined">more_horiz</span></button>
+</div>
+<div class="overflow-x-auto pb-sm">
+<div class="min-w-[600px]">
+<!-- Heatmap Mockup (Simplified structure for design purposes) -->
+<div class="flex gap-xs mb-xs text-text-muted font-label-sm text-[10px] uppercase">
+<div class="w-8"></div> <!-- Spacer for row labels -->
+<div class="flex-1 flex justify-between">
+<span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span>
+</div>
+</div>
+<div class="flex gap-sm">
+<div class="flex flex-col gap-xs text-text-muted font-label-sm text-[10px] uppercase justify-between py-1">
+<span>Mon</span><span>Wed</span><span>Fri</span>
+</div>
+<div class="flex-1 grid grid-rows-7 grid-flow-col gap-1">
+<!-- Generating a pattern of generic heatmap squares -->
+<!-- Column 1 -->
+<div class="w-3 h-3 rounded-sm bg-surface-container-high"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/40"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/80"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/20"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-container-high"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/60"></div>
+<!-- Column 2 -->
+<div class="w-3 h-3 rounded-sm bg-success-green/60"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/80"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/100"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-container-high"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/40"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/20"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-container-high"></div>
+<!-- Column 3 -->
+<div class="w-3 h-3 rounded-sm bg-surface-container-high"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/40"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/80"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/20"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-container-high"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/60"></div>
+<!-- Column 4 -->
+<div class="w-3 h-3 rounded-sm bg-success-green/60"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/80"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/100"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-container-high"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/40"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/20"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-container-high"></div>
+<!-- Column 5 -->
+<div class="w-3 h-3 rounded-sm bg-surface-container-high"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/40"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/80"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/20"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-container-high"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/60"></div>
+<!-- Column 6 -->
+<div class="w-3 h-3 rounded-sm bg-success-green/60"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/80"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/100"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-container-high"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/40"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/20"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-container-high"></div>
+<!-- Column 7 -->
+<div class="w-3 h-3 rounded-sm bg-surface-container-high"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/40"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/80"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/20"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-container-high"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/60"></div>
+<!-- Column 8 -->
+<div class="w-3 h-3 rounded-sm bg-success-green/60"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/80"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/100"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-container-high"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/40"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/20"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-container-high"></div>
+<!-- Column 9 -->
+<div class="w-3 h-3 rounded-sm bg-surface-container-high"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/40"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/80"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/20"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-container-high"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/60"></div>
+<!-- Column 10 -->
+<div class="w-3 h-3 rounded-sm bg-success-green/60"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/80"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/100"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-container-high"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/40"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/20"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-container-high"></div>
+<!-- Column 11 -->
+<div class="w-3 h-3 rounded-sm bg-surface-container-high"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/40"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/80"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/20"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-container-high"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/60"></div>
+<!-- Column 12 -->
+<div class="w-3 h-3 rounded-sm bg-success-green/60"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/80"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/100"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-container-high"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/40"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/20"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-container-high"></div>
+<!-- Column 13 -->
+<div class="w-3 h-3 rounded-sm bg-surface-container-high"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/40"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/80"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/20"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-container-high"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/60"></div>
+<!-- Column 14 -->
+<div class="w-3 h-3 rounded-sm bg-success-green/60"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/80"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/100"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-container-high"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/40"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/20"></div>
+<div class="w-3 h-3 rounded-sm bg-surface-container-high"></div>
+</div>
+</div>
+<div class="flex justify-end items-center gap-xs mt-sm text-[10px] text-text-muted uppercase">
+<span>Less</span>
+<div class="w-3 h-3 rounded-sm bg-surface-container-high"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/40"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green/80"></div>
+<div class="w-3 h-3 rounded-sm bg-success-green"></div>
+<span>More</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Weekly Completion Bar Chart -->
+<div class="bg-surface-container-lowest p-lg rounded-xl shadow-[0_4px_12px_rgba(15,23,42,0.05)] border border-surface-container flex flex-col">
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-card-heading text-card-heading text-text-primary">Weekly Completion</h3>
+<button class="text-text-secondary hover:text-primary transition-colors"><span class="material-symbols-outlined">more_horiz</span></button>
+</div>
+<div class="flex-1 flex items-end justify-between gap-2 pt-lg pb-sm">
+<!-- Mon -->
+<div class="flex flex-col items-center gap-2 group flex-1">
+<div class="w-full bg-surface-container-high rounded-t-md h-32 relative overflow-hidden">
+<div class="absolute bottom-0 w-full bg-primary h-[90%] rounded-t-md group-hover:bg-primary-container transition-colors"></div>
+</div>
+<span class="font-label-sm text-label-sm text-text-secondary">M</span>
+</div>
+<!-- Tue -->
+<div class="flex flex-col items-center gap-2 group flex-1">
+<div class="w-full bg-surface-container-high rounded-t-md h-32 relative overflow-hidden">
+<div class="absolute bottom-0 w-full bg-primary h-[60%] rounded-t-md group-hover:bg-primary-container transition-colors"></div>
+</div>
+<span class="font-label-sm text-label-sm text-text-secondary">T</span>
+</div>
+<!-- Wed -->
+<div class="flex flex-col items-center gap-2 group flex-1">
+<div class="w-full bg-surface-container-high rounded-t-md h-32 relative overflow-hidden">
+<div class="absolute bottom-0 w-full bg-primary h-[75%] rounded-t-md group-hover:bg-primary-container transition-colors"></div>
+</div>
+<span class="font-label-sm text-label-sm text-text-secondary">W</span>
+</div>
+<!-- Thu -->
+<div class="flex flex-col items-center gap-2 group flex-1">
+<div class="w-full bg-surface-container-high rounded-t-md h-32 relative overflow-hidden">
+<div class="absolute bottom-0 w-full bg-primary h-[50%] rounded-t-md group-hover:bg-primary-container transition-colors"></div>
+</div>
+<span class="font-label-sm text-label-sm text-text-secondary">T</span>
+</div>
+<!-- Fri -->
+<div class="flex flex-col items-center gap-2 group flex-1">
+<div class="w-full bg-surface-container-high rounded-t-md h-32 relative overflow-hidden">
+<div class="absolute bottom-0 w-full bg-primary h-[85%] rounded-t-md group-hover:bg-primary-container transition-colors"></div>
+</div>
+<span class="font-label-sm text-label-sm text-text-secondary">F</span>
+</div>
+<!-- Sat -->
+<div class="flex flex-col items-center gap-2 group flex-1">
+<div class="w-full bg-surface-container-high rounded-t-md h-32 relative overflow-hidden">
+<div class="absolute bottom-0 w-full bg-primary h-[30%] rounded-t-md group-hover:bg-primary-container transition-colors opacity-60"></div>
+</div>
+<span class="font-label-sm text-label-sm text-text-muted">S</span>
+</div>
+<!-- Sun -->
+<div class="flex flex-col items-center gap-2 group flex-1">
+<div class="w-full bg-surface-container-high rounded-t-md h-32 relative overflow-hidden">
+<div class="absolute bottom-0 w-full bg-primary h-[40%] rounded-t-md group-hover:bg-primary-container transition-colors opacity-60"></div>
+</div>
+<span class="font-label-sm text-label-sm text-text-muted">S</span>
+</div>
+</div>
+</div>
+<!-- Personal Insights -->
+<div class="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-md mt-sm">
+<!-- Insight 1 -->
+<div class="bg-gradient-to-br from-surface-container-low to-surface-container-lowest p-md rounded-xl shadow-[0_4px_12px_rgba(15,23,42,0.05)] border border-surface-container flex items-start gap-md">
+<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+</div>
+<div>
+<h4 class="font-card-heading text-card-heading text-text-primary mb-tiny">Consistent Mondays</h4>
+<p class="font-body-md text-body-md text-text-secondary">You are most consistent on Mondays. Leveraging this momentum sets a strong tone for the rest of your week.</p>
+</div>
+</div>
+<!-- Insight 2 -->
+<div class="bg-gradient-to-br from-surface-container-low to-surface-container-lowest p-md rounded-xl shadow-[0_4px_12px_rgba(15,23,42,0.05)] border border-surface-container flex items-start gap-md">
+<div class="w-12 h-12 rounded-full bg-success-green/10 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-success-green" style="font-variation-settings: 'FILL' 1;">trending_up</span>
+</div>
+<div>
+<h4 class="font-card-heading text-card-heading text-text-primary mb-tiny">Study Habits Improved</h4>
+<p class="font-body-md text-body-md text-text-secondary">Your study habits improved this week. You completed 20% more focus sessions compared to last week.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom spacer for mobile if needed -->
+<div class="h-24 lg:h-8"></div>
+</main>
+</div>
+</div>
+</body></html>

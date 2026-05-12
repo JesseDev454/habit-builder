@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HabitQuest - Turn your daily habits into a quest.</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-surface": "#1c1b23",
+                      "surface": "#fcf8ff",
+                      "streak-orange": "#F97316",
+                      "on-secondary": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "inverse-surface": "#312f38",
+                      "secondary": "#5045d4",
+                      "on-error": "#ffffff",
+                      "primary-fixed-dim": "#c6bfff",
+                      "card-surface": "#FFFFFF",
+                      "outline": "#787586",
+                      "background": "#fcf8ff",
+                      "primary": "#5341cd",
+                      "app-bg": "#F8FAFC",
+                      "secondary-fixed-dim": "#c4c0ff",
+                      "on-primary-fixed": "#160066",
+                      "surface-dim": "#dcd8e4",
+                      "secondary-container": "#6960ee",
+                      "tertiary-fixed-dim": "#c8c4d7",
+                      "quest-blue": "#38BDF8",
+                      "error-red": "#EF4444",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary-fixed-variant": "#3929be",
+                      "border-neutral": "#E2E8F0",
+                      "on-tertiary-container": "#fbf6ff",
+                      "tertiary-fixed": "#e4e0f4",
+                      "on-tertiary-fixed": "#1b1a28",
+                      "xp-gold": "#FBBF24",
+                      "on-primary-fixed-variant": "#4029ba",
+                      "dark-bg": "#0F172A",
+                      "tertiary": "#595868",
+                      "primary-container": "#6c5ce7",
+                      "on-surface-variant": "#474554",
+                      "on-tertiary-fixed-variant": "#464555",
+                      "text-primary": "#0F172A",
+                      "on-primary-container": "#faf6ff",
+                      "outline-variant": "#c8c4d7",
+                      "inverse-on-surface": "#f3effb",
+                      "text-secondary": "#64748B",
+                      "error": "#ba1a1a",
+                      "badge-pink": "#EC4899",
+                      "dark-border": "#334155",
+                      "surface-container-highest": "#e5e0ed",
+                      "on-secondary-fixed": "#120068",
+                      "on-background": "#1c1b23",
+                      "on-secondary-container": "#fffbff",
+                      "info-blue": "#3B82F6",
+                      "primary-fixed": "#e4dfff",
+                      "surface-container": "#f0ecf8",
+                      "surface-tint": "#5847d2",
+                      "surface-container-low": "#f6f2fe",
+                      "surface-container-high": "#ebe6f2",
+                      "on-primary": "#ffffff",
+                      "success-green": "#22C55E",
+                      "tertiary-container": "#727081",
+                      "surface-bright": "#fcf8ff",
+                      "dark-surface": "#1E293B",
+                      "secondary-fixed": "#e3dfff",
+                      "on-error-container": "#93000a",
+                      "text-muted": "#94A3B8",
+                      "inverse-primary": "#c6bfff",
+                      "warning-amber": "#F59E0B",
+                      "surface-variant": "#e5e0ed",
+                      "on-tertiary": "#ffffff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "hero": "48px",
+                      "xl": "32px",
+                      "lg": "24px",
+                      "xs": "8px",
+                      "grid-gutter": "24px",
+                      "sm": "12px",
+                      "tiny": "4px",
+                      "sidebar-width": "240px",
+                      "md": "16px"
+              },
+              "fontFamily": {
+                      "hero-heading-mobile": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "page-heading-mobile": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "section-heading": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "card-heading": [
+                              "Inter"
+                      ],
+                      "page-heading": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "label-sm": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "hero-heading": [
+                              "Plus Jakarta Sans"
+                      ]
+              },
+              "fontSize": {
+                      "hero-heading-mobile": [
+                              "42px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "page-heading-mobile": [
+                              "30px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "section-heading": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "card-heading": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "page-heading": [
+                              "36px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-sm": [
+                              "13px",
+                              {
+                                      "lineHeight": "1",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "hero-heading": [
+                              "64px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "fontWeight": "800"
+                              }
+                      ]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+      </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col items-center">
+<!-- Landing Page Header (Simplified, Navigation Shell Suppressed per Destination Rule) -->
+<header class="w-full max-w-md flex justify-between items-center px-md py-sm sticky top-0 z-50 bg-surface/90 backdrop-blur-sm border-b border-border-neutral/50">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined filled text-primary text-2xl">swords</span>
+<span class="font-section-heading text-section-heading text-primary tracking-tight">HabitQuest</span>
+</div>
+<button class="font-label-sm text-label-sm text-primary bg-surface-container hover:bg-surface-container-high px-4 py-2 rounded-lg transition-colors">
+            Log In
+        </button>
+</header>
+<!-- Main Content Canvas -->
+<main class="w-full max-w-md px-md pb-xl flex-1 flex flex-col">
+<!-- Hero Section -->
+<section class="flex flex-col items-center text-center mt-xl mb-hero gap-lg">
+<div class="space-y-sm">
+<div class="inline-flex items-center gap-tiny bg-surface-container-high px-3 py-1.5 rounded-full text-secondary font-label-sm text-label-sm mb-2 shadow-sm">
+<span class="material-symbols-outlined text-[16px] filled text-xp-gold">stars</span>
+<span>The #1 Gamified Tracker</span>
+</div>
+<h1 class="font-hero-heading-mobile text-hero-heading-mobile text-text-primary tracking-tight text-balance">
+                    Turn your daily habits into a quest.
+                </h1>
+<p class="font-body-md text-body-md text-text-secondary max-w-[320px] mx-auto text-balance">
+                    Level up your real life. Build streaks, earn XP, and unlock rewards for completing your daily routines.
+                </p>
+</div>
+<!-- Hero Image / Visual Anchor -->
+<div class="w-full relative rounded-xl overflow-hidden shadow-lg border border-border-neutral aspect-[4/3] bg-surface-container-low flex items-center justify-center">
+<img alt="HabitQuest Interface Preview" class="w-full h-full object-cover" data-alt="A stylized, high-fidelity 3D rendering representing a gamified dashboard floating in a bright, modern studio space. The composition features sleek glassmorphism panels, a vibrant purple progress bar, a glowing orange flame icon denoting a streak, and a shiny golden star coin for XP. The scene is illuminated by soft, high-key white lighting, creating a premium, clean light-mode aesthetic that blends SaaS productivity with playful RPG elements." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdduSuaTGqF28m3t3xf5wbpEypdf8SKSxcY-mr5LnlytMB6XNvI6j2e0ELx9qphlWn9qF2fd3HT_vsOvutuW0eQ8bUBpEllk4YMm1yyjNxOgqizQdQt90IpP9Ogf1hBb-XY79YGrdrE7KjsAIVyDC3FYAyV8tCQiC_lUqIkVPyzMDIj_p8jaXYUvzQp_QJazt4d00HUFf_u1ad304up5ib1Wcc6cZSQbfDbz-OdWgSfovgChrw194YUQ5X92wf0jmfhc9L67PHSbY8"/>
+<!-- Decorative floating element -->
+<div class="absolute bottom-4 left-4 right-4 bg-card-surface/90 backdrop-blur-md p-sm rounded-xl shadow-md border border-white/50 flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined filled text-streak-orange">local_fire_department</span>
+</div>
+<div class="text-left flex-1">
+<p class="font-label-sm text-label-sm text-text-secondary">Current Streak</p>
+<p class="font-card-heading text-card-heading text-text-primary">14 Days</p>
+</div>
+<span class="font-label-sm text-label-sm text-success-green bg-success-green/10 px-2 py-1 rounded-md">+50 XP</span>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary py-4 rounded-xl font-card-heading text-card-heading shadow-[0_8px_16px_rgba(83,65,205,0.25)] hover:shadow-[0_12px_24px_rgba(83,65,205,0.35)] hover:-translate-y-1 transition-all duration-200 active:scale-95 flex items-center justify-center gap-sm">
+                Start Your Quest
+                <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</section>
+<!-- Features Stack -->
+<section class="flex flex-col gap-md">
+<h2 class="font-section-heading text-section-heading text-text-primary text-center mb-sm">
+                How it works
+            </h2>
+<!-- Card 1: Tracking -->
+<div class="bg-card-surface rounded-xl p-lg shadow-sm border border-border-neutral hover:shadow-md transition-shadow flex flex-col gap-sm">
+<div class="w-12 h-12 rounded-xl bg-success-green/10 flex items-center justify-center mb-xs">
+<span class="material-symbols-outlined text-[28px] text-success-green filled">task_alt</span>
+</div>
+<h3 class="font-card-heading text-card-heading text-text-primary">Track Daily Habits</h3>
+<p class="font-body-md text-body-md text-text-secondary">
+                    Create customized daily quests. Check them off your list and watch your progress bar fill up in real-time.
+                </p>
+</div>
+<!-- Card 2: Streaks -->
+<div class="bg-card-surface rounded-xl p-lg shadow-sm border border-border-neutral hover:shadow-md transition-shadow flex flex-col gap-sm relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-streak-orange/5 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none"></div>
+<div class="w-12 h-12 rounded-xl bg-streak-orange/10 flex items-center justify-center mb-xs relative z-10">
+<span class="material-symbols-outlined text-[28px] text-streak-orange filled">local_fire_department</span>
+</div>
+<h3 class="font-card-heading text-card-heading text-text-primary relative z-10">Build Unstoppable Streaks</h3>
+<p class="font-body-md text-body-md text-text-secondary relative z-10">
+                    Don't break the chain. Every consecutive day fuels your streak flame and multiplies your daily XP rewards.
+                </p>
+</div>
+<!-- Card 3: Rewards -->
+<div class="bg-card-surface rounded-xl p-lg shadow-sm border border-border-neutral hover:shadow-md transition-shadow flex flex-col gap-sm relative overflow-hidden">
+<div class="absolute bottom-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-2xl -mr-10 -mb-10 pointer-events-none"></div>
+<div class="w-12 h-12 rounded-xl bg-primary-container/20 flex items-center justify-center mb-xs relative z-10">
+<span class="material-symbols-outlined text-[28px] text-primary filled">military_tech</span>
+</div>
+<h3 class="font-card-heading text-card-heading text-text-primary relative z-10">Level Up &amp; Unlock Badges</h3>
+<p class="font-body-md text-body-md text-text-secondary relative z-10">
+                    Gain experience points to level up your profile. Unlock exclusive badges and rank up from Novice to Trailblazer.
+                </p>
+</div>
+</section>
+<!-- Bottom CTA -->
+<section class="mt-hero bg-primary text-on-primary rounded-xl p-lg shadow-lg flex flex-col items-center text-center gap-md relative overflow-hidden">
+<!-- Decorative background elements -->
+<div class="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20">
+<div class="absolute -top-10 -left-10 w-32 h-32 bg-white rounded-full blur-3xl"></div>
+<div class="absolute -bottom-10 -right-10 w-40 h-40 bg-secondary rounded-full blur-3xl"></div>
+</div>
+<div class="relative z-10 flex flex-col items-center gap-sm">
+<span class="material-symbols-outlined text-[48px] text-xp-gold filled drop-shadow-md">award_star</span>
+<h2 class="font-section-heading text-section-heading">Ready to begin?</h2>
+<p class="font-body-md text-body-md text-primary-fixed-dim max-w-[280px]">
+                    Join thousands of others turning their productivity into an adventure.
+                </p>
+</div>
+<button class="relative z-10 w-full bg-card-surface text-primary py-4 rounded-xl font-card-heading text-card-heading shadow-md hover:bg-surface-container-low transition-colors active:scale-95">
+                Create Free Account
+            </button>
+</section>
+<!-- Footer -->
+<footer class="mt-xl py-lg text-center border-t border-border-neutral">
+<p class="font-label-sm text-label-sm text-text-muted">
+                © 2024 HabitQuest. All rights reserved.
+            </p>
+</footer>
+</main>
+</body></html>

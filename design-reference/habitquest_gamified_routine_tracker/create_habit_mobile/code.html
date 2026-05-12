@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Create Habit - HabitQuest</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#faf6ff",
+                        "on-tertiary-container": "#fbf6ff",
+                        "on-tertiary-fixed": "#1b1a28",
+                        "text-secondary": "#64748B",
+                        "error": "#ba1a1a",
+                        "secondary": "#5045d4",
+                        "card-surface": "#FFFFFF",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#312f38",
+                        "surface-bright": "#fcf8ff",
+                        "app-bg": "#F8FAFC",
+                        "surface-container-low": "#f6f2fe",
+                        "tertiary": "#595868",
+                        "text-muted": "#94A3B8",
+                        "on-error-container": "#93000a",
+                        "on-background": "#1c1b23",
+                        "outline": "#787586",
+                        "surface-container-highest": "#e5e0ed",
+                        "secondary-fixed-dim": "#c4c0ff",
+                        "inverse-on-surface": "#f3effb",
+                        "on-primary-fixed": "#160066",
+                        "tertiary-fixed": "#e4e0f4",
+                        "on-primary-fixed-variant": "#4029ba",
+                        "dark-border": "#334155",
+                        "on-secondary-container": "#fffbff",
+                        "surface-container-lowest": "#ffffff",
+                        "quest-blue": "#38BDF8",
+                        "surface-container": "#f0ecf8",
+                        "surface": "#fcf8ff",
+                        "on-tertiary-fixed-variant": "#464555",
+                        "secondary-fixed": "#e3dfff",
+                        "dark-surface": "#1E293B",
+                        "surface-dim": "#dcd8e4",
+                        "error-container": "#ffdad6",
+                        "primary": "#5341cd",
+                        "primary-fixed": "#e4dfff",
+                        "tertiary-container": "#727081",
+                        "on-primary": "#ffffff",
+                        "warning-amber": "#F59E0B",
+                        "dark-bg": "#0F172A",
+                        "xp-gold": "#FBBF24",
+                        "info-blue": "#3B82F6",
+                        "background": "#fcf8ff",
+                        "on-secondary-fixed-variant": "#3929be",
+                        "primary-fixed-dim": "#c6bfff",
+                        "on-surface-variant": "#474554",
+                        "badge-pink": "#EC4899",
+                        "success-green": "#22C55E",
+                        "error-red": "#EF4444",
+                        "on-secondary": "#ffffff",
+                        "border-neutral": "#E2E8F0",
+                        "inverse-primary": "#c6bfff",
+                        "surface-variant": "#e5e0ed",
+                        "tertiary-fixed-dim": "#c8c4d7",
+                        "surface-tint": "#5847d2",
+                        "on-surface": "#1c1b23",
+                        "on-tertiary": "#ffffff",
+                        "streak-orange": "#F97316",
+                        "on-secondary-fixed": "#120068",
+                        "text-primary": "#0F172A",
+                        "surface-container-high": "#ebe6f2",
+                        "primary-container": "#6c5ce7",
+                        "outline-variant": "#c8c4d7",
+                        "secondary-container": "#6960ee"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "md": "16px",
+                        "xl": "32px",
+                        "sidebar-width": "240px",
+                        "sm": "12px",
+                        "hero": "48px",
+                        "xs": "8px",
+                        "grid-gutter": "24px",
+                        "tiny": "4px"
+                    },
+                    "fontFamily": {
+                        "section-heading": ["Plus Jakarta Sans"],
+                        "label-sm": ["Inter"],
+                        "page-heading-mobile": ["Plus Jakarta Sans"],
+                        "page-heading": ["Plus Jakarta Sans"],
+                        "hero-heading-mobile": ["Plus Jakarta Sans"],
+                        "card-heading": ["Inter"],
+                        "body-md": ["Inter"],
+                        "hero-heading": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "section-heading": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "label-sm": ["13px", {"lineHeight": "1", "fontWeight": "500"}],
+                        "page-heading-mobile": ["30px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "page-heading": ["36px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "hero-heading-mobile": ["42px", {"lineHeight": "1.1", "fontWeight": "800"}],
+                        "card-heading": ["18px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "hero-heading": ["64px", {"lineHeight": "1.1", "fontWeight": "800"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-app-bg text-text-primary min-h-screen antialiased selection:bg-primary selection:text-on-primary font-body-md text-body-md flex flex-col">
+<!-- Transactional Header (Suppressed Main Nav) -->
+<header class="flex items-center justify-between px-md h-16 bg-surface-container-lowest shadow-sm z-40 sticky top-0">
+<button aria-label="Go back" class="flex items-center justify-center w-10 h-10 rounded-full text-text-secondary active:bg-surface-container-high transition-colors -ml-2">
+<span class="material-symbols-outlined text-[24px]" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-section-heading text-card-heading text-text-primary tracking-tight">Create Habit</h1>
+<div class="w-10"></div> <!-- Spacer to balance back button -->
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto pb-24">
+<!-- Live Preview Section -->
+<div class="px-md pt-lg pb-md">
+<div class="flex items-center justify-between mb-xs">
+<span class="font-label-sm text-label-sm text-text-secondary uppercase tracking-widest">Preview</span>
+<span class="flex items-center gap-tiny text-xp-gold font-label-sm text-label-sm bg-surface-container-high px-2 py-1 rounded-full">
+<span class="material-symbols-outlined fill-icon text-[14px]" data-icon="bolt">bolt</span>
+                    +15 XP
+                </span>
+</div>
+<!-- Gamified Habit Card Preview -->
+<div class="bg-surface-container-lowest p-md rounded-[16px] shadow-[0_4px_12px_rgba(15,23,42,0.05)] border border-border-neutral flex items-center justify-between transition-all duration-300">
+<div class="flex items-center gap-sm">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[28px]" data-icon="water_drop" id="preview-icon">water_drop</span>
+</div>
+<div>
+<h3 class="font-card-heading text-card-heading text-text-primary" id="preview-title">Hydration Quest</h3>
+<p class="font-label-sm text-label-sm text-text-muted mt-tiny">0 / 1 Daily</p>
+</div>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-border-neutral flex items-center justify-center text-border-neutral">
+<span class="material-symbols-outlined text-[20px]" data-icon="check">check</span>
+</div>
+</div>
+</div>
+<!-- Scrollable Form Container -->
+<div class="px-md space-y-lg pb-lg">
+<!-- Habit Name Input -->
+<div class="space-y-xs">
+<label class="font-label-sm text-label-sm text-text-primary ml-1 block" for="habit-name">Habit Name</label>
+<div class="relative">
+<input class="w-full h-[48px] pl-md pr-10 rounded-xl bg-surface-container-lowest border border-border-neutral text-body-md font-body-md text-text-primary placeholder:text-text-muted focus:ring-0 focus:border-2 focus:border-primary transition-all outline-none" id="habit-name" placeholder="e.g., Read 10 Pages" type="text" value="Hydration Quest"/>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-text-muted text-[20px]" data-icon="edit">edit</span>
+</div>
+</div>
+<!-- Gamified Icon Selection -->
+<div class="space-y-sm">
+<div class="flex items-center justify-between ml-1">
+<label class="font-label-sm text-label-sm text-text-primary">Quest Icon</label>
+<span class="font-label-sm text-label-sm text-primary cursor-pointer">More</span>
+</div>
+<div class="grid grid-cols-5 gap-sm">
+<button class="aspect-square rounded-xl bg-primary-container text-on-primary-container border-2 border-primary flex items-center justify-center transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[24px]" data-icon="water_drop">water_drop</span>
+</button>
+<button class="aspect-square rounded-xl bg-surface-container-highest text-text-secondary border border-transparent hover:border-border-neutral flex items-center justify-center transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[24px]" data-icon="menu_book">menu_book</span>
+</button>
+<button class="aspect-square rounded-xl bg-surface-container-highest text-text-secondary border border-transparent hover:border-border-neutral flex items-center justify-center transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[24px]" data-icon="fitness_center">fitness_center</span>
+</button>
+<button class="aspect-square rounded-xl bg-surface-container-highest text-text-secondary border border-transparent hover:border-border-neutral flex items-center justify-center transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[24px]" data-icon="self_improvement">self_improvement</span>
+</button>
+<button class="aspect-square rounded-xl bg-surface-container-highest text-text-secondary border border-transparent hover:border-border-neutral flex items-center justify-center transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[24px]" data-icon="palette">palette</span>
+</button>
+</div>
+</div>
+<!-- Frequency & Goal Row -->
+<div class="grid grid-cols-2 gap-md">
+<div class="space-y-xs">
+<label class="font-label-sm text-label-sm text-text-primary ml-1 block">Frequency</label>
+<div class="relative">
+<select class="w-full h-[48px] px-md appearance-none rounded-xl bg-surface-container-lowest border border-border-neutral text-body-md font-body-md text-text-primary focus:ring-0 focus:border-2 focus:border-primary transition-all outline-none pr-10">
+<option>Daily</option>
+<option>Weekly</option>
+<option>Specific Days</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none text-[20px]" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<div class="space-y-xs">
+<label class="font-label-sm text-label-sm text-text-primary ml-1 flex items-center gap-1">XP Reward <span class="material-symbols-outlined text-[14px] text-xp-gold fill-icon" data-icon="bolt">bolt</span></label>
+<div class="relative">
+<select class="w-full h-[48px] px-md appearance-none rounded-xl bg-surface-container-lowest border border-border-neutral text-body-md font-body-md text-text-primary focus:ring-0 focus:border-2 focus:border-primary transition-all outline-none pr-10">
+<option>+10 XP (Easy)</option>
+<option selected="">+15 XP (Medium)</option>
+<option>+25 XP (Hard)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none text-[20px]" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Advanced Settings (Collapsed state simulation) -->
+<div class="pt-sm">
+<button class="w-full flex items-center justify-between p-md bg-surface-container-lowest border border-border-neutral rounded-xl active:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-text-secondary">
+<span class="material-symbols-outlined text-[18px]" data-icon="notifications_active">notifications_active</span>
+</div>
+<span class="font-card-heading text-card-heading text-text-primary text-[15px]">Add Reminders</span>
+</div>
+<span class="material-symbols-outlined text-text-secondary" data-icon="add">add</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Bottom Action Area (Fixed) -->
+<div class="fixed bottom-0 left-0 w-full bg-surface-container-lowest border-t border-border-neutral p-md flex flex-col gap-sm shadow-[0_-4px_12px_rgba(15,23,42,0.03)] z-50">
+<button class="w-full h-[48px] bg-primary text-on-primary font-label-sm text-label-sm rounded-[14px] flex items-center justify-center gap-xs active:scale-[0.98] transition-transform shadow-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="add_task">add_task</span>
+            Save Habit
+        </button>
+<button class="w-full h-[44px] text-secondary font-label-sm text-label-sm rounded-[14px] flex items-center justify-center active:bg-surface-container-low transition-colors">
+            Cancel
+        </button>
+</div>
+</body></html>

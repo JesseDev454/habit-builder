@@ -1,0 +1,14 @@
+{
+  "name": "habitquest",
+  "version": "0.1.0",
+  "private": true,
+  "description": "HabitQuest: a gamified habit-building MERN web app.",
+  "scripts": {
+    "client": "npm run dev --prefix client",
+    "server": "npm run dev --prefix server",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

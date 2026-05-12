@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HabitQuest - Empty Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-container": "#faf6ff",
+                      "on-tertiary-container": "#fbf6ff",
+                      "on-tertiary-fixed": "#1b1a28",
+                      "text-secondary": "#64748B",
+                      "error": "#ba1a1a",
+                      "secondary": "#5045d4",
+                      "card-surface": "#FFFFFF",
+                      "on-error": "#ffffff",
+                      "inverse-surface": "#312f38",
+                      "surface-bright": "#fcf8ff",
+                      "app-bg": "#F8FAFC",
+                      "surface-container-low": "#f6f2fe",
+                      "tertiary": "#595868",
+                      "text-muted": "#94A3B8",
+                      "on-error-container": "#93000a",
+                      "on-background": "#1c1b23",
+                      "outline": "#787586",
+                      "surface-container-highest": "#e5e0ed",
+                      "secondary-fixed-dim": "#c4c0ff",
+                      "inverse-on-surface": "#f3effb",
+                      "on-primary-fixed": "#160066",
+                      "tertiary-fixed": "#e4e0f4",
+                      "on-primary-fixed-variant": "#4029ba",
+                      "dark-border": "#334155",
+                      "on-secondary-container": "#fffbff",
+                      "surface-container-lowest": "#ffffff",
+                      "quest-blue": "#38BDF8",
+                      "surface-container": "#f0ecf8",
+                      "surface": "#fcf8ff",
+                      "on-tertiary-fixed-variant": "#464555",
+                      "secondary-fixed": "#e3dfff",
+                      "dark-surface": "#1E293B",
+                      "surface-dim": "#dcd8e4",
+                      "error-container": "#ffdad6",
+                      "primary": "#5341cd",
+                      "primary-fixed": "#e4dfff",
+                      "tertiary-container": "#727081",
+                      "on-primary": "#ffffff",
+                      "warning-amber": "#F59E0B",
+                      "dark-bg": "#0F172A",
+                      "xp-gold": "#FBBF24",
+                      "info-blue": "#3B82F6",
+                      "background": "#fcf8ff",
+                      "on-secondary-fixed-variant": "#3929be",
+                      "primary-fixed-dim": "#c6bfff",
+                      "on-surface-variant": "#474554",
+                      "badge-pink": "#EC4899",
+                      "success-green": "#22C55E",
+                      "error-red": "#EF4444",
+                      "on-secondary": "#ffffff",
+                      "border-neutral": "#E2E8F0",
+                      "inverse-primary": "#c6bfff",
+                      "surface-variant": "#e5e0ed",
+                      "tertiary-fixed-dim": "#c8c4d7",
+                      "surface-tint": "#5847d2",
+                      "on-surface": "#1c1b23",
+                      "on-tertiary": "#ffffff",
+                      "streak-orange": "#F97316",
+                      "on-secondary-fixed": "#120068",
+                      "text-primary": "#0F172A",
+                      "surface-container-high": "#ebe6f2",
+                      "primary-container": "#6c5ce7",
+                      "outline-variant": "#c8c4d7",
+                      "secondary-container": "#6960ee"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "lg": "24px",
+                      "md": "16px",
+                      "xl": "32px",
+                      "sidebar-width": "240px",
+                      "sm": "12px",
+                      "hero": "48px",
+                      "xs": "8px",
+                      "grid-gutter": "24px",
+                      "tiny": "4px"
+              },
+              "fontFamily": {
+                      "section-heading": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "label-sm": [
+                              "Inter"
+                      ],
+                      "page-heading-mobile": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "page-heading": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "hero-heading-mobile": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "card-heading": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "hero-heading": [
+                              "Plus Jakarta Sans"
+                      ]
+              },
+              "fontSize": {
+                      "section-heading": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-sm": [
+                              "13px",
+                              {
+                                      "lineHeight": "1",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "page-heading-mobile": [
+                              "30px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "page-heading": [
+                              "36px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "hero-heading-mobile": [
+                              "42px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "card-heading": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "hero-heading": [
+                              "64px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "fontWeight": "800"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+</head>
+<body class="bg-app-bg text-text-primary min-h-screen flex">
+<!-- SideNavBar -->
+<nav class="hidden lg:flex flex-col h-full p-md gap-md overflow-y-auto fixed left-0 top-0 h-screen w-sidebar-width bg-surface-container-lowest dark:bg-dark-surface shadow-md z-30">
+<div class="flex items-center gap-sm px-sm py-md">
+<img alt="User avatar" class="w-10 h-10 rounded-full" data-alt="A small circular profile picture of a young man with a neutral expression, suitable for a dashboard avatar. The lighting is bright and clean, fitting a modern productivity application aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtnQ6H4rB1bL10frNqnhI8W11Saf4sge9Z2JfhnhsxDecCU12irhwQJ4rvP70DN2K2nQNv0jW-NZc5vmchMStM20BuWL7zJqoHyp57ec3HKwcRiV2g13CorA_nusiXQgnTmceBered1EzEvQt0qpMPbGD3MKVx6gS_JVE8uFSpFnqz-wHdCs8LLw9uIIiyl9zsb3eU-SU2mxye9wb7mDa7u5YqYlJof57vNjNPzcQBhtAzjqDzxBg8qWOl3phcvbu-HaiX6g-_w3sb"/>
+<div>
+<div class="font-label-sm text-label-sm text-primary dark:text-primary-fixed font-bold">Alex Weaver</div>
+<div class="font-label-sm text-label-sm text-text-secondary text-[11px]">Level 24 Guardian</div>
+</div>
+</div>
+<button class="bg-primary text-on-primary rounded-xl py-sm px-md font-label-sm text-label-sm font-bold flex items-center justify-center gap-xs hover:bg-on-primary-fixed-variant transition-colors shadow-sm w-full mb-md">
+<span class="material-symbols-outlined text-[18px]">add</span>
+            New Habit
+        </button>
+<div class="flex flex-col gap-xs flex-1">
+<a class="flex items-center gap-md px-md py-sm bg-primary-container text-on-primary-container rounded-xl font-bold" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-label-sm text-label-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-text-secondary dark:text-text-muted hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-dark-bg transition-all duration-200 rounded-xl active:translate-x-1" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-label-sm text-label-sm">Quests</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-text-secondary dark:text-text-muted hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-dark-bg transition-all duration-200 rounded-xl active:translate-x-1" href="#">
+<span class="material-symbols-outlined">repeat</span>
+<span class="font-label-sm text-label-sm">Habits</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-text-secondary dark:text-text-muted hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-dark-bg transition-all duration-200 rounded-xl active:translate-x-1" href="#">
+<span class="material-symbols-outlined">emoji_events</span>
+<span class="font-label-sm text-label-sm">Leaderboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-text-secondary dark:text-text-muted hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-dark-bg transition-all duration-200 rounded-xl active:translate-x-1" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-sm text-label-sm">Settings</span>
+</a>
+</div>
+<div class="flex flex-col gap-xs mt-auto pt-md border-t border-border-neutral dark:border-dark-border">
+<a class="flex items-center gap-md px-md py-sm text-text-secondary dark:text-text-muted hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-dark-bg transition-all duration-200 rounded-xl active:translate-x-1" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-sm text-label-sm">Help</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-text-secondary dark:text-text-muted hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-dark-bg transition-all duration-200 rounded-xl active:translate-x-1" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-sm text-label-sm">Logout</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 lg:ml-sidebar-width flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center h-16 px-lg w-full z-40 shadow-sm dark:shadow-none bg-surface-container-lowest dark:bg-dark-surface sticky top-0">
+<div class="font-page-heading text-section-heading font-extrabold text-primary dark:text-primary-fixed hidden md:block">HabitQuest</div>
+<div class="flex items-center gap-md ml-auto">
+<button class="p-2 text-text-secondary dark:text-text-muted hover:bg-surface-container-low dark:hover:bg-dark-bg transition-colors rounded-full active:scale-95 duration-200">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-text-secondary dark:text-text-muted hover:bg-surface-container-low dark:hover:bg-dark-bg transition-colors rounded-full active:scale-95 duration-200">
+<span class="material-symbols-outlined">local_fire_department</span>
+</button>
+<img alt="User profile avatar with level indicator" class="w-8 h-8 rounded-full ml-sm md:hidden" data-alt="A small circular profile picture of a young man with a neutral expression, suitable for a dashboard avatar. The lighting is bright and clean, fitting a modern productivity application aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAM2-rpA-YisayGsa93sbbaTdqTj-s0yN5weLD9X9Xlf72An3jD8r8trFH2YOlmpbW3OFpel4ycvdKPqk-bsRYIbBw2WXs4XOTZ7DNlCsNZwGYev7Qsk1wDk3sJsDnAr-_5k0WsD0Ls7ZmCFfobtaZzzcDqu5oJhYjAOqquPC1TT1hFZSrHIIB6x6fIQkFCgdQyapw1rfIGfUiYOzn7WlDPzf2yyGoT8aV3U0i3DrE1m5beqxqcOmKisTPOK8CXN-rPyUiwkBKaTrAB"/>
+</div>
+</header>
+<!-- Canvas -->
+<main class="flex-1 p-md lg:p-lg flex items-center justify-center">
+<div class="max-w-2xl w-full bg-card-surface dark:bg-dark-surface rounded-2xl shadow-[0_4px_12px_rgba(15,23,42,0.05)] p-xl flex flex-col items-center text-center border border-border-neutral dark:border-dark-border">
+<!-- Friendly Illustration Placeholder -->
+<div class="w-48 h-48 mb-lg bg-surface-container-low rounded-full flex items-center justify-center">
+<img alt="Quiet forest illustration" class="w-full h-full object-cover rounded-full mix-blend-multiply opacity-80" data-alt="A serene, minimalist digital illustration of a quiet forest clearing at dawn. Soft, pastel colors dominate, primarily soft purples, pale greens, and misty whites, fitting a calming 'empty state' UI. The style is flat, vector-like, and highly polished, conveying a sense of peaceful potential and new beginnings." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUWv31xqTc7IVx6rrZpmgzSl9LtB5tvQ-J0qfiW0zC3fv3jVLzxW4dcdfTXJJLg8-2fWUB46F4pMJYAYBEJLfL9dlJZyTCTPtQhHdv5Qnp6XMJmkE3NwgDgoDNmV7E7qsB5lg7uk_yrKvgm9IuctUXdpWACis-t1OkadHP4H81W0PM3v2fzctHYhxnqvy1vSYOjsPLVC83dR55Zo3pij3lKBYDVR5ztjR3i1szrwgNybvc9Yyi6ViQdVibnL4-e5LePyNcOobMqQGF"/>
+</div>
+<h1 class="font-page-heading text-page-heading text-primary dark:text-primary-fixed mb-sm">No habits yet</h1>
+<p class="font-body-md text-body-md text-text-secondary max-w-md mb-xl">Start with one small habit and build from there.</p>
+<div class="flex flex-col sm:flex-row gap-md w-full sm:w-auto">
+<button class="bg-primary text-on-primary font-label-sm text-label-sm font-semibold py-sm px-xl rounded-xl hover:bg-on-primary-fixed-variant transition-colors shadow-md active:translate-y-px">
+                        Create Your First Habit
+                    </button>
+<button class="bg-surface-container-highest text-primary font-label-sm text-label-sm font-semibold py-sm px-xl rounded-xl hover:bg-surface-variant transition-colors active:translate-y-px">
+                        Use a Template
+                    </button>
+</div>
+</div>
+</main>
+</div>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-2 bg-surface-container-lowest dark:bg-dark-surface z-50 rounded-t-xl shadow-[0_-4px_12px_rgba(15,23,42,0.05)]">
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-2xl px-4 py-1 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-sm text-label-sm mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-text-secondary dark:text-text-muted active:bg-surface-container-high transition-colors active:scale-90 duration-150 p-2 rounded-xl" href="#">
+<span class="material-symbols-outlined">swords</span>
+<span class="font-label-sm text-label-sm mt-1">Quests</span>
+</a>
+<a class="flex flex-col items-center justify-center text-text-secondary dark:text-text-muted active:bg-surface-container-high transition-colors active:scale-90 duration-150 p-2 rounded-xl" href="#">
+<span class="material-symbols-outlined">checklist</span>
+<span class="font-label-sm text-label-sm mt-1">Habits</span>
+</a>
+<a class="flex flex-col items-center justify-center text-text-secondary dark:text-text-muted active:bg-surface-container-high transition-colors active:scale-90 duration-150 p-2 rounded-xl" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

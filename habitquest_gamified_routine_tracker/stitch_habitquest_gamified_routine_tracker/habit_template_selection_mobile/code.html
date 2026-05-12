@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Habit Template Selection</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#faf6ff",
+                        "on-tertiary-container": "#fbf6ff",
+                        "on-tertiary-fixed": "#1b1a28",
+                        "text-secondary": "#64748B",
+                        "error": "#ba1a1a",
+                        "secondary": "#5045d4",
+                        "card-surface": "#FFFFFF",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#312f38",
+                        "surface-bright": "#fcf8ff",
+                        "app-bg": "#F8FAFC",
+                        "surface-container-low": "#f6f2fe",
+                        "tertiary": "#595868",
+                        "text-muted": "#94A3B8",
+                        "on-error-container": "#93000a",
+                        "on-background": "#1c1b23",
+                        "outline": "#787586",
+                        "surface-container-highest": "#e5e0ed",
+                        "secondary-fixed-dim": "#c4c0ff",
+                        "inverse-on-surface": "#f3effb",
+                        "on-primary-fixed": "#160066",
+                        "tertiary-fixed": "#e4e0f4",
+                        "on-primary-fixed-variant": "#4029ba",
+                        "dark-border": "#334155",
+                        "on-secondary-container": "#fffbff",
+                        "surface-container-lowest": "#ffffff",
+                        "quest-blue": "#38BDF8",
+                        "surface-container": "#f0ecf8",
+                        "surface": "#fcf8ff",
+                        "on-tertiary-fixed-variant": "#464555",
+                        "secondary-fixed": "#e3dfff",
+                        "dark-surface": "#1E293B",
+                        "surface-dim": "#dcd8e4",
+                        "error-container": "#ffdad6",
+                        "primary": "#5341cd",
+                        "primary-fixed": "#e4dfff",
+                        "tertiary-container": "#727081",
+                        "on-primary": "#ffffff",
+                        "warning-amber": "#F59E0B",
+                        "dark-bg": "#0F172A",
+                        "xp-gold": "#FBBF24",
+                        "info-blue": "#3B82F6",
+                        "background": "#fcf8ff",
+                        "on-secondary-fixed-variant": "#3929be",
+                        "primary-fixed-dim": "#c6bfff",
+                        "on-surface-variant": "#474554",
+                        "badge-pink": "#EC4899",
+                        "success-green": "#22C55E",
+                        "error-red": "#EF4444",
+                        "on-secondary": "#ffffff",
+                        "border-neutral": "#E2E8F0",
+                        "inverse-primary": "#c6bfff",
+                        "surface-variant": "#e5e0ed",
+                        "tertiary-fixed-dim": "#c8c4d7",
+                        "surface-tint": "#5847d2",
+                        "on-surface": "#1c1b23",
+                        "on-tertiary": "#ffffff",
+                        "streak-orange": "#F97316",
+                        "on-secondary-fixed": "#120068",
+                        "text-primary": "#0F172A",
+                        "surface-container-high": "#ebe6f2",
+                        "primary-container": "#6c5ce7",
+                        "outline-variant": "#c8c4d7",
+                        "secondary-container": "#6960ee"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "md": "16px",
+                        "xl": "32px",
+                        "sidebar-width": "240px",
+                        "sm": "12px",
+                        "hero": "48px",
+                        "xs": "8px",
+                        "grid-gutter": "24px",
+                        "tiny": "4px"
+                    },
+                    "fontFamily": {
+                        "section-heading": ["Plus Jakarta Sans"],
+                        "label-sm": ["Inter"],
+                        "page-heading-mobile": ["Plus Jakarta Sans"],
+                        "page-heading": ["Plus Jakarta Sans"],
+                        "hero-heading-mobile": ["Plus Jakarta Sans"],
+                        "card-heading": ["Inter"],
+                        "body-md": ["Inter"],
+                        "hero-heading": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "section-heading": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "label-sm": ["13px", { "lineHeight": "1", "fontWeight": "500" }],
+                        "page-heading-mobile": ["30px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "page-heading": ["36px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "hero-heading-mobile": ["42px", { "lineHeight": "1.1", "fontWeight": "800" }],
+                        "card-heading": ["18px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "hero-heading": ["64px", { "lineHeight": "1.1", "fontWeight": "800" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .custom-shadow { box-shadow: 0px 4px 12px rgba(15, 23, 42, 0.05); }
+        .hover-shadow:hover { box-shadow: 0px 8px 24px rgba(15, 23, 42, 0.08); transform: translateY(-2px); transition: all 200ms ease-in-out; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-app-bg text-text-primary font-body-md min-h-screen flex flex-col antialiased selection:bg-primary selection:text-on-primary">
+<!-- Top Navigation (Transactional/Linear Intent: No Global Nav Shells) -->
+<header class="bg-surface-container-lowest shadow-sm flex justify-between items-center h-16 px-md w-full sticky top-0 z-40">
+<button class="text-text-secondary hover:text-primary transition-colors flex items-center justify-center p-2 -ml-2 rounded-full hover:bg-surface-container-low active:scale-95">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="font-label-sm text-label-sm text-text-muted flex items-center gap-2">
+<span>Step 2 of 2</span>
+<div class="flex gap-1">
+<div class="w-8 h-2 rounded-full bg-primary"></div>
+<div class="w-8 h-2 rounded-full bg-primary"></div>
+</div>
+</div>
+<div class="w-10"></div> <!-- Spacer for centering -->
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col px-md pt-lg pb-32">
+<div class="mb-lg">
+<h1 class="font-page-heading-mobile text-page-heading-mobile text-text-primary mb-xs">Choose starter habits</h1>
+<p class="font-body-md text-body-md text-text-secondary">Select a few quests to begin your journey. You can customize these later.</p>
+</div>
+<!-- Bento Grid / Masonry Layout for Habits -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Category: Morning Routine -->
+<div class="col-span-1 md:col-span-2 mt-xs mb-sm">
+<h2 class="font-label-sm text-label-sm text-primary uppercase tracking-wider">Morning Routine</h2>
+</div>
+<!-- Habit Card 1 (Selected State) -->
+<div class="bg-primary-container text-on-primary-container rounded-xl p-md custom-shadow relative border-2 border-primary transition-all duration-200">
+<div class="absolute top-md right-md">
+<button class="bg-white text-primary rounded-full p-1 shadow-sm flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</button>
+</div>
+<div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mb-md">
+<span class="material-symbols-outlined text-white text-[28px]">water_drop</span>
+</div>
+<h3 class="font-card-heading text-card-heading mb-tiny text-white">Hydration Station</h3>
+<p class="font-label-sm text-label-sm text-white/80 mb-sm">Drink a glass of water right after waking up.</p>
+<div class="flex items-center gap-xs">
+<span class="bg-white/20 text-white font-label-sm text-label-sm px-2 py-1 rounded-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-xp-gold" style="font-variation-settings: 'FILL' 1;">bolt</span> +10 XP
+                    </span>
+<span class="text-white/60 font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">schedule</span> Daily
+                    </span>
+</div>
+</div>
+<!-- Habit Card 2 -->
+<div class="bg-card-surface rounded-xl p-md custom-shadow hover-shadow relative border-2 border-transparent transition-all duration-200 group cursor-pointer">
+<div class="absolute top-md right-md">
+<button class="bg-surface-container-high text-text-muted group-hover:text-primary rounded-full p-1 transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined">add_circle</span>
+</button>
+</div>
+<div class="w-12 h-12 bg-surface-container-low text-primary rounded-xl flex items-center justify-center mb-md">
+<span class="material-symbols-outlined text-[28px]">book</span>
+</div>
+<h3 class="font-card-heading text-card-heading mb-tiny">Scholar's Focus</h3>
+<p class="font-label-sm text-label-sm text-text-secondary mb-sm">Read 10 pages of a non-fiction book.</p>
+<div class="flex items-center gap-xs">
+<span class="bg-surface-container text-text-primary font-label-sm text-label-sm px-2 py-1 rounded-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-xp-gold" style="font-variation-settings: 'FILL' 1;">bolt</span> +15 XP
+                    </span>
+<span class="text-text-muted font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">schedule</span> Daily
+                    </span>
+</div>
+</div>
+<!-- Category: Health & Fitness -->
+<div class="col-span-1 md:col-span-2 mt-md mb-sm">
+<h2 class="font-label-sm text-label-sm text-primary uppercase tracking-wider">Health &amp; Fitness</h2>
+</div>
+<!-- Habit Card 3 -->
+<div class="bg-card-surface rounded-xl p-md custom-shadow hover-shadow relative border-2 border-transparent transition-all duration-200 group cursor-pointer">
+<div class="absolute top-md right-md">
+<button class="bg-surface-container-high text-text-muted group-hover:text-primary rounded-full p-1 transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined">add_circle</span>
+</button>
+</div>
+<div class="w-12 h-12 bg-surface-container-low text-badge-pink rounded-xl flex items-center justify-center mb-md">
+<span class="material-symbols-outlined text-[28px]">directions_run</span>
+</div>
+<h3 class="font-card-heading text-card-heading mb-tiny">The Explorer's Path</h3>
+<p class="font-label-sm text-label-sm text-text-secondary mb-sm">Take a 20-minute brisk walk outside.</p>
+<div class="flex items-center gap-xs">
+<span class="bg-surface-container text-text-primary font-label-sm text-label-sm px-2 py-1 rounded-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-xp-gold" style="font-variation-settings: 'FILL' 1;">bolt</span> +20 XP
+                    </span>
+<span class="text-text-muted font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">event</span> 3x/Week
+                    </span>
+</div>
+</div>
+<!-- Habit Card 4 -->
+<div class="bg-card-surface rounded-xl p-md custom-shadow hover-shadow relative border-2 border-transparent transition-all duration-200 group cursor-pointer">
+<div class="absolute top-md right-md">
+<button class="bg-surface-container-high text-text-muted group-hover:text-primary rounded-full p-1 transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined">add_circle</span>
+</button>
+</div>
+<div class="w-12 h-12 bg-surface-container-low text-success-green rounded-xl flex items-center justify-center mb-md">
+<span class="material-symbols-outlined text-[28px]">restaurant_menu</span>
+</div>
+<h3 class="font-card-heading text-card-heading mb-tiny">Alchemist's Fuel</h3>
+<p class="font-label-sm text-label-sm text-text-secondary mb-sm">Eat one full serving of vegetables.</p>
+<div class="flex items-center gap-xs">
+<span class="bg-surface-container text-text-primary font-label-sm text-label-sm px-2 py-1 rounded-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-xp-gold" style="font-variation-settings: 'FILL' 1;">bolt</span> +10 XP
+                    </span>
+<span class="text-text-muted font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">schedule</span> Daily
+                    </span>
+</div>
+</div>
+<!-- Category: Mindfulness -->
+<div class="col-span-1 md:col-span-2 mt-md mb-sm">
+<h2 class="font-label-sm text-label-sm text-primary uppercase tracking-wider">Mindfulness</h2>
+</div>
+<!-- Habit Card 5 (Selected State) -->
+<div class="bg-primary-container text-on-primary-container rounded-xl p-md custom-shadow relative border-2 border-primary transition-all duration-200">
+<div class="absolute top-md right-md">
+<button class="bg-white text-primary rounded-full p-1 shadow-sm flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</button>
+</div>
+<div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mb-md">
+<span class="material-symbols-outlined text-white text-[28px]">self_improvement</span>
+</div>
+<h3 class="font-card-heading text-card-heading mb-tiny text-white">Inner Sanctuary</h3>
+<p class="font-label-sm text-label-sm text-white/80 mb-sm">5 minutes of guided meditation or silence.</p>
+<div class="flex items-center gap-xs">
+<span class="bg-white/20 text-white font-label-sm text-label-sm px-2 py-1 rounded-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-xp-gold" style="font-variation-settings: 'FILL' 1;">bolt</span> +15 XP
+                    </span>
+<span class="text-white/60 font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">schedule</span> Daily
+                    </span>
+</div>
+</div>
+</div>
+</main>
+<!-- Sticky Bottom CTA Area -->
+<div class="fixed bottom-0 left-0 w-full bg-surface-container-lowest border-t border-border-neutral p-md shadow-[0_-8px_24px_rgba(15,23,42,0.08)] z-50 rounded-t-xl">
+<div class="flex flex-col gap-sm max-w-md mx-auto">
+<button class="w-full bg-primary text-on-primary font-card-heading text-card-heading h-12 rounded-xl hover:bg-secondary-container active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-sm">
+                Add Selected Habits <span class="bg-white/20 px-2 py-0.5 rounded-full text-sm">2</span>
+</button>
+<button class="w-full bg-surface-container-low text-primary font-label-sm text-label-sm h-12 rounded-xl hover:bg-surface-container-highest active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+                Create Custom
+            </button>
+</div>
+</div>
+</body></html>

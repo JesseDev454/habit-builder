@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HabitQuest - Edit Habit</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ba1a1a",
+                        "outline": "#787586",
+                        "text-muted": "#94A3B8",
+                        "on-tertiary-fixed-variant": "#464555",
+                        "on-background": "#1c1b23",
+                        "surface-bright": "#fcf8ff",
+                        "surface": "#fcf8ff",
+                        "on-tertiary-fixed": "#1b1a28",
+                        "error-container": "#ffdad6",
+                        "background": "#fcf8ff",
+                        "outline-variant": "#c8c4d7",
+                        "on-surface": "#1c1b23",
+                        "on-error": "#ffffff",
+                        "dark-bg": "#0F172A",
+                        "xp-gold": "#FBBF24",
+                        "on-secondary-fixed": "#120068",
+                        "tertiary-fixed": "#e4e0f4",
+                        "badge-pink": "#EC4899",
+                        "surface-container-highest": "#e5e0ed",
+                        "inverse-surface": "#312f38",
+                        "info-blue": "#3B82F6",
+                        "surface-tint": "#5847d2",
+                        "surface-variant": "#e5e0ed",
+                        "tertiary-fixed-dim": "#c8c4d7",
+                        "streak-orange": "#F97316",
+                        "text-primary": "#0F172A",
+                        "quest-blue": "#38BDF8",
+                        "secondary-fixed-dim": "#c4c0ff",
+                        "primary": "#5341cd",
+                        "dark-border": "#334155",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#ebe6f2",
+                        "on-secondary-container": "#fffbff",
+                        "primary-container": "#6c5ce7",
+                        "dark-surface": "#1E293B",
+                        "warning-amber": "#F59E0B",
+                        "tertiary-container": "#727081",
+                        "surface-dim": "#dcd8e4",
+                        "secondary-container": "#6960ee",
+                        "text-secondary": "#64748B",
+                        "inverse-primary": "#c6bfff",
+                        "secondary-fixed": "#e3dfff",
+                        "primary-fixed-dim": "#c6bfff",
+                        "border-neutral": "#E2E8F0",
+                        "tertiary": "#595868",
+                        "card-surface": "#FFFFFF",
+                        "surface-container": "#f0ecf8",
+                        "on-error-container": "#93000a",
+                        "on-tertiary": "#ffffff",
+                        "error-red": "#EF4444",
+                        "on-secondary-fixed-variant": "#3929be",
+                        "primary-fixed": "#e4dfff",
+                        "inverse-on-surface": "#f3effb",
+                        "on-primary-fixed-variant": "#4029ba",
+                        "on-surface-variant": "#474554",
+                        "on-primary-container": "#faf6ff",
+                        "on-tertiary-container": "#fbf6ff",
+                        "surface-container-low": "#f6f2fe",
+                        "secondary": "#5045d4",
+                        "success-green": "#22C55E",
+                        "on-secondary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed": "#160066",
+                        "app-bg": "#F8FAFC"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "tiny": "4px",
+                        "sidebar-width": "240px",
+                        "hero": "48px",
+                        "xl": "32px",
+                        "sm": "12px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "xs": "8px",
+                        "grid-gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "card-heading": ["Inter"],
+                        "hero-heading-mobile": ["Plus Jakarta Sans"],
+                        "section-heading": ["Plus Jakarta Sans"],
+                        "hero-heading": ["Plus Jakarta Sans"],
+                        "page-heading-mobile": ["Plus Jakarta Sans"],
+                        "label-sm": ["Inter"],
+                        "page-heading": ["Plus Jakarta Sans"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "card-heading": ["18px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "hero-heading-mobile": ["42px", {"lineHeight": "1.1", "fontWeight": "800"}],
+                        "section-heading": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "hero-heading": ["64px", {"lineHeight": "1.1", "fontWeight": "800"}],
+                        "page-heading-mobile": ["30px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "label-sm": ["13px", {"lineHeight": "1", "fontWeight": "500"}],
+                        "page-heading": ["36px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-app-bg text-text-primary font-body-md text-body-md h-screen flex overflow-hidden">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-40 bg-surface-container-lowest dark:bg-dark-surface shadow-sm lg:hidden flex justify-between items-center h-16 px-lg">
+<div class="font-page-heading text-section-heading font-extrabold text-primary dark:text-primary-fixed">HabitQuest</div>
+<div class="flex items-center gap-4 text-primary dark:text-primary-fixed">
+<button class="hover:bg-surface-container-low dark:hover:bg-dark-bg p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="hover:bg-surface-container-low dark:hover:bg-dark-bg p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined">local_fire_department</span>
+</button>
+<img alt="User profile avatar with level indicator" class="w-8 h-8 rounded-full border-2 border-primary" data-alt="A small circular user avatar showing a smiling person. The avatar has a thin purple border. The style is clean, modern SaaS interface with bright lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrA7XDomcAN2vADF4MykAte23eWmG_i6H4Uei1TlYWxHf-KL2jyFtBm_cvqg_SbI2wajRZDj3sp3k3ucjOkbr7jXXy6_qkA5KnGorjeRQmbECH93gomo6OZu6OIE_3d-mSZGgaxZd4z44yC3aFzGXCmOOtH-QuEw2-cFAxAGqyMofSqDegq4xxEXU4pKFzgG8S2mLTj-SusMhszcOVCaT2VqzQ03RBLXzlHomZXPEMQNiPeH6oYlSv6A_JvlEtIXgp_j08Sz_w3Eu_"/>
+</div>
+</header>
+<!-- SideNavBar -->
+<nav class="hidden lg:flex flex-col h-full p-md gap-md overflow-y-auto fixed left-0 top-0 w-sidebar-width bg-surface-container-lowest dark:bg-dark-surface shadow-md z-30 pt-6">
+<div class="flex flex-col items-center mb-8">
+<div class="font-page-heading text-section-heading text-primary dark:text-primary-fixed mb-4 w-full text-left pl-4 font-extrabold">HabitQuest</div>
+<img alt="User avatar" class="w-16 h-16 rounded-full mb-3 border-2 border-primary-container shadow-sm" data-alt="A user profile picture showing a friendly person. The image is circular with a subtle shadow and a thin purple border. It sits within a clean, minimalist sidebar layout." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwvEjgm08KV7mxWD5zdgTJNMKBhta95z_8vvn3-eGvgKjX9-JLricADx5Tls2e-QpiiZ5r0cx-BX9lS2DnW60RlIPIC3tVo0UmyytH22mLE3rd4gcjRH9W-_he1sBwsGiZEyjREKFlGTsm96bJ-zu2ofOtdNPclfR-AWFAkPdvXV5CVh3R-PjimgSJcwHZ2_KkrE4yllHJkMedpW_XSRQZt997UkPr_Rq2S1fAFi-ptGXTQMpzgQ8ZvQ-Bi2P-_WmEDEaRqEgBBXmQ"/>
+<h2 class="font-card-heading text-card-heading text-text-primary">Alex Weaver</h2>
+<p class="font-label-sm text-label-sm text-text-secondary mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-xp-gold text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                Level 24 Guardian
+            </p>
+</div>
+<button class="bg-primary hover:bg-secondary text-on-primary font-body-md text-body-md py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 mb-4 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">add</span>
+            New Habit
+        </button>
+<div class="flex-1 flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-text-secondary dark:text-text-muted hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-dark-bg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-sm text-label-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-text-secondary dark:text-text-muted hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-dark-bg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-label-sm text-label-sm">Quests</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary-container text-on-primary-container font-bold" href="#">
+<span class="material-symbols-outlined">repeat</span>
+<span class="font-label-sm text-label-sm">Habits</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-text-secondary dark:text-text-muted hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-dark-bg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">emoji_events</span>
+<span class="font-label-sm text-label-sm">Leaderboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-text-secondary dark:text-text-muted hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-dark-bg transition-all duration-200 mt-auto" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-sm text-label-sm">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-text-secondary dark:text-text-muted hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-dark-bg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-sm text-label-sm">Help</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-text-secondary dark:text-text-muted hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-dark-bg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-sm text-label-sm">Logout</span>
+</a>
+</div>
+</nav>
+<!-- BottomNavBar -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-2 bg-surface-container-lowest dark:bg-dark-surface shadow-[0_-4px_12px_rgba(15,23,42,0.05)] rounded-t-xl z-50">
+<a class="flex flex-col items-center justify-center text-text-secondary dark:text-text-muted active:scale-90 transition-transform duration-150 p-2" href="#">
+<span class="material-symbols-outlined mb-1">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-text-secondary dark:text-text-muted active:scale-90 transition-transform duration-150 p-2" href="#">
+<span class="material-symbols-outlined mb-1">swords</span>
+<span class="font-label-sm text-label-sm">Quests</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-2xl px-4 py-1 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined mb-1">checklist</span>
+<span class="font-label-sm text-label-sm">Habits</span>
+</a>
+<a class="flex flex-col items-center justify-center text-text-secondary dark:text-text-muted active:scale-90 transition-transform duration-150 p-2" href="#">
+<span class="material-symbols-outlined mb-1">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+<!-- Main Content -->
+<main class="flex-1 lg:ml-sidebar-width pt-16 lg:pt-0 overflow-y-auto h-full relative">
+<div class="max-w-4xl mx-auto p-md lg:p-xl pb-24 lg:pb-xl">
+<div class="flex items-center gap-4 mb-xl">
+<a class="text-text-secondary hover:text-primary transition-colors p-2 rounded-full hover:bg-surface-container" href="#">
+<span class="material-symbols-outlined">arrow_back</span>
+</a>
+<h1 class="font-page-heading text-page-heading text-text-primary">Edit Habit</h1>
+</div>
+<div class="bg-card-surface rounded-xl shadow-[0_4px_12px_rgba(15,23,42,0.05)] p-lg lg:p-xl border border-border-neutral relative overflow-hidden">
+<form class="space-y-lg">
+<div class="space-y-sm">
+<label class="font-card-heading text-card-heading text-text-primary block" for="habit-name">Habit Name</label>
+<p class="text-text-secondary font-body-md text-sm mb-2">What quest are you embarking on?</p>
+<input class="w-full h-[48px] px-4 rounded-lg border-border-neutral bg-surface-container-lowest focus:border-primary focus:ring-2 focus:ring-primary-container outline-none transition-all font-body-md text-text-primary" id="habit-name" type="text" value="Code for 1 hour"/>
+</div>
+<div class="space-y-sm">
+<label class="font-card-heading text-card-heading text-text-primary block">Frequency</label>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-md">
+<label class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-primary bg-primary-container/10 cursor-pointer transition-all">
+<input checked="" class="sr-only" name="frequency" type="radio" value="daily"/>
+<span class="material-symbols-outlined text-primary mb-2">calendar_today</span>
+<span class="font-label-sm text-primary font-bold">Daily</span>
+</label>
+<label class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-border-neutral hover:border-primary/50 cursor-pointer transition-all">
+<input class="sr-only" name="frequency" type="radio" value="weekly"/>
+<span class="material-symbols-outlined text-text-secondary mb-2">date_range</span>
+<span class="font-label-sm text-text-secondary">Weekly</span>
+</label>
+<label class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-border-neutral hover:border-primary/50 cursor-pointer transition-all">
+<input class="sr-only" name="frequency" type="radio" value="monthly"/>
+<span class="material-symbols-outlined text-text-secondary mb-2">calendar_month</span>
+<span class="font-label-sm text-text-secondary">Monthly</span>
+</label>
+<label class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-border-neutral hover:border-primary/50 cursor-pointer transition-all">
+<input class="sr-only" name="frequency" type="radio" value="custom"/>
+<span class="material-symbols-outlined text-text-secondary mb-2">tune</span>
+<span class="font-label-sm text-text-secondary">Custom</span>
+</label>
+</div>
+</div>
+<div class="space-y-sm">
+<label class="font-card-heading text-card-heading text-text-primary block">Choose Icon</label>
+<div class="flex gap-4 overflow-x-auto pb-2 custom-scrollbar">
+<button class="flex-shrink-0 w-12 h-12 rounded-xl bg-surface-container-low text-text-secondary hover:bg-primary-container hover:text-primary transition-colors flex items-center justify-center border border-border-neutral" type="button">
+<span class="material-symbols-outlined">fitness_center</span>
+</button>
+<button class="flex-shrink-0 w-12 h-12 rounded-xl bg-surface-container-low text-text-secondary hover:bg-primary-container hover:text-primary transition-colors flex items-center justify-center border border-border-neutral" type="button">
+<span class="material-symbols-outlined">menu_book</span>
+</button>
+<button class="flex-shrink-0 w-12 h-12 rounded-xl bg-primary text-on-primary transition-colors flex items-center justify-center border-2 border-primary shadow-sm" type="button">
+<span class="material-symbols-outlined">terminal</span>
+</button>
+<button class="flex-shrink-0 w-12 h-12 rounded-xl bg-surface-container-low text-text-secondary hover:bg-primary-container hover:text-primary transition-colors flex items-center justify-center border border-border-neutral" type="button">
+<span class="material-symbols-outlined">water_drop</span>
+</button>
+<button class="flex-shrink-0 w-12 h-12 rounded-xl bg-surface-container-low text-text-secondary hover:bg-primary-container hover:text-primary transition-colors flex items-center justify-center border border-border-neutral border-dashed" type="button">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+<div class="space-y-sm">
+<label class="font-card-heading text-card-heading text-text-primary block">Reward Priority</label>
+<div class="bg-surface-container-low p-4 rounded-xl flex items-center gap-4 border border-border-neutral">
+<span class="material-symbols-outlined text-xp-gold text-[32px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<div class="flex-1">
+<input class="w-full h-2 bg-border-neutral rounded-lg appearance-none cursor-pointer accent-primary" max="100" min="10" type="range" value="50"/>
+<div class="flex justify-between text-xs text-text-secondary mt-2">
+<span>10 XP (Easy)</span>
+<span>50 XP (Medium)</span>
+<span>100 XP (Hard)</span>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-lg flex flex-col-reverse md:flex-row justify-between items-center gap-md border-t border-border-neutral">
+<button class="text-error-red hover:text-error-container hover:bg-error-container/10 px-4 py-3 rounded-xl font-body-md transition-colors flex items-center gap-2" type="button">
+<span class="material-symbols-outlined">delete</span>
+                            Delete Habit
+                        </button>
+<div class="flex gap-4 w-full md:w-auto">
+<button class="flex-1 md:flex-none px-6 py-3 rounded-xl text-text-secondary bg-transparent hover:bg-surface-container transition-colors font-body-md font-medium" type="button">
+                                Cancel
+                            </button>
+<button class="flex-1 md:flex-none px-6 py-3 rounded-xl bg-primary hover:bg-secondary text-on-primary shadow-sm hover:shadow-md transition-all font-body-md font-medium" type="button">
+                                Save Changes
+                            </button>
+</div>
+</div>
+</form>
+</div>
+</div>
+<!-- Delete Confirmation Modal Overlay -->
+<div class="absolute inset-0 z-50 bg-dark-bg/40 backdrop-blur-sm flex items-center justify-center p-md">
+<div class="bg-card-surface w-full max-w-md rounded-2xl shadow-xl p-lg md:p-xl transform transition-all">
+<div class="flex items-center gap-4 mb-4 text-error-red">
+<div class="w-12 h-12 rounded-full bg-error-container/30 flex items-center justify-center">
+<span class="material-symbols-outlined text-error-red text-[28px]">warning</span>
+</div>
+<h3 class="font-section-heading text-section-heading text-text-primary">Delete Habit?</h3>
+</div>
+<p class="font-body-md text-text-secondary mb-8">
+                    Are you sure you want to delete <strong class="text-text-primary">"Code for 1 hour"</strong>? This action cannot be undone and will erase all associated streak history and XP.
+                </p>
+<div class="flex gap-4 justify-end">
+<button class="px-6 py-2.5 rounded-xl text-text-secondary bg-surface-container-low hover:bg-surface-container transition-colors font-body-md font-medium" type="button">
+                        Cancel
+                    </button>
+<button class="px-6 py-2.5 rounded-xl bg-error-red hover:bg-error text-on-error shadow-sm hover:shadow-md transition-all font-body-md font-medium" type="button">
+                        Delete
+                    </button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

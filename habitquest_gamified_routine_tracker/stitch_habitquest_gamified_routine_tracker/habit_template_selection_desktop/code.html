@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HabitQuest - Habit Template Selection</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#faf6ff",
+                        "on-tertiary-container": "#fbf6ff",
+                        "on-tertiary-fixed": "#1b1a28",
+                        "text-secondary": "#64748B",
+                        "error": "#ba1a1a",
+                        "secondary": "#5045d4",
+                        "card-surface": "#FFFFFF",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#312f38",
+                        "surface-bright": "#fcf8ff",
+                        "app-bg": "#F8FAFC",
+                        "surface-container-low": "#f6f2fe",
+                        "tertiary": "#595868",
+                        "text-muted": "#94A3B8",
+                        "on-error-container": "#93000a",
+                        "on-background": "#1c1b23",
+                        "outline": "#787586",
+                        "surface-container-highest": "#e5e0ed",
+                        "secondary-fixed-dim": "#c4c0ff",
+                        "inverse-on-surface": "#f3effb",
+                        "on-primary-fixed": "#160066",
+                        "tertiary-fixed": "#e4e0f4",
+                        "on-primary-fixed-variant": "#4029ba",
+                        "dark-border": "#334155",
+                        "on-secondary-container": "#fffbff",
+                        "surface-container-lowest": "#ffffff",
+                        "quest-blue": "#38BDF8",
+                        "surface-container": "#f0ecf8",
+                        "surface": "#fcf8ff",
+                        "on-tertiary-fixed-variant": "#464555",
+                        "secondary-fixed": "#e3dfff",
+                        "dark-surface": "#1E293B",
+                        "surface-dim": "#dcd8e4",
+                        "error-container": "#ffdad6",
+                        "primary": "#5341cd",
+                        "primary-fixed": "#e4dfff",
+                        "tertiary-container": "#727081",
+                        "on-primary": "#ffffff",
+                        "warning-amber": "#F59E0B",
+                        "dark-bg": "#0F172A",
+                        "xp-gold": "#FBBF24",
+                        "info-blue": "#3B82F6",
+                        "background": "#fcf8ff",
+                        "on-secondary-fixed-variant": "#3929be",
+                        "primary-fixed-dim": "#c6bfff",
+                        "on-surface-variant": "#474554",
+                        "badge-pink": "#EC4899",
+                        "success-green": "#22C55E",
+                        "error-red": "#EF4444",
+                        "on-secondary": "#ffffff",
+                        "border-neutral": "#E2E8F0",
+                        "inverse-primary": "#c6bfff",
+                        "surface-variant": "#e5e0ed",
+                        "tertiary-fixed-dim": "#c8c4d7",
+                        "surface-tint": "#5847d2",
+                        "on-surface": "#1c1b23",
+                        "on-tertiary": "#ffffff",
+                        "streak-orange": "#F97316",
+                        "on-secondary-fixed": "#120068",
+                        "text-primary": "#0F172A",
+                        "surface-container-high": "#ebe6f2",
+                        "primary-container": "#6c5ce7",
+                        "outline-variant": "#c8c4d7",
+                        "secondary-container": "#6960ee"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "md": "16px",
+                        "xl": "32px",
+                        "sidebar-width": "240px",
+                        "sm": "12px",
+                        "hero": "48px",
+                        "xs": "8px",
+                        "grid-gutter": "24px",
+                        "tiny": "4px"
+                    },
+                    "fontFamily": {
+                        "section-heading": ["Plus Jakarta Sans"],
+                        "label-sm": ["Inter"],
+                        "page-heading-mobile": ["Plus Jakarta Sans"],
+                        "page-heading": ["Plus Jakarta Sans"],
+                        "hero-heading-mobile": ["Plus Jakarta Sans"],
+                        "card-heading": ["Inter"],
+                        "body-md": ["Inter"],
+                        "hero-heading": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "section-heading": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "label-sm": ["13px", { "lineHeight": "1", "fontWeight": "500" }],
+                        "page-heading-mobile": ["30px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "page-heading": ["36px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "hero-heading-mobile": ["42px", { "lineHeight": "1.1", "fontWeight": "800" }],
+                        "card-heading": ["18px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "hero-heading": ["64px", { "lineHeight": "1.1", "fontWeight": "800" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .ambient-shadow {
+            box-shadow: 0px 4px 12px rgba(15, 23, 42, 0.05);
+        }
+        .hover-lift {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0px 12px 24px rgba(15, 23, 42, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-app-bg text-text-primary font-body-md text-body-md antialiased min-h-screen flex flex-col">
+<!-- TopAppBar (Transactional - Nav hidden, Brand only) -->
+<header class="shadow-sm dark:shadow-none bg-surface-container-lowest dark:bg-dark-surface docked full-width top-0 z-40">
+<div class="flex justify-between items-center h-16 px-lg w-full">
+<div class="font-page-heading text-section-heading font-extrabold text-primary dark:text-primary-fixed">HabitQuest</div>
+<div class="flex items-center gap-md text-text-secondary font-label-sm text-label-sm">
+<span>Step 2 of 2</span>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex justify-center items-start pt-hero pb-hero px-lg">
+<div class="w-full max-w-5xl flex flex-col gap-xl">
+<!-- Header Section -->
+<div class="text-center flex flex-col gap-sm">
+<h1 class="font-page-heading text-page-heading text-text-primary">Choose starter habits</h1>
+<p class="text-text-secondary">Pick a few habits to begin your quest.</p>
+</div>
+<!-- Bento Grid / Cards Container -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-grid-gutter">
+<!-- Card 1: Selected State -->
+<div class="glass-card ambient-shadow hover-lift rounded-xl p-md flex flex-col gap-md relative border-2 border-primary bg-primary/5">
+<div class="absolute top-md right-md text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="w-12 h-12 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-section-heading">terminal</span>
+</div>
+<div>
+<h3 class="font-card-heading text-card-heading mb-tiny">Code for 1 hour</h3>
+<div class="flex gap-xs items-center flex-wrap">
+<span class="bg-info-blue/10 text-info-blue px-2 py-1 rounded font-label-sm text-label-sm">Career</span>
+<span class="text-text-secondary font-label-sm text-label-sm">Daily</span>
+</div>
+</div>
+<div class="mt-auto flex justify-between items-center pt-sm border-t border-border-neutral">
+<div class="flex items-center gap-tiny text-xp-gold font-bold">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+<span>+50 XP</span>
+</div>
+</div>
+</div>
+<!-- Card 2: Unselected -->
+<div class="glass-card ambient-shadow hover-lift rounded-xl p-md flex flex-col gap-md relative border border-border-neutral">
+<div class="absolute top-md right-md text-text-muted hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">add_circle</span>
+</div>
+<div class="w-12 h-12 rounded-full bg-surface-container-high text-tertiary flex items-center justify-center">
+<span class="material-symbols-outlined text-section-heading">menu_book</span>
+</div>
+<div>
+<h3 class="font-card-heading text-card-heading mb-tiny">Read for 20 minutes</h3>
+<div class="flex gap-xs items-center flex-wrap">
+<span class="bg-primary/10 text-primary px-2 py-1 rounded font-label-sm text-label-sm">Learning</span>
+<span class="text-text-secondary font-label-sm text-label-sm">Daily</span>
+</div>
+</div>
+<div class="mt-auto flex justify-between items-center pt-sm border-t border-border-neutral">
+<div class="flex items-center gap-tiny text-xp-gold font-bold">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+<span>+20 XP</span>
+</div>
+</div>
+</div>
+<!-- Card 3: Unselected -->
+<div class="glass-card ambient-shadow hover-lift rounded-xl p-md flex flex-col gap-md relative border border-border-neutral">
+<div class="absolute top-md right-md text-text-muted hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">add_circle</span>
+</div>
+<div class="w-12 h-12 rounded-full bg-surface-container-high text-tertiary flex items-center justify-center">
+<span class="material-symbols-outlined text-section-heading">water_drop</span>
+</div>
+<div>
+<h3 class="font-card-heading text-card-heading mb-tiny">Drink 8 cups of water</h3>
+<div class="flex gap-xs items-center flex-wrap">
+<span class="bg-quest-blue/10 text-quest-blue px-2 py-1 rounded font-label-sm text-label-sm">Health</span>
+<span class="text-text-secondary font-label-sm text-label-sm">Daily</span>
+</div>
+</div>
+<div class="mt-auto flex justify-between items-center pt-sm border-t border-border-neutral">
+<div class="flex items-center gap-tiny text-xp-gold font-bold">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+<span>+10 XP</span>
+</div>
+</div>
+</div>
+<!-- Card 4: Unselected -->
+<div class="glass-card ambient-shadow hover-lift rounded-xl p-md flex flex-col gap-md relative border border-border-neutral">
+<div class="absolute top-md right-md text-text-muted hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">add_circle</span>
+</div>
+<div class="w-12 h-12 rounded-full bg-surface-container-high text-tertiary flex items-center justify-center">
+<span class="material-symbols-outlined text-section-heading">school</span>
+</div>
+<div>
+<h3 class="font-card-heading text-card-heading mb-tiny">Study for 2 hours</h3>
+<div class="flex gap-xs items-center flex-wrap">
+<span class="bg-primary/10 text-primary px-2 py-1 rounded font-label-sm text-label-sm">Learning</span>
+<span class="text-text-secondary font-label-sm text-label-sm">Weekdays</span>
+</div>
+</div>
+<div class="mt-auto flex justify-between items-center pt-sm border-t border-border-neutral">
+<div class="flex items-center gap-tiny text-xp-gold font-bold">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+<span>+40 XP</span>
+</div>
+</div>
+</div>
+<!-- Card 5: Unselected -->
+<div class="glass-card ambient-shadow hover-lift rounded-xl p-md flex flex-col gap-md relative border border-border-neutral">
+<div class="absolute top-md right-md text-text-muted hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">add_circle</span>
+</div>
+<div class="w-12 h-12 rounded-full bg-surface-container-high text-tertiary flex items-center justify-center">
+<span class="material-symbols-outlined text-section-heading">fitness_center</span>
+</div>
+<div>
+<h3 class="font-card-heading text-card-heading mb-tiny">Workout for 30 minutes</h3>
+<div class="flex gap-xs items-center flex-wrap">
+<span class="bg-success-green/10 text-success-green px-2 py-1 rounded font-label-sm text-label-sm">Health</span>
+<span class="text-text-secondary font-label-sm text-label-sm">4x/Week</span>
+</div>
+</div>
+<div class="mt-auto flex justify-between items-center pt-sm border-t border-border-neutral">
+<div class="flex items-center gap-tiny text-xp-gold font-bold">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+<span>+30 XP</span>
+</div>
+</div>
+</div>
+<!-- Card 6: Unselected -->
+<div class="glass-card ambient-shadow hover-lift rounded-xl p-md flex flex-col gap-md relative border border-border-neutral">
+<div class="absolute top-md right-md text-text-muted hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">add_circle</span>
+</div>
+<div class="w-12 h-12 rounded-full bg-surface-container-high text-tertiary flex items-center justify-center">
+<span class="material-symbols-outlined text-section-heading">bedtime</span>
+</div>
+<div>
+<h3 class="font-card-heading text-card-heading mb-tiny">Sleep before 11 PM</h3>
+<div class="flex gap-xs items-center flex-wrap">
+<span class="bg-quest-blue/10 text-quest-blue px-2 py-1 rounded font-label-sm text-label-sm">Health</span>
+<span class="text-text-secondary font-label-sm text-label-sm">Daily</span>
+</div>
+</div>
+<div class="mt-auto flex justify-between items-center pt-sm border-t border-border-neutral">
+<div class="flex items-center gap-tiny text-xp-gold font-bold">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+<span>+20 XP</span>
+</div>
+</div>
+</div>
+<!-- Card 7: Unselected -->
+<div class="glass-card ambient-shadow hover-lift rounded-xl p-md flex flex-col gap-md relative border border-border-neutral">
+<div class="absolute top-md right-md text-text-muted hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">add_circle</span>
+</div>
+<div class="w-12 h-12 rounded-full bg-surface-container-high text-tertiary flex items-center justify-center">
+<span class="material-symbols-outlined text-section-heading">self_improvement</span>
+</div>
+<div>
+<h3 class="font-card-heading text-card-heading mb-tiny">Pray or meditate</h3>
+<div class="flex gap-xs items-center flex-wrap">
+<span class="bg-badge-pink/10 text-badge-pink px-2 py-1 rounded font-label-sm text-label-sm">Mindfulness</span>
+<span class="text-text-secondary font-label-sm text-label-sm">Daily</span>
+</div>
+</div>
+<div class="mt-auto flex justify-between items-center pt-sm border-t border-border-neutral">
+<div class="flex items-center gap-tiny text-xp-gold font-bold">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+<span>+15 XP</span>
+</div>
+</div>
+</div>
+<!-- Card 8: Unselected -->
+<div class="glass-card ambient-shadow hover-lift rounded-xl p-md flex flex-col gap-md relative border border-border-neutral">
+<div class="absolute top-md right-md text-text-muted hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">add_circle</span>
+</div>
+<div class="w-12 h-12 rounded-full bg-surface-container-high text-tertiary flex items-center justify-center">
+<span class="material-symbols-outlined text-section-heading">rate_review</span>
+</div>
+<div>
+<h3 class="font-card-heading text-card-heading mb-tiny">Review class notes</h3>
+<div class="flex gap-xs items-center flex-wrap">
+<span class="bg-primary/10 text-primary px-2 py-1 rounded font-label-sm text-label-sm">Learning</span>
+<span class="text-text-secondary font-label-sm text-label-sm">Weekdays</span>
+</div>
+</div>
+<div class="mt-auto flex justify-between items-center pt-sm border-t border-border-neutral">
+<div class="flex items-center gap-tiny text-xp-gold font-bold">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+<span>+25 XP</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Area -->
+<div class="flex flex-col sm:flex-row justify-center items-center gap-md mt-lg pt-lg border-t border-border-neutral">
+<button class="w-full sm:w-auto px-xl py-sm bg-surface-container-low text-primary font-bold rounded-lg hover:bg-surface-container-high transition-colors">
+                    Create Custom Habit
+                </button>
+<button class="w-full sm:w-auto px-xl py-sm bg-primary text-on-primary font-bold rounded-lg hover:bg-primary-container transition-colors shadow-md hover:shadow-lg">
+                    Add Selected Habits (1)
+                </button>
+</div>
+</div>
+</main>
+</body></html>

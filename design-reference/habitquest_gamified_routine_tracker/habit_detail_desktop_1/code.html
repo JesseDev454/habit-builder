@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Habit Detail - Code for 1 hour | HabitQuest</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-container": "#faf6ff",
+                    "on-tertiary-container": "#fbf6ff",
+                    "on-tertiary-fixed": "#1b1a28",
+                    "text-secondary": "#64748B",
+                    "error": "#ba1a1a",
+                    "secondary": "#5045d4",
+                    "card-surface": "#FFFFFF",
+                    "on-error": "#ffffff",
+                    "inverse-surface": "#312f38",
+                    "surface-bright": "#fcf8ff",
+                    "app-bg": "#F8FAFC",
+                    "surface-container-low": "#f6f2fe",
+                    "tertiary": "#595868",
+                    "text-muted": "#94A3B8",
+                    "on-error-container": "#93000a",
+                    "on-background": "#1c1b23",
+                    "outline": "#787586",
+                    "surface-container-highest": "#e5e0ed",
+                    "secondary-fixed-dim": "#c4c0ff",
+                    "inverse-on-surface": "#f3effb",
+                    "on-primary-fixed": "#160066",
+                    "tertiary-fixed": "#e4e0f4",
+                    "on-primary-fixed-variant": "#4029ba",
+                    "dark-border": "#334155",
+                    "on-secondary-container": "#fffbff",
+                    "surface-container-lowest": "#ffffff",
+                    "quest-blue": "#38BDF8",
+                    "surface-container": "#f0ecf8",
+                    "surface": "#fcf8ff",
+                    "on-tertiary-fixed-variant": "#464555",
+                    "secondary-fixed": "#e3dfff",
+                    "dark-surface": "#1E293B",
+                    "surface-dim": "#dcd8e4",
+                    "error-container": "#ffdad6",
+                    "primary": "#5341cd",
+                    "primary-fixed": "#e4dfff",
+                    "tertiary-container": "#727081",
+                    "on-primary": "#ffffff",
+                    "warning-amber": "#F59E0B",
+                    "dark-bg": "#0F172A",
+                    "xp-gold": "#FBBF24",
+                    "info-blue": "#3B82F6",
+                    "background": "#fcf8ff",
+                    "on-secondary-fixed-variant": "#3929be",
+                    "primary-fixed-dim": "#c6bfff",
+                    "on-surface-variant": "#474554",
+                    "badge-pink": "#EC4899",
+                    "success-green": "#22C55E",
+                    "error-red": "#EF4444",
+                    "on-secondary": "#ffffff",
+                    "border-neutral": "#E2E8F0",
+                    "inverse-primary": "#c6bfff",
+                    "surface-variant": "#e5e0ed",
+                    "tertiary-fixed-dim": "#c8c4d7",
+                    "surface-tint": "#5847d2",
+                    "on-surface": "#1c1b23",
+                    "on-tertiary": "#ffffff",
+                    "streak-orange": "#F97316",
+                    "on-secondary-fixed": "#120068",
+                    "text-primary": "#0F172A",
+                    "surface-container-high": "#ebe6f2",
+                    "primary-container": "#6c5ce7",
+                    "outline-variant": "#c8c4d7",
+                    "secondary-container": "#6960ee"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "lg": "24px",
+                    "md": "16px",
+                    "xl": "32px",
+                    "sidebar-width": "240px",
+                    "sm": "12px",
+                    "hero": "48px",
+                    "xs": "8px",
+                    "grid-gutter": "24px",
+                    "tiny": "4px"
+            },
+            "fontFamily": {
+                    "section-heading": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "label-sm": [
+                            "Inter"
+                    ],
+                    "page-heading-mobile": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "page-heading": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "hero-heading-mobile": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "card-heading": [
+                            "Inter"
+                    ],
+                    "body-md": [
+                            "Inter"
+                    ],
+                    "hero-heading": [
+                            "Plus Jakarta Sans"
+                    ]
+            },
+            "fontSize": {
+                    "section-heading": [
+                            "24px",
+                            {
+                                    "lineHeight": "1.3",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "label-sm": [
+                            "13px",
+                            {
+                                    "lineHeight": "1",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "page-heading-mobile": [
+                            "30px",
+                            {
+                                    "lineHeight": "1.2",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "page-heading": [
+                            "36px",
+                            {
+                                    "lineHeight": "1.2",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "hero-heading-mobile": [
+                            "42px",
+                            {
+                                    "lineHeight": "1.1",
+                                    "fontWeight": "800"
+                            }
+                    ],
+                    "card-heading": [
+                            "18px",
+                            {
+                                    "lineHeight": "1.4",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "1.6",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "hero-heading": [
+                            "64px",
+                            {
+                                    "lineHeight": "1.1",
+                                    "fontWeight": "800"
+                            }
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+<style>
+        .shadow-soft {
+            box-shadow: 0px 4px 12px rgba(15, 23, 42, 0.05);
+        }
+        .hover-lift {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .hover-lift:hover {
+            transform: translateY(-2px);
+            box-shadow: 0px 8px 16px rgba(15, 23, 42, 0.08);
+        }
+    </style>
+</head>
+<body class="bg-app-bg text-text-primary font-body-md font-body-md min-h-screen flex flex-col md:flex-row">
+<nav class="hidden lg:flex flex-col h-screen p-md gap-md overflow-y-auto fixed left-0 top-0 w-sidebar-width bg-surface-container-lowest dark:bg-dark-surface shadow-md z-30">
+<div class="flex items-center gap-sm mb-lg">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+<span class="font-page-heading text-section-heading text-primary dark:text-primary-fixed font-extrabold tracking-tight">HabitQuest</span>
+</div>
+<div class="flex items-center gap-md mb-xl p-md rounded-xl bg-surface-container-low">
+<img alt="User avatar" class="w-12 h-12 rounded-full border-2 border-primary-container" data-alt="A close-up portrait of a young man with short dark hair, wearing a casual light blue shirt. He is looking directly at the camera with a neutral, calm expression. The background is a soft, out-of-focus outdoor setting with a light mode aesthetic, featuring a clean, modern look." src="https://lh3.googleusercontent.com/aida-public/AB6AXuANzPiIKx3MbTRqN4nwaAaFwb25K9SaU9o6eDKfFPunueFAQjhk-eVwL6H8JfRub2CIV0lYmQsf4MfOC7csFm2Wa9lneiwxF2yQGtMXTrW5HmMNdZrjc-DPtWjWT1qk7HcsVksp21gzQYYPblRnxUq3Z-XYqiQ-UIN-qRcHnwHvz8AV8lINJuxWhrlMwUIvWhSLudLGkcoiEuhr4f9sgi20xiGK8i7CpGVFPlmKrMBjlLJA3FHhoC_lWZvOEBCMSBgeHZzzTdDc2gFj"/>
+<div>
+<p class="font-card-heading text-card-heading text-text-primary">Alex Weaver</p>
+<p class="font-label-sm text-label-sm text-text-secondary mt-1">Level 24 Guardian</p>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary rounded-xl py-3 font-card-heading text-card-heading flex items-center justify-center gap-2 mb-lg hover:bg-on-primary-fixed-variant transition-colors shadow-soft">
+<span class="material-symbols-outlined">add</span>
+            New Habit
+        </button>
+<div class="flex-1 flex flex-col gap-sm">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-text-secondary dark:text-text-muted hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-dark-bg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-sm text-label-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-text-secondary dark:text-text-muted hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-dark-bg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-label-sm text-label-sm">Quests</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary-container text-on-primary-container font-bold shadow-soft" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">repeat</span>
+<span class="font-label-sm text-label-sm">Habits</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-text-secondary dark:text-text-muted hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-dark-bg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">emoji_events</span>
+<span class="font-label-sm text-label-sm">Leaderboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-text-secondary dark:text-text-muted hover:text-primary dark:hover:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-dark-bg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-sm text-label-sm">Settings</span>
+</a>
+</div>
+<div class="mt-auto border-t border-surface-container pt-md flex flex-col gap-sm">
+<a class="flex items-center gap-3 px-4 py-2 rounded-xl text-text-secondary hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-sm text-label-sm">Help</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-xl text-text-secondary hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-sm text-label-sm">Logout</span>
+</a>
+</div>
+</nav>
+<header class="flex justify-between items-center h-16 px-lg w-full z-40 md:hidden bg-surface-container-lowest dark:bg-dark-surface shadow-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-2xl" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+<span class="font-page-heading text-section-heading font-extrabold text-primary dark:text-primary-fixed">HabitQuest</span>
+</div>
+<div class="flex items-center gap-4 text-primary dark:text-primary-fixed">
+<button class="hover:bg-surface-container-low dark:hover:bg-dark-bg p-2 rounded-full transition-colors active:scale-95 duration-200"><span class="material-symbols-outlined">notifications</span></button>
+<img alt="User profile avatar with level indicator" class="w-8 h-8 rounded-full border-2 border-primary-container" data-alt="A close-up portrait of a young man with short dark hair, wearing a casual light blue shirt. He is looking directly at the camera with a neutral, calm expression. The background is a soft, out-of-focus outdoor setting with a light mode aesthetic, featuring a clean, modern look." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0fdJOKLknpAV6JHBH95u9vwB_FiF1eL5XitVZWfXLgWltuuS8I1aQt9hW0ux4hltDaQVA8N64gombUoH9m7NJ7tOnayatFnSaqwvrTJFyaE1r5wUBGc9RzBkmZwjOMgtDYy1Yk6VK_79sZteLQiwRnteSxINE9ZVq6at7XZlJo1qjLi-hZEpUpZBkKT13i5QOo4QWrg3hNkKAaSLoqaOtk-WKR83TUg2GuLWEkfhhSwdb5ujQAsMiR09WpMQ0d1BxG3piSPebwCA_"/>
+</div>
+</header>
+<main class="flex-1 w-full lg:ml-[240px] p-md lg:p-lg lg:pt-lg pb-24 lg:pb-lg overflow-x-hidden">
+<div class="mb-lg flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<button class="text-text-secondary hover:text-primary transition-colors flex items-center justify-center p-1 rounded-full hover:bg-surface-container-low">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<span class="bg-surface-container-high text-tertiary px-3 py-1 rounded-full font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">terminal</span>
+                        Career &amp; Skills
+                    </span>
+</div>
+<h1 class="font-page-heading text-page-heading-mobile md:text-page-heading text-text-primary">Code for 1 hour</h1>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-2 rounded-xl bg-surface-container-low text-primary font-card-heading text-card-heading hover:bg-surface-container-highest transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">edit</span>
+                    Edit
+                </button>
+<button class="px-6 py-2 rounded-xl bg-primary text-on-primary font-card-heading text-card-heading hover:bg-on-primary-fixed-variant transition-colors shadow-soft flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+                    Complete Today
+                </button>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-lg">
+<div class="bg-card-surface rounded-xl p-4 shadow-soft hover-lift flex flex-col items-center justify-center text-center">
+<div class="flex items-center gap-1 text-streak-orange mb-1">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+<span class="font-page-heading text-section-heading text-text-primary">12 Days</span>
+<span class="font-label-sm text-label-sm text-text-secondary uppercase tracking-wider mt-1">Current Streak</span>
+</div>
+<div class="bg-card-surface rounded-xl p-4 shadow-soft hover-lift flex flex-col items-center justify-center text-center">
+<div class="flex items-center gap-1 text-text-secondary mb-1">
+<span class="material-symbols-outlined text-3xl">workspace_premium</span>
+</div>
+<span class="font-page-heading text-section-heading text-text-primary">24 Days</span>
+<span class="font-label-sm text-label-sm text-text-secondary uppercase tracking-wider mt-1">Longest Streak</span>
+</div>
+<div class="bg-card-surface rounded-xl p-4 shadow-soft hover-lift flex flex-col items-center justify-center text-center">
+<div class="flex items-center gap-1 text-info-blue mb-1">
+<span class="material-symbols-outlined text-3xl">task_alt</span>
+</div>
+<span class="font-page-heading text-section-heading text-text-primary">87</span>
+<span class="font-label-sm text-label-sm text-text-secondary uppercase tracking-wider mt-1">Completions</span>
+</div>
+<div class="bg-card-surface rounded-xl p-4 shadow-soft hover-lift flex flex-col items-center justify-center text-center">
+<div class="flex items-center gap-1 text-success-green mb-1">
+<span class="material-symbols-outlined text-3xl">monitoring</span>
+</div>
+<span class="font-page-heading text-section-heading text-text-primary">82%</span>
+<span class="font-label-sm text-label-sm text-text-secondary uppercase tracking-wider mt-1">Win Rate</span>
+</div>
+<div class="bg-card-surface rounded-xl p-4 shadow-soft hover-lift flex flex-col items-center justify-center text-center col-span-2 md:col-span-1 border-2 border-xp-gold/20 bg-gradient-to-b from-card-surface to-surface-container-low">
+<div class="flex items-center gap-1 text-xp-gold mb-1">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="font-page-heading text-section-heading text-text-primary">1,250</span>
+<span class="font-label-sm text-label-sm text-text-secondary uppercase tracking-wider mt-1">XP Earned</span>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-lg mb-lg">
+<div class="lg:col-span-2 flex flex-col gap-lg">
+<div class="bg-card-surface rounded-xl p-md shadow-soft hover-lift h-64 flex flex-col">
+<div class="flex justify-between items-center mb-4">
+<h2 class="font-section-heading text-card-heading text-text-primary">Weekly Momentum</h2>
+<button class="text-text-secondary hover:text-primary transition-colors"><span class="material-symbols-outlined">more_horiz</span></button>
+</div>
+<div class="flex-1 flex items-end justify-between px-2 pb-2 gap-2">
+<div class="w-full flex flex-col items-center gap-2">
+<div class="w-full bg-surface-container rounded-t-md h-[40%] hover:bg-primary-fixed transition-colors"></div>
+<span class="font-label-sm text-label-sm text-text-secondary">Mon</span>
+</div>
+<div class="w-full flex flex-col items-center gap-2">
+<div class="w-full bg-primary rounded-t-md h-[80%] hover:bg-on-primary-fixed-variant transition-colors"></div>
+<span class="font-label-sm text-label-sm text-text-secondary">Tue</span>
+</div>
+<div class="w-full flex flex-col items-center gap-2">
+<div class="w-full bg-primary rounded-t-md h-[100%] hover:bg-on-primary-fixed-variant transition-colors"></div>
+<span class="font-label-sm text-label-sm text-text-primary font-bold">Wed</span>
+</div>
+<div class="w-full flex flex-col items-center gap-2">
+<div class="w-full bg-surface-container rounded-t-md h-[60%] hover:bg-primary-fixed transition-colors"></div>
+<span class="font-label-sm text-label-sm text-text-secondary">Thu</span>
+</div>
+<div class="w-full flex flex-col items-center gap-2">
+<div class="w-full bg-primary rounded-t-md h-[90%] hover:bg-on-primary-fixed-variant transition-colors"></div>
+<span class="font-label-sm text-label-sm text-text-secondary">Fri</span>
+</div>
+<div class="w-full flex flex-col items-center gap-2">
+<div class="w-full bg-surface-container rounded-t-md h-[20%] hover:bg-primary-fixed transition-colors"></div>
+<span class="font-label-sm text-label-sm text-text-secondary">Sat</span>
+</div>
+<div class="w-full flex flex-col items-center gap-2">
+<div class="w-full bg-surface-container rounded-t-md h-[10%] hover:bg-primary-fixed transition-colors"></div>
+<span class="font-label-sm text-label-sm text-text-secondary">Sun</span>
+</div>
+</div>
+</div>
+<div class="bg-card-surface rounded-xl p-md shadow-soft hover-lift">
+<h2 class="font-section-heading text-card-heading text-text-primary mb-4">Consistency Heatmap</h2>
+<div class="grid grid-cols-12 gap-1 md:gap-2">
+<div class="w-full aspect-square bg-surface-container rounded-sm"></div>
+<div class="w-full aspect-square bg-primary-fixed rounded-sm"></div>
+<div class="w-full aspect-square bg-primary-container rounded-sm"></div>
+<div class="w-full aspect-square bg-primary rounded-sm"></div>
+<div class="w-full aspect-square bg-surface-container rounded-sm"></div>
+<div class="w-full aspect-square bg-primary-fixed rounded-sm"></div>
+<div class="w-full aspect-square bg-primary-container rounded-sm"></div>
+<div class="w-full aspect-square bg-primary rounded-sm"></div>
+<div class="w-full aspect-square bg-primary-container rounded-sm"></div>
+<div class="w-full aspect-square bg-surface-container rounded-sm"></div>
+<div class="w-full aspect-square bg-primary-fixed rounded-sm"></div>
+<div class="w-full aspect-square bg-primary rounded-sm"></div>
+<div class="w-full aspect-square bg-primary-fixed rounded-sm"></div>
+<div class="w-full aspect-square bg-primary-container rounded-sm"></div>
+<div class="w-full aspect-square bg-surface-container rounded-sm"></div>
+<div class="w-full aspect-square bg-primary rounded-sm"></div>
+<div class="w-full aspect-square bg-surface-container rounded-sm"></div>
+<div class="w-full aspect-square bg-primary-fixed rounded-sm"></div>
+<div class="w-full aspect-square bg-primary-container rounded-sm"></div>
+<div class="w-full aspect-square bg-primary rounded-sm"></div>
+<div class="w-full aspect-square bg-primary-container rounded-sm"></div>
+<div class="w-full aspect-square bg-surface-container rounded-sm"></div>
+<div class="w-full aspect-square bg-primary-fixed rounded-sm"></div>
+<div class="w-full aspect-square bg-primary rounded-sm"></div>
+</div>
+<div class="flex items-center justify-end gap-2 mt-3 text-text-secondary text-xs">
+<span>Less</span>
+<div class="w-3 h-3 bg-surface-container rounded-sm"></div>
+<div class="w-3 h-3 bg-primary-fixed rounded-sm"></div>
+<div class="w-3 h-3 bg-primary-container rounded-sm"></div>
+<div class="w-3 h-3 bg-primary rounded-sm"></div>
+<span>More</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-lg">
+<div class="bg-surface-container-low rounded-xl p-md shadow-soft border border-primary-fixed flex items-start gap-4">
+<div class="bg-primary-fixed text-primary p-2 rounded-lg flex-shrink-0">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+</div>
+<div>
+<h3 class="font-card-heading text-card-heading text-text-primary mb-1">Quest Insight</h3>
+<p class="font-body-md text-body-md text-text-secondary">You are most consistent with this habit on weekdays. Consider setting a reminder for the weekends to keep your streak alive!</p>
+</div>
+</div>
+<div class="bg-card-surface rounded-xl p-md shadow-soft hover-lift flex-1">
+<div class="flex justify-between items-center mb-4">
+<h2 class="font-section-heading text-card-heading text-text-primary">Recent History</h2>
+<a class="font-label-sm text-label-sm text-primary hover:underline" href="#">View All</a>
+</div>
+<div class="flex flex-col gap-3">
+<div class="flex items-center justify-between p-3 rounded-lg bg-surface-container-lowest border border-border-neutral">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-success-green" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div>
+<p class="font-card-heading text-label-sm text-text-primary font-bold">Today</p>
+<p class="font-label-sm text-label-sm text-text-secondary">Completed at 10:30 AM</p>
+</div>
+</div>
+<span class="text-xp-gold font-bold text-sm">+50 XP</span>
+</div>
+<div class="flex items-center justify-between p-3 rounded-lg bg-surface-container-lowest border border-border-neutral">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-success-green" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div>
+<p class="font-card-heading text-label-sm text-text-primary">Yesterday</p>
+<p class="font-label-sm text-label-sm text-text-secondary">Completed at 9:15 AM</p>
+</div>
+</div>
+<span class="text-xp-gold font-bold text-sm">+50 XP</span>
+</div>
+<div class="flex items-center justify-between p-3 rounded-lg bg-surface-container-lowest border border-border-neutral">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-success-green" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div>
+<p class="font-card-heading text-label-sm text-text-primary">Monday</p>
+<p class="font-label-sm text-label-sm text-text-secondary">Completed at 11:00 AM</p>
+</div>
+</div>
+<span class="text-xp-gold font-bold text-sm">+50 XP</span>
+</div>
+<div class="flex items-center justify-between p-3 rounded-lg bg-surface-container-lowest border border-border-neutral opacity-60">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-error-red">cancel</span>
+<div>
+<p class="font-card-heading text-label-sm text-text-primary">Sunday</p>
+<p class="font-label-sm text-label-sm text-text-secondary">Missed</p>
+</div>
+</div>
+<span class="text-text-secondary text-sm">0 XP</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<nav class="lg:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-2 bg-surface-container-lowest dark:bg-dark-surface z-50 rounded-t-xl shadow-[0_-4px_12px_rgba(15,23,42,0.05)] shadow-lg">
+<a class="flex flex-col items-center justify-center text-text-secondary dark:text-text-muted active:scale-90 transition-transform duration-150 active:bg-surface-container-high transition-colors p-2 rounded-xl" href="#">
+<span class="material-symbols-outlined text-2xl">home</span>
+<span class="font-label-sm text-label-sm mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-text-secondary dark:text-text-muted active:scale-90 transition-transform duration-150 active:bg-surface-container-high transition-colors p-2 rounded-xl" href="#">
+<span class="material-symbols-outlined text-2xl">swords</span>
+<span class="font-label-sm text-label-sm mt-1">Quests</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-2xl px-4 py-1 active:scale-90 transition-transform duration-150 active:bg-surface-container-high transition-colors shadow-soft" href="#">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">checklist</span>
+<span class="font-label-sm text-label-sm mt-1 font-bold">Habits</span>
+</a>
+<a class="flex flex-col items-center justify-center text-text-secondary dark:text-text-muted active:scale-90 transition-transform duration-150 active:bg-surface-container-high transition-colors p-2 rounded-xl" href="#">
+<span class="material-symbols-outlined text-2xl">person</span>
+<span class="font-label-sm text-label-sm mt-1">Profile</span>
+</a>
+</nav>
+</body></html>
