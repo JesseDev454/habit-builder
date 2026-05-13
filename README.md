@@ -34,8 +34,8 @@ Root tooling:
 
 ```text
 habit-builder/
-  client/
-  server/
+  frontend/
+  backend/
   design-reference/
     habitquest_gamified_routine_tracker/
   docs/
@@ -64,33 +64,33 @@ The original downloaded reference folder was left untouched.
 npm install
 ```
 
-2. Install client dependencies:
+2. Install frontend dependencies:
 
 ```bash
-npm install --prefix client
+npm install --prefix frontend
 ```
 
-3. Install server dependencies:
+3. Install backend dependencies:
 
 ```bash
-npm install --prefix server
+npm install --prefix backend
 ```
 
 4. Create local environment files:
 
 ```bash
-cp client/.env.example client/.env
-cp server/.env.example server/.env
+cp frontend/.env.example frontend/.env
+cp backend/.env.example backend/.env
 ```
 
 On Windows PowerShell, use:
 
 ```powershell
-Copy-Item client/.env.example client/.env
-Copy-Item server/.env.example server/.env
+Copy-Item frontend/.env.example frontend/.env
+Copy-Item backend/.env.example backend/.env
 ```
 
-5. Update `server/.env` with a MongoDB Atlas or local MongoDB connection string.
+5. Update `backend/.env` with a MongoDB Atlas or local MongoDB connection string.
 
 For Sprint 0, the API can still start without `MONGO_URI`; it will warn and skip the database connection.
 
@@ -105,13 +105,13 @@ npm run dev
 Frontend only:
 
 ```bash
-npm run dev --prefix client
+npm run dev --prefix frontend
 ```
 
 Backend only:
 
 ```bash
-npm run dev --prefix server
+npm run dev --prefix backend
 ```
 
 Expected URLs:
@@ -130,15 +130,15 @@ HabitQuest API is running
 Sprint 0 creates:
 
 - MERN monorepo foundation
-- React + Vite client
-- Express server
+- React + Vite frontend
+- Express backend
 - MongoDB connection setup
 - Placeholder API routes
 - Starter Mongoose schemas
 - Static Stitch-matched frontend screens
 - Mock data for all major MVP areas
 - Reusable UI components
-- Design audit notes in `client/src/design-notes.md`
+- Design audit notes in `frontend/src/design-notes.md`
 
 Sprint 0 does not implement:
 

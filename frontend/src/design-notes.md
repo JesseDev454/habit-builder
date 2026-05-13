@@ -47,4 +47,4 @@ The reference uses Plus Jakarta Sans for hero/page headings and Inter for body t
 
 ## Assets
 
-No full Stitch folder was moved into `client/src`. Remote image URLs from the reference are reused for visual parity where useful, especially the profile/avatar treatment.
+No full Stitch folder was moved into `frontend/src`. Remote image URLs from the reference are reused for visual parity where useful, especially the profile/avatar treatment.

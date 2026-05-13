@@ -10,6 +10,7 @@ import LoadingSkeleton from "../components/common/LoadingSkeleton";
 import StatCard from "../components/common/StatCard";
 import Heatmap from "../components/analytics/Heatmap";
 import WeeklyChart from "../components/analytics/WeeklyChart";
+import StitchCompletionOverlay from "../components/stitch/StitchCompletionOverlay";
 import { archiveHabit, completeHabit, getHabitById, getHabitLogs } from "../api/habitApi";
 import { getHabitStats } from "../api/analyticsApi";
 import useAuth from "../hooks/useAuth";
@@ -36,6 +37,7 @@ const HabitDetail = () => {
   const [showArchiveModal, setShowArchiveModal] = useState(false);
   const [archiving, setArchiving] = useState(false);
   const [completing, setCompleting] = useState(false);
+  const [overlayRewards, setOverlayRewards] = useState(null);
 
   const loadHabit = useCallback(async () => {
     try {
@@ -75,6 +77,7 @@ const HabitDetail = () => {
       setCompleting(true);
       const data = await completeHabit(id);
       if (data?.user) updateUser(data.user);
+      setOverlayRewards(data?.rewards || null);
       toast.success(data?.message || "Habit completed successfully");
       await loadHabit();
     } catch (error) {
@@ -168,6 +171,7 @@ const HabitDetail = () => {
         onConfirm={handleArchive}
         title="Archive habit?"
       />
+      <StitchCompletionOverlay onClose={() => setOverlayRewards(null)} open={Boolean(overlayRewards)} rewards={overlayRewards} />
     </div>
   );
 };

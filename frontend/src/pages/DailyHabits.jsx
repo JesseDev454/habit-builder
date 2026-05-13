@@ -1,14 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import MaterialIcon from "../components/common/MaterialIcon";
+import StitchTopBar from "../components/stitch/StitchTopBar";
 import { StitchBottomNav, StitchFooter, StitchSidebar } from "../components/stitch/StitchNav";
 import { getCategoryAnalytics } from "../api/analyticsApi";
 import { getHabits } from "../api/habitApi";
 import { habitCategories } from "../data/habitCategories";
+import useAppAvatar from "../hooks/useAppAvatar";
 import { normalizeSearchText } from "../utils/search";
-
-const avatarSrc =
-  "https://lh3.googleusercontent.com/aida-public/AB6AXuAws1WUkG-HvtpFqLZODaa_C5RbDJsumtQlsngw-BMdRAA0TRQYRYL6oqsYKTIeGSvQLwRxNPQbIgRozdzWbHCkZ8yHzJ7OWgpUS_DFzmhXZ-xnfdAxqNj7UNgV8m4qPFCVqaRoc7H0i_3TphGMBV8jiWN7qVFtLOM9djwSjWYJhf8-bCzsrdz5koNxQbmAy1tPaLOcibV04_s2ee3MibaFwIvdq32aHmiawuchZgtnWqWx8l5A9TyLWHFOcZBH7mh42saXHvKg4Haq";
 
 const cardStyles = {
   study: { glow: "bg-primary-fixed/30", iconWrap: "bg-secondary-fixed text-on-secondary-fixed-variant" },
@@ -23,17 +22,26 @@ const cardStyles = {
 };
 
 const DailyHabits = () => {
+  const avatarSrc = useAppAvatar();
+  const location = useLocation();
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
   const [categories, setCategories] = useState([]);
   const [habits, setHabits] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [searchQuery, setSearchQuery] = useState(searchParams.get("search") || "");
+  const [activeSearch, setActiveSearch] = useState("");
 
   useEffect(() => {
-    setSearchQuery(searchParams.get("search") || "");
-  }, [searchParams]);
+    const incomingSearch = location.state?.habitSearchQuery;
+
+    if (!incomingSearch) {
+      return;
+    }
+
+    const normalizedSearch = String(incomingSearch).trim();
+    setActiveSearch(normalizedSearch);
+    navigate(location.pathname, { replace: true, state: null });
+  }, [location.pathname, location.state, navigate]);
 
   useEffect(() => {
     const loadCategories = async () => {
@@ -71,7 +79,7 @@ const DailyHabits = () => {
       accumulator[key].push(habit.name || "");
       return accumulator;
     }, {});
-    const normalizedQuery = normalizeSearchText(searchParams.get("search") || "");
+    const normalizedQuery = normalizeSearchText(activeSearch);
 
     return habitCategories
       .map((category) => {
@@ -98,19 +106,7 @@ const DailyHabits = () => {
 
         return haystack.includes(normalizedQuery);
       });
-  }, [categories, habits, searchParams]);
-
-  const handleSearchSubmit = (event) => {
-    event.preventDefault();
-    const trimmedQuery = searchQuery.trim();
-
-    if (!trimmedQuery) {
-      setSearchParams({});
-      return;
-    }
-
-    setSearchParams({ search: trimmedQuery });
-  };
+  }, [activeSearch, categories, habits]);
 
   return (
     <div className="min-h-screen bg-background text-on-background">
@@ -118,40 +114,14 @@ const DailyHabits = () => {
         <StitchSidebar activeKey="habits" avatarSrc={avatarSrc} brandVariant="square" />
 
         <main className="relative flex min-h-screen w-full flex-1 flex-col pb-24 md:ml-[280px] md:pb-0">
-          <header className="sticky top-0 z-40 mx-auto flex h-16 w-full max-w-container_max_width items-center justify-between bg-surface/90 px-margin_mobile shadow-sm backdrop-blur-md md:px-margin_desktop">
-            <div className="md:hidden">
-              <span className="text-headline-lg-mobile font-black text-primary">HabitQuest</span>
-            </div>
-            <div className="hidden flex-1 md:block" />
-            <div className="flex items-center gap-4">
-              <form className="relative hidden sm:block" onSubmit={handleSearchSubmit}>
-                <MaterialIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" name="search" />
-                <input
-                  className="w-48 rounded-xl border border-transparent bg-surface-container-highest py-2 pl-10 pr-4 text-body-base transition-all outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 lg:w-64"
-                  placeholder="Search quests..."
-                  type="text"
-                  value={searchQuery}
-                  onChange={(event) => setSearchQuery(event.target.value)}
-                />
-              </form>
-              <button className="flex h-10 w-10 items-center justify-center rounded-full text-on-surface-variant transition-colors hover:bg-surface-container-highest hover:text-primary" type="button">
-                <MaterialIcon name="notifications" />
-              </button>
-              <button className="flex h-10 w-10 items-center justify-center rounded-full text-on-surface-variant transition-colors hover:bg-surface-container-highest hover:text-primary" type="button">
-                <MaterialIcon name="history_edu" />
-              </button>
-              <div className="ml-2 h-10 w-10 overflow-hidden rounded-full border-2 border-surface bg-surface-variant">
-                <img alt="Hero Avatar" className="h-full w-full object-cover" src={avatarSrc} />
-              </div>
-            </div>
-          </header>
+          <StitchTopBar />
 
           <div className="mx-auto flex-1 w-full max-w-container_max_width px-margin_mobile py-8 md:px-margin_desktop">
             <div className="mb-10 text-center md:text-left">
               <h2 className="mb-2 text-headline-lg text-on-background">Daily Habits</h2>
               <p className="text-body-base text-on-surface-variant">
-                {searchParams.get("search")
-                  ? `Showing results for "${searchParams.get("search")}".`
+                {activeSearch
+                  ? `Showing results for "${activeSearch}".`
                   : "Choose a habit category to view progress."}
               </p>
             </div>
@@ -167,7 +137,10 @@ const DailyHabits = () => {
                 <button
                   className="group relative flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-transparent bg-surface-container-lowest p-6 text-left shadow-[0px_4px_20px_rgba(15,23,42,0.05)] transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02] hover:border-primary hover:shadow-lg"
                   key={category.id}
-                  onClick={() => navigate(`/daily-habits/${category.id}`)}
+                  onClick={() => {
+                    setActiveSearch("");
+                    navigate(`/daily-habits/${category.id}`);
+                  }}
                   type="button"
                 >
                   <div className={`absolute -right-4 -top-4 h-24 w-24 rounded-full ${category.styles.glow} blur-2xl transition-colors`} />
@@ -201,7 +174,7 @@ const DailyHabits = () => {
               ))}
             </div>
 
-            {!loading && !error && categoryCards.length === 0 ? (
+            {!loading && !error && activeSearch && categoryCards.length === 0 ? (
               <div className="mt-6 rounded-xl bg-surface-container-lowest p-6 text-body-base text-on-surface-variant shadow-[0px_4px_20px_rgba(15,23,42,0.05)]">
                 No habit categories matched your search yet.
               </div>

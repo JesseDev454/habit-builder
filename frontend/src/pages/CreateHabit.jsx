@@ -2,12 +2,10 @@ import { useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import MaterialIcon from "../components/common/MaterialIcon";
+import StitchTopBar from "../components/stitch/StitchTopBar";
 import { StitchBottomNav, StitchSidebar } from "../components/stitch/StitchNav";
 import { createHabit } from "../api/habitApi";
 import { findHabitCategory, getCategorySlug, habitCategories, normalizeHabitCategory } from "../data/habitCategories";
-
-const avatarSrc =
-  "https://lh3.googleusercontent.com/aida-public/AB6AXuCmrWmqYp97uIdGAdRERWUJtZoxc4mlQq1akxjAAxGnR55KXAy90GU7WsMUPALwwKyGg_gjbMvWV8iiN2oFmW5Q8rgIVD-It7OsZe4wcckbDZToXnG9hjKU3g1gcoMysXvcrKehTtgi_PvHttXLnjxHjo65Ibba4DtrCyPfUoU1_1ZdozNfNLuUr1jEy4Dl4_7ccKADtEuvkvcgXvlmA9-uE9R7CXO39MM2C8gFAVvSg2iQsUZjtA3zswT8XdK6iriERsYkP8kNOgAQ";
 
 const quickTemplates = [
   { name: "Read for 20 mins", icon: "menu_book", category: "Reading", difficulty: "easy" },
@@ -102,30 +100,17 @@ const CreateHabit = () => {
         <StitchSidebar activeKey="habits" brandVariant="text" ctaLabel="New Quest" />
 
         <main className="min-h-screen flex-1 pb-24 md:ml-[280px] md:pb-0">
-          <header className="sticky top-0 z-40 mx-auto flex h-16 max-w-container_max_width items-center justify-between bg-surface/90 px-margin_mobile shadow-sm backdrop-blur-md md:px-margin_desktop">
-            <div className="md:hidden">
-              <h2 className="text-headline-lg-mobile font-black text-primary">HabitQuest</h2>
-            </div>
-            <div className="hidden flex-1 md:block">
-              <button
-                className="flex cursor-pointer items-center gap-2 text-label-sm text-on-surface-variant transition-colors hover:text-primary"
-                onClick={() => navigate(selectedCategory ? `/daily-habits/${selectedCategory.id}` : "/daily-habits")}
-                type="button"
-              >
-                <MaterialIcon name="arrow_back" />
-                Back to Habits
-              </button>
-            </div>
-            <div className="flex items-center gap-4">
-              <MaterialIcon className="cursor-pointer text-on-surface-variant transition-colors hover:text-primary" name="notifications" />
-              <MaterialIcon className="cursor-pointer text-on-surface-variant transition-colors hover:text-primary" name="history_edu" />
-              <div className="overflow-hidden rounded-full border border-outline-variant bg-primary-container">
-                <img alt="Hero Avatar" className="h-8 w-8 object-cover" src={avatarSrc} />
-              </div>
-            </div>
-          </header>
+          <StitchTopBar />
 
           <div className="mx-auto max-w-3xl px-margin_mobile pb-16 pt-8 md:px-margin_desktop">
+            <button
+              className="mb-6 hidden cursor-pointer items-center gap-2 text-label-sm text-on-surface-variant transition-colors hover:text-primary md:flex"
+              onClick={() => navigate(selectedCategory ? `/daily-habits/${selectedCategory.id}` : "/daily-habits")}
+              type="button"
+            >
+              <MaterialIcon name="arrow_back" />
+              Back to Habits
+            </button>
             <div className="mb-10 text-center md:text-left">
               <h1 className="mb-2 text-headline-lg text-on-surface">Create a New Habit</h1>
               <p className="text-body-base text-on-surface-variant">Turn a small routine into a daily quest.</p>

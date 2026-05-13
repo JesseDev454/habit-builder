@@ -1,11 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import MaterialIcon from "../components/common/MaterialIcon";
+import StitchTopBar from "../components/stitch/StitchTopBar";
 import { StitchBottomNav, StitchFooter, StitchSidebar } from "../components/stitch/StitchNav";
 import { getChallenges, joinChallenge } from "../api/challengeApi";
-
-const avatarSrc =
-  "https://lh3.googleusercontent.com/aida-public/AB6AXuBet5eeLgJEKpb-DeXwhyVVixRL92c413C0S-XjZhjRcXS1E4hpfLKvHJ5HuVkjLxt0tXWTQrNO4qBtTa1GRrk8mwsepS2F_NG5_ltZKpZmmej3nWNxRP328WlPQ7gadiCTiehZQIBGFqIX0Jal02Q57WwEfSMNU3zjaOqDAsmunKUwtj8rUzv_vPVMqDAZJjNtv23Ml5TpObMLWr8MesyRvV_eM99sqY3XuyCttJQkq-cNCiZj_Dj_gj39JKVmKe42xdEHzLGxoU93";
+import useAppAvatar from "../hooks/useAppAvatar";
 
 const iconClassByCategory = {
   coding: {
@@ -47,6 +46,7 @@ const labelByDifficulty = {
 };
 
 const EpicQuests = () => {
+  const avatarSrc = useAppAvatar();
   const [quests, setQuests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -111,23 +111,7 @@ const EpicQuests = () => {
         <StitchSidebar activeKey="quests" avatarSrc={avatarSrc} brandVariant="circle" />
 
         <main className="flex min-h-screen w-full flex-1 flex-col pb-24 md:ml-[280px] md:pb-0">
-          <header className="sticky top-0 z-40 mx-auto flex h-16 w-full max-w-container_max_width items-center justify-between bg-surface/90 px-margin_mobile shadow-sm backdrop-blur-md md:px-margin_desktop">
-            <div className="md:hidden">
-              <span className="text-headline-lg-mobile font-black text-primary">HabitQuest</span>
-            </div>
-            <div className="hidden flex-1 md:block" />
-            <div className="flex items-center gap-4">
-              <button className="flex h-10 w-10 items-center justify-center rounded-full text-on-surface-variant transition-colors hover:bg-surface-container-highest hover:text-primary" type="button">
-                <MaterialIcon name="notifications" />
-              </button>
-              <button className="flex h-10 w-10 items-center justify-center rounded-full text-on-surface-variant transition-colors hover:bg-surface-container-highest hover:text-primary" type="button">
-                <MaterialIcon name="history_edu" />
-              </button>
-              <div className="h-10 w-10 overflow-hidden rounded-full border-2 border-primary">
-                <img alt="Hero Avatar" className="h-full w-full object-cover" src={avatarSrc} />
-              </div>
-            </div>
-          </header>
+          <StitchTopBar />
 
           <div className="mx-auto flex w-full max-w-container_max_width flex-1 flex-col px-margin_mobile py-8 md:px-margin_desktop">
             <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-12">

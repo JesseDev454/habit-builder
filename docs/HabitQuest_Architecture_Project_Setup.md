@@ -107,8 +107,8 @@ Required root structure:
 
 ```text
 habitquest/
-  client/
-  server/
+  frontend/
+  backend/
   README.md
   .gitignore
   package.json
@@ -118,8 +118,8 @@ habitquest/
 
 - Store shared project documentation.
 - Provide root scripts for running frontend and backend together.
-- Keep frontend code inside `client/`.
-- Keep backend code inside `server/`.
+- Keep frontend code inside `frontend/`.
+- Keep backend code inside `backend/`.
 
 ---
 
@@ -132,9 +132,9 @@ Required scripts:
 ```json
 {
   "scripts": {
-    "client": "npm run dev --prefix client",
-    "server": "npm run dev --prefix server",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "frontend": "npm run dev --prefix frontend",
+    "backend": "npm run dev --prefix backend",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\""
   }
 }
 ```
@@ -150,7 +150,7 @@ Required scripts:
 Required backend structure:
 
 ```text
-server/
+backend/
   config/
     db.js
   controllers/
@@ -203,7 +203,7 @@ server/
 
 ## 8. Backend Package Requirements
 
-The backend should be initialized inside `server/`.
+The backend should be initialized inside `backend/`.
 
 ### Backend Dependencies
 
@@ -222,7 +222,7 @@ Required development dependency:
 
 ### Backend Scripts
 
-The `server/package.json` should include:
+The `backend/package.json` should include:
 
 ```json
 {
@@ -237,7 +237,7 @@ The `server/package.json` should include:
 
 ## 9. Backend Server Requirements
 
-The `server/server.js` file should:
+The `backend/server.js` file should:
 
 - Load environment variables using `dotenv`.
 - Connect to MongoDB using `config/db.js`.
@@ -282,7 +282,7 @@ The backend should mount:
 
 ## 10. MongoDB Connection Requirements
 
-The `server/config/db.js` file should:
+The `backend/config/db.js` file should:
 
 - Export an async MongoDB connection function.
 - Use `process.env.MONGO_URI`.
@@ -293,7 +293,7 @@ The `server/config/db.js` file should:
 
 ## 11. Backend Environment Variables
 
-Create `server/.env.example` with:
+Create `backend/.env.example` with:
 
 ```env
 PORT=5000
@@ -522,7 +522,7 @@ For setup phase:
 Required frontend source structure:
 
 ```text
-client/src/
+frontend/src/
   api/
     axios.js
     authApi.js
@@ -605,7 +605,7 @@ client/src/
 
 ## 18. Frontend Package Requirements
 
-The frontend should be created with React + Vite inside `client/`.
+The frontend should be created with React + Vite inside `frontend/`.
 
 Required dependencies:
 
@@ -642,7 +642,7 @@ Keep Vite default scripts:
 
 ## 19. Frontend Router Requirements
 
-Configure React Router in `client/src/App.jsx`.
+Configure React Router in `frontend/src/App.jsx`.
 
 Required routes:
 
@@ -677,7 +677,7 @@ Dashboard Page - HabitQuest
 
 ## 20. Frontend Axios Requirements
 
-Configure `client/src/api/axios.js`.
+Configure `frontend/src/api/axios.js`.
 
 Requirements:
 
@@ -845,7 +845,7 @@ For setup phase:
 
 Configure Tailwind CSS in the frontend.
 
-`client/src/index.css` should include:
+`frontend/src/index.css` should include:
 
 ```css
 @tailwind base;
@@ -923,13 +923,13 @@ The root `.gitignore` should exclude:
 
 ```text
 node_modules/
-client/node_modules/
-server/node_modules/
+frontend/node_modules/
+backend/node_modules/
 .env
-client/.env
-server/.env
+frontend/.env
+backend/.env
 dist/
-client/dist/
+frontend/dist/
 build/
 .DS_Store
 npm-debug.log*
@@ -946,13 +946,13 @@ After setup, the project should support:
 ### Run Frontend Only
 
 ```bash
-npm run client
+npm run frontend
 ```
 
 or:
 
 ```bash
-cd client
+cd frontend
 npm run dev
 ```
 
@@ -965,13 +965,13 @@ http://localhost:5173
 ### Run Backend Only
 
 ```bash
-npm run server
+npm run backend
 ```
 
 or:
 
 ```bash
-cd server
+cd backend
 npm run dev
 ```
 
@@ -1048,8 +1048,8 @@ The setup should:
 The setup phase is complete when:
 
 - Root `habitquest/` structure exists.
-- `client/` contains a working React + Vite app.
-- `server/` contains a working Express app.
+- `frontend/` contains a working React + Vite app.
+- `backend/` contains a working Express app.
 - Tailwind CSS is configured.
 - React Router is configured with all required placeholder routes.
 - Axios instance is configured.
@@ -1086,3 +1086,4 @@ This keeps the project aligned with the 22-day MVP plan and avoids building late
 - Real secrets will be stored only in local `.env` files.
 - Full feature logic will be implemented in later phases.
 - The team is beginner-to-intermediate, so the structure favors clarity over advanced abstractions.
+

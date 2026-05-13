@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import MaterialIcon from "../common/MaterialIcon";
 import useAuth from "../../hooks/useAuth";
+import { HABITQUEST_AVATAR_FALLBACK } from "../../hooks/useAppAvatar";
 
 const desktopItems = [
   { key: "dashboard", label: "Dashboard", icon: "dashboard", to: "/dashboard" },
@@ -43,6 +44,7 @@ export const StitchSidebar = ({
   const navigate = useNavigate();
   const { logout, user } = useAuth();
   const resolvedLevelLabel = levelLabel || `Level ${user?.level ?? 1} Hero`;
+  const resolvedAvatarSrc = avatarSrc || user?.avatar || HABITQUEST_AVATAR_FALLBACK;
 
   const handleLogout = () => {
     logout();
@@ -68,8 +70,8 @@ export const StitchSidebar = ({
                   : "h-12 w-12 shrink-0 overflow-hidden rounded-full border-2 border-primary-container"
               }
             >
-              {avatarSrc ? (
-                <img alt="Hero Avatar" className="h-full w-full object-cover" src={avatarSrc} />
+              {resolvedAvatarSrc ? (
+                <img alt="Hero Avatar" className="h-full w-full object-cover" src={resolvedAvatarSrc} />
               ) : null}
             </div>
             <div>

@@ -2,24 +2,26 @@ import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import MaterialIcon from "../components/common/MaterialIcon";
+import StitchCompletionOverlay from "../components/stitch/StitchCompletionOverlay";
+import StitchTopBar from "../components/stitch/StitchTopBar";
 import { StitchBottomNav, StitchSidebar } from "../components/stitch/StitchNav";
 import { getCategoryDetailAnalytics } from "../api/analyticsApi";
 import { completeHabit } from "../api/habitApi";
 import { findHabitCategory } from "../data/habitCategories";
+import useAppAvatar from "../hooks/useAppAvatar";
 import useAuth from "../hooks/useAuth";
 import { getDifficultyXp } from "../utils/stitch";
-
-const avatarSrc =
-  "https://lh3.googleusercontent.com/aida-public/AB6AXuBet5eeLgJEKpb-DeXwhyVVixRL92c413C0S-XjZhjRcXS1E4hpfLKvHJ5HuVkjLxt0tXWTQrNO4qBtTa1GRrk8mwsepS2F_NG5_ltZKpZmmej3nWNxRP328WlPQ7gadiCTiehZQIBGFqIX0Jal02Q57WwEfSMNU3zjaOqDAsmunKUwtj8rUzv_vPVMqDAZJjNtv23Ml5TpObMLWr8MesyRvV_eM99sqY3XuyCttJQkq-cNCiZj_Dj_gj39JKVmKe42xdEHzLGxoU93";
 
 const CategoryDashboard = () => {
   const { category: categorySlug } = useParams();
   const navigate = useNavigate();
+  const avatarSrc = useAppAvatar();
   const { updateUser } = useAuth();
   const [categoryData, setCategoryData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [completingId, setCompletingId] = useState(null);
+  const [overlayRewards, setOverlayRewards] = useState(null);
 
   const fallbackMeta = findHabitCategory(categorySlug);
 
@@ -58,6 +60,7 @@ const CategoryDashboard = () => {
       setCompletingId(habitId);
       const data = await completeHabit(habitId);
       if (data?.user) updateUser(data.user);
+      setOverlayRewards(data?.rewards || null);
       toast.success(data?.message || "Quest completed.");
       await loadCategory();
     } catch (completeError) {
@@ -73,23 +76,7 @@ const CategoryDashboard = () => {
         <StitchSidebar activeKey="habits" avatarSrc={avatarSrc} brandVariant="circle" />
 
         <main className="flex-1 pb-24 md:ml-[280px] md:pb-8">
-          <header className="sticky top-0 z-40 mx-auto flex h-16 max-w-container_max_width items-center justify-between bg-surface/90 px-margin_mobile shadow-sm backdrop-blur-md md:px-margin_desktop">
-            <div className="md:hidden">
-              <span className="text-headline-lg-mobile font-black text-primary">HabitQuest</span>
-            </div>
-            <div className="ml-auto flex flex-1 items-center justify-end gap-4 md:flex-none">
-              <button className="cursor-pointer rounded-full p-2 text-on-surface-variant transition-colors hover:bg-surface-container hover:text-primary" type="button">
-                <MaterialIcon name="search" />
-              </button>
-              <button className="relative cursor-pointer rounded-full p-2 text-on-surface-variant transition-colors hover:bg-surface-container hover:text-primary" type="button">
-                <MaterialIcon name="notifications" />
-                <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-error" />
-              </button>
-              <button className="cursor-pointer rounded-full p-2 text-on-surface-variant transition-colors hover:bg-surface-container hover:text-primary" type="button">
-                <MaterialIcon name="history_edu" />
-              </button>
-            </div>
-          </header>
+          <StitchTopBar />
 
           <div className="mx-auto max-w-container_max_width px-margin_mobile pt-8 md:px-margin_desktop">
             <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
@@ -257,6 +244,7 @@ const CategoryDashboard = () => {
       </div>
 
       <StitchBottomNav activeKey="habits" />
+      <StitchCompletionOverlay onClose={() => setOverlayRewards(null)} open={Boolean(overlayRewards)} rewards={overlayRewards} />
     </div>
   );
 };

@@ -3,9 +3,11 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import MaterialIcon from "../components/common/MaterialIcon";
 import StitchCompletionOverlay from "../components/stitch/StitchCompletionOverlay";
+import StitchTopBar from "../components/stitch/StitchTopBar";
 import { StitchBottomNav, StitchFooter, StitchSidebar } from "../components/stitch/StitchNav";
 import { getDashboardAnalytics } from "../api/analyticsApi";
 import { completeHabit } from "../api/habitApi";
+import useAppAvatar from "../hooks/useAppAvatar";
 import useAuth from "../hooks/useAuth";
 import {
   formatWeeklyCompletionBars,
@@ -14,12 +16,6 @@ import {
   getDifficultyXp,
   getHabitIcon,
 } from "../utils/stitch";
-import { buildHabitSearchPath } from "../utils/search";
-
-const mobileAvatar =
-  "https://lh3.googleusercontent.com/aida-public/AB6AXuCrxGlLbyt5tGxzM2rSp1rAzpSJG8G447Pu5Kuz9LvmkuXr5TwhbGwJWmPrm-bM23whE8cTDqHSj48i7og3dn7DU2wYCzGMwsfY95NcRN1MRbc7_wAEJsxjNG1gkAYl6d6n0KRavW_Z4QObEkmawAtpibYqE3YV3GZgA0OTKAgCtlzKuZLkOBx5Vodqsn5XPpNMgNvr-GlQbFE0nM4WFhqVh-OgcyMZ_jF7eVLpEGaN_f8kl4pJzrn3kbAQaV83wnXEqcFBy7pwDpJ1";
-const desktopAvatar =
-  "https://lh3.googleusercontent.com/aida-public/AB6AXuCv4ugk_G95eEwaEV4_8BP66NZr0cuvImbDtpF1OBcItmX3O3UkQjNh6SUgjHUpFBxnpf1w9KWJ32oDMSnCni393Jf9Ys6BPk5BfZSjB2TAoszINNHpa_9R_dPv7yUo8k9Q1-Cd4GFlkmVOgUmeOEr8swDlEdVNwwHcaWKY_vgI6ctGnZvrGGLkrSn7NC0SGEt_yhTW2jyAB5qVRscTJGe364ZjY2SEdBk9eJsKYxZXzXe_iOXA_hStcT3_js93oQ78BLp2fe_0zJ2m";
 
 const statDecorClass = {
   "Total XP": "text-primary/20",
@@ -37,13 +33,13 @@ const statIconClass = {
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const avatarSrc = useAppAvatar();
   const { updateUser } = useAuth();
   const [dashboard, setDashboard] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [completingId, setCompletingId] = useState(null);
   const [overlayRewards, setOverlayRewards] = useState(null);
-  const [searchQuery, setSearchQuery] = useState("");
 
   const loadDashboard = useCallback(async () => {
     try {
@@ -109,24 +105,10 @@ const Dashboard = () => {
     navigate(`/habits/${habitId}`);
   };
 
-  const handleSearchSubmit = (event) => {
-    event.preventDefault();
-    navigate(buildHabitSearchPath(searchQuery));
-  };
-
   return (
     <div className="min-h-screen bg-background text-on-background">
       <div className="md:hidden">
-        <header className="sticky top-0 z-40 bg-surface/90 shadow-sm backdrop-blur-md">
-          <div className="mx-auto flex h-16 max-w-container_max_width items-center justify-between px-margin_mobile">
-            <h1 className="text-headline-lg-mobile font-black text-primary">HabitQuest</h1>
-            <div className="flex items-center gap-4">
-              <MaterialIcon className="cursor-pointer text-on-surface-variant transition-colors hover:text-primary" name="notifications" />
-              <MaterialIcon className="cursor-pointer text-on-surface-variant transition-colors hover:text-primary" name="history_edu" />
-              <img alt="Hero Avatar" className="h-8 w-8 rounded-full border-2 border-primary-container object-cover" src={mobileAvatar} />
-            </div>
-          </div>
-        </header>
+        <StitchTopBar />
 
         <main className="flex flex-col gap-6 p-margin_mobile pb-28">
           <section className="flex flex-col gap-2">
@@ -260,37 +242,10 @@ const Dashboard = () => {
 
       <div className="hidden md:block">
         <div className="flex min-h-screen flex-col md:flex-row">
-          <StitchSidebar activeKey="dashboard" avatarSrc={desktopAvatar} brandVariant="circle" />
+          <StitchSidebar activeKey="dashboard" avatarSrc={avatarSrc} brandVariant="circle" />
 
           <div className="flex min-h-screen min-w-0 flex-1 flex-col pb-24 md:ml-[280px] md:pb-0">
-            <header className="sticky top-0 z-40 bg-surface/90 shadow-sm backdrop-blur-md">
-              <div className="mx-auto flex h-16 max-w-container_max_width items-center justify-between px-margin_mobile md:px-margin_desktop">
-                <div className="hidden max-w-[28rem] flex-1 items-center md:flex">
-                  <form className="relative w-full" onSubmit={handleSearchSubmit}>
-                    <MaterialIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-lg text-on-surface-variant" name="search" />
-                    <input
-                      className="w-full rounded-full border border-surface-container-high bg-surface-container-lowest py-2 pl-10 pr-4 text-label-sm shadow-sm outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
-                      placeholder="Search quests, habits..."
-                      type="text"
-                      value={searchQuery}
-                      onChange={(event) => setSearchQuery(event.target.value)}
-                    />
-                  </form>
-                </div>
-                <div className="ml-auto flex items-center gap-4">
-                  <button className="relative cursor-pointer rounded-full p-2 text-on-surface-variant transition-colors duration-150 hover:bg-surface-container-highest hover:text-primary" type="button">
-                    <MaterialIcon name="notifications" />
-                    <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-error" />
-                  </button>
-                  <button className="hidden cursor-pointer rounded-full p-2 text-on-surface-variant transition-colors duration-150 hover:bg-surface-container-highest hover:text-primary sm:block" type="button">
-                    <MaterialIcon name="history_edu" />
-                  </button>
-                  <div className="overflow-hidden rounded-full border border-outline-variant sm:hidden">
-                    <img alt="Hero Avatar" className="h-8 w-8 object-cover" src={desktopAvatar} />
-                  </div>
-                </div>
-              </div>
-            </header>
+            <StitchTopBar />
 
             <main className="mx-auto flex w-full max-w-container_max_width flex-1 flex-col overflow-y-auto p-margin_mobile md:p-margin_desktop">
               <section className="mb-8">

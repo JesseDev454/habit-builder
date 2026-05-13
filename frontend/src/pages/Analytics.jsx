@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import MaterialIcon from "../components/common/MaterialIcon";
+import StitchTopBar from "../components/stitch/StitchTopBar";
 import { StitchBottomNav, StitchFooter, StitchSidebar } from "../components/stitch/StitchNav";
 import {
   getAnalyticsSummary,
@@ -7,12 +8,8 @@ import {
   getHeatmapData,
   getWeeklyAnalytics,
 } from "../api/analyticsApi";
+import useAppAvatar from "../hooks/useAppAvatar";
 import { formatWeeklyCompletionBars } from "../utils/stitch";
-
-const avatarSrc =
-  "https://lh3.googleusercontent.com/aida-public/AB6AXuBABfsgjQVYTZHBqBJ1dF5Mas6GXXBftmxTFiXNgGTz9bfaCqIxNGOfoGW0ry-NB_XR3xczbaFqE_NQvx_hp8fiyeDJW5gHjoHhRvSgMpi5mXwMe2mQevfN6Es-7ynliVIGK-kKd3Juk7kobEltMqwU0WfbDW7pBH_vPBF4g8zIgi_Z4q_lovFvYuZaOIFL8XZDv4GX9oKJG3SI6RXW1pWAF6Gw3gI6SqeYdP8ZS8P9-gUpef6sBiGe-hpVWWeXElGOjWRXSmcM7y96";
-const mobileAvatar =
-  "https://lh3.googleusercontent.com/aida-public/AB6AXuAHqIeo4EKMdN8ibgCOUYHnZF6fqze30plzO8inxSJM1clXNNFoOjiETl1Qz_O6v-N9akD5t0FkHSNrtLQFbGt2vqEDc1k58qL-mviY6ACf5qERM43CLPErDpzAZdXhFPkFo6AMRvqKz7sde578WJuKH5DgYQygqTYWzXtQdwS7_pjCsmInRMvpoIHPJ6TTBwAUOqkyssO65KHjRpVo2VH5q7taqnTXlxnpdB1Fst3x8Kd_qbQpe12yhIRsFwxtAYFagaZH3JR4ZtQs";
 
 const heatTone = (count) => {
   if (count >= 4) return "bg-success";
@@ -23,6 +20,7 @@ const heatTone = (count) => {
 };
 
 const Analytics = () => {
+  const avatarSrc = useAppAvatar();
   const [summary, setSummary] = useState(null);
   const [weekly, setWeekly] = useState([]);
   const [heatmap, setHeatmap] = useState([]);
@@ -81,21 +79,7 @@ const Analytics = () => {
         <StitchSidebar activeKey="analytics" avatarSrc={avatarSrc} brandVariant="circle" />
 
         <div className="flex min-h-screen flex-1 flex-col md:ml-[280px]">
-          <header className="sticky top-0 z-40 bg-surface/90 shadow-sm backdrop-blur-md">
-            <div className="mx-auto flex h-16 max-w-container_max_width items-center justify-between px-margin_mobile md:px-margin_desktop">
-              <div className="text-headline-lg-mobile font-black text-primary md:hidden">HabitQuest</div>
-              <div className="mx-4 hidden max-w-[28rem] flex-1 md:flex" />
-              <div className="flex items-center gap-4">
-                <button className="cursor-pointer text-on-surface-variant transition-colors hover:text-primary" type="button">
-                  <MaterialIcon name="notifications" />
-                </button>
-                <button className="cursor-pointer text-on-surface-variant transition-colors hover:text-primary" type="button">
-                  <MaterialIcon name="history_edu" />
-                </button>
-                <img alt="Hero Avatar" className="h-8 w-8 rounded-full object-cover md:hidden" src={mobileAvatar} />
-              </div>
-            </div>
-          </header>
+          <StitchTopBar />
 
           <main className="mx-auto flex w-full max-w-container_max_width flex-1 flex-col p-margin_mobile md:p-margin_desktop">
             <header className="mb-8">
