@@ -32,14 +32,7 @@ const StitchTopBar = () => {
           </form>
         </div>
         <div className="ml-auto flex items-center gap-4">
-          <button className="relative cursor-pointer rounded-full p-2 text-on-surface-variant transition-colors duration-150 hover:bg-surface-container-highest hover:text-primary" type="button">
-            <MaterialIcon name="notifications" />
-            <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-error" />
-          </button>
-          <button className="hidden cursor-pointer rounded-full p-2 text-on-surface-variant transition-colors duration-150 hover:bg-surface-container-highest hover:text-primary sm:block" type="button">
-            <MaterialIcon name="history_edu" />
-          </button>
-          <div className="overflow-hidden rounded-full border border-outline-variant sm:hidden">
+          <div className="overflow-hidden rounded-full border border-outline-variant">
             <img alt="Hero Avatar" className="h-8 w-8 object-cover" src={avatarSrc} />
           </div>
         </div>

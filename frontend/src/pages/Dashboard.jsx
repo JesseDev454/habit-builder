@@ -1,6 +1,9 @@
+// Dashboard page:
+// combines real analytics data, today's habits, and reward feedback in one home screen.
 import { useCallback, useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import AnimatedNumber from "../components/common/AnimatedNumber";
 import MaterialIcon from "../components/common/MaterialIcon";
 import StitchCompletionOverlay from "../components/stitch/StitchCompletionOverlay";
 import StitchTopBar from "../components/stitch/StitchTopBar";
@@ -41,6 +44,7 @@ const Dashboard = () => {
   const [completingId, setCompletingId] = useState(null);
   const [overlayRewards, setOverlayRewards] = useState(null);
 
+  // Load the full dashboard payload from the backend and sync the auth context user.
   const loadDashboard = useCallback(async () => {
     try {
       setLoading(true);
@@ -60,6 +64,7 @@ const Dashboard = () => {
     loadDashboard();
   }, [loadDashboard]);
 
+  // Pull out the pieces the JSX uses often so the render section stays readable.
   const dashboardUser = dashboard?.user;
   const levelProgress = dashboard?.levelProgress;
   const stats = dashboard?.stats;
@@ -72,20 +77,23 @@ const Dashboard = () => {
     1
   );
 
+  // Prepare the desktop stat cards from the live dashboard payload.
   const desktopStats = useMemo(
     () => [
-      { label: "Total XP", value: dashboardUser?.totalXP ?? 0, icon: "workspace_premium" },
-      { label: "Current Level", value: dashboardUser?.level ?? 1, icon: "shield" },
-      { label: "Best Streak", value: `${stats?.bestStreak ?? 0} days`, icon: "local_fire_department" },
+      { label: "Total XP", value: dashboardUser?.totalXP ?? 0, icon: "workspace_premium", suffix: "" },
+      { label: "Current Level", value: dashboardUser?.level ?? 1, icon: "shield", prefix: "Lvl " },
+      { label: "Best Streak", value: stats?.bestStreak ?? 0, icon: "local_fire_department", suffix: " days" },
       {
         label: "Today's Progress",
-        value: `${stats?.completedToday ?? 0}/${stats?.totalTodayHabits ?? 0}`,
+        completed: stats?.completedToday ?? 0,
+        total: stats?.totalTodayHabits ?? 0,
         icon: "donut_large",
       },
     ],
     [dashboardUser?.level, dashboardUser?.totalXP, stats?.bestStreak, stats?.completedToday, stats?.totalTodayHabits]
   );
 
+  // Completing from the dashboard updates XP/level and then refreshes the summary cards.
   const handleComplete = async (habitId) => {
     try {
       setCompletingId(habitId);
@@ -110,7 +118,7 @@ const Dashboard = () => {
       <div className="md:hidden">
         <StitchTopBar />
 
-        <main className="flex flex-col gap-6 p-margin_mobile pb-28">
+        <main className="animate-page-in flex flex-col gap-6 p-margin_mobile pb-28">
           <section className="flex flex-col gap-2">
             <h2 className="text-headline-lg text-on-background">Welcome back, {greetingName}!</h2>
             <p className="text-body-base text-on-surface-variant">Ready to complete your daily quests?</p>
@@ -128,18 +136,20 @@ const Dashboard = () => {
               <div className="z-10 flex items-start justify-between">
                 <div>
                   <span className="mb-1 block text-label-sm uppercase tracking-widest text-on-surface-variant">Current Level</span>
-                  <h3 className="text-display-xl text-primary">Lvl {dashboardUser?.level ?? 1}</h3>
+                  <h3 className="text-display-xl text-primary">
+                    Lvl <AnimatedNumber value={dashboardUser?.level ?? 1} />
+                  </h3>
                 </div>
                 <div className="flex items-center gap-1 rounded-full bg-tertiary-fixed px-3 py-1 text-badge-xs text-tertiary">
                   <MaterialIcon className="text-[14px]" fill name="local_fire_department" />
-                  {stats?.bestStreak ?? 0} Day Streak
+                  <AnimatedNumber suffix=" Day Streak" value={stats?.bestStreak ?? 0} />
                 </div>
               </div>
               <div className="z-10 mt-2">
                 <div className="mb-2 flex justify-between text-label-sm text-on-surface-variant">
                   <span>XP Progress</span>
                   <span>
-                    {levelProgress?.xpIntoLevel ?? 0} / {progressMax} XP
+                    <AnimatedNumber value={levelProgress?.xpIntoLevel ?? 0} /> / <AnimatedNumber value={progressMax} /> XP
                   </span>
                 </div>
                 <div className="h-3 w-full overflow-hidden rounded-full bg-surface-container-high">
@@ -158,12 +168,12 @@ const Dashboard = () => {
                   <div className="absolute inset-0 rotate-45 rounded-full border-4 border-primary border-r-transparent border-t-transparent" />
                   <div className="flex flex-col items-center">
                     <span className="text-title-md font-bold text-primary">
-                      {stats?.completedToday ?? 0}/{stats?.totalTodayHabits ?? 0}
+                      <AnimatedNumber value={stats?.completedToday ?? 0} />/<AnimatedNumber value={stats?.totalTodayHabits ?? 0} />
                     </span>
                   </div>
                 </div>
                 <span className="rounded-full bg-primary-fixed/50 px-2 py-1 text-badge-xs text-primary">
-                  {stats?.todayProgressPercent ?? 0}% Done
+                  <AnimatedNumber suffix="% Done" value={stats?.todayProgressPercent ?? 0} />
                 </span>
               </div>
 
@@ -171,7 +181,9 @@ const Dashboard = () => {
                 <span className="text-label-sm text-on-surface-variant">Total Gold</span>
                 <div className="flex items-center gap-2">
                   <MaterialIcon className="text-[28px] text-tertiary-container" fill name="monetization_on" />
-                  <span className="text-[32px] font-bold text-on-background">{dashboardUser?.coins ?? 0}</span>
+                  <span className="text-[32px] font-bold text-on-background">
+                    <AnimatedNumber value={dashboardUser?.coins ?? 0} />
+                  </span>
                 </div>
                 <button className="mt-auto w-full rounded-lg bg-surface-container-highest py-2 text-label-sm text-primary transition-transform active:scale-95" type="button">
                   Shop
@@ -247,7 +259,7 @@ const Dashboard = () => {
           <div className="flex min-h-screen min-w-0 flex-1 flex-col pb-24 md:ml-[280px] md:pb-0">
             <StitchTopBar />
 
-            <main className="mx-auto flex w-full max-w-container_max_width flex-1 flex-col overflow-y-auto p-margin_mobile md:p-margin_desktop">
+            <main className="animate-page-in mx-auto flex w-full max-w-container_max_width flex-1 flex-col overflow-y-auto p-margin_mobile md:p-margin_desktop">
               <section className="mb-8">
                 <h2 className="mb-2 text-display-xl text-on-background">Welcome back, {greetingName}.</h2>
                 <p className="text-title-md text-on-surface-variant">Ready to keep your streak alive today?</p>
@@ -267,7 +279,15 @@ const Dashboard = () => {
                       <MaterialIcon className={`text-sm ${statIconClass[stat.label]}`} fill name={stat.icon === "shield" ? "trending_up" : stat.icon === "workspace_premium" ? "stars" : stat.icon === "donut_large" ? "checklist" : stat.icon} />
                       <h3 className="text-label-sm uppercase tracking-wider">{stat.label}</h3>
                     </div>
-                    <div className="text-headline-lg text-on-background">{stat.value}</div>
+                    <div className="text-headline-lg text-on-background">
+                      {stat.label === "Today's Progress" ? (
+                        <>
+                          <AnimatedNumber value={stat.completed} />/<AnimatedNumber value={stat.total} />
+                        </>
+                      ) : (
+                        <AnimatedNumber prefix={stat.prefix} suffix={stat.suffix} value={stat.value} />
+                      )}
+                    </div>
                     {stat.label === "Today's Progress" ? (
                       <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-surface-container">
                         <div className="h-full rounded-full bg-primary" style={{ width: `${stats?.todayProgressPercent ?? 0}%` }} />
@@ -307,11 +327,13 @@ const Dashboard = () => {
                           <div className="min-w-0">
                             <h4 className={`truncate text-title-md ${done ? "line-through opacity-70" : ""}`}>{habit.name}</h4>
                             <div className="mt-1 flex flex-wrap items-center gap-3">
-                              <span className={`rounded-full px-2 py-0.5 text-badge-xs ${done ? "bg-tertiary-fixed text-on-tertiary-fixed opacity-70" : "bg-tertiary-fixed text-on-tertiary-fixed"}`}>+{xp} XP</span>
+                              <span className={`rounded-full px-2 py-0.5 text-badge-xs ${done ? "bg-tertiary-fixed text-on-tertiary-fixed opacity-70" : "bg-tertiary-fixed text-on-tertiary-fixed"}`}>
+                                <AnimatedNumber prefix="+" suffix=" XP" value={xp} />
+                              </span>
                               {habit.currentStreak ? (
                                 <span className={`flex items-center gap-1 text-label-sm text-on-surface-variant ${done ? "opacity-70" : ""}`}>
                                   <MaterialIcon className="text-[14px] text-tertiary" name="local_fire_department" />
-                                  {habit.currentStreak} Day Streak
+                                  <AnimatedNumber suffix=" Day Streak" value={habit.currentStreak} />
                                 </span>
                               ) : null}
                             </div>

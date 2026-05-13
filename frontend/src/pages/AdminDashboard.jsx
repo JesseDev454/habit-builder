@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import AnimatedNumber from "../components/common/AnimatedNumber";
 import MaterialIcon from "../components/common/MaterialIcon";
 import LoadingSkeleton from "../components/common/LoadingSkeleton";
 import EmptyState from "../components/common/EmptyState";
@@ -56,7 +57,7 @@ const AdminDashboard = () => {
 
       <div className="grid grid-cols-1 gap-md md:grid-cols-2 lg:grid-cols-4">
         {statCards.map(([key, label, icon, color]) => (
-          <AdminStat key={key} label={label} value={(stats[key] || 0).toLocaleString()} icon={icon} color={color} />
+          <AdminStat key={key} label={label} value={stats[key] || 0} icon={icon} color={color} />
         ))}
       </div>
 
@@ -87,7 +88,9 @@ const AdminStat = ({ label, value, icon, color }) => (
       <p className="font-medium text-text-secondary">{label}</p>
       <div className={`flex h-8 w-8 items-center justify-center rounded-full bg-current/10 ${color}`}><MaterialIcon name={icon} className="text-[18px]" /></div>
     </div>
-    <p className="font-page-heading text-page-heading-mobile font-bold">{value}</p>
+    <p className="font-page-heading text-page-heading-mobile font-bold">
+      <AnimatedNumber value={value} />
+    </p>
   </div>
 );
 

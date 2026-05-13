@@ -102,7 +102,7 @@ const CreateHabit = () => {
         <main className="min-h-screen flex-1 pb-24 md:ml-[280px] md:pb-0">
           <StitchTopBar />
 
-          <div className="mx-auto max-w-3xl px-margin_mobile pb-16 pt-8 md:px-margin_desktop">
+          <div className="animate-page-in mx-auto max-w-3xl px-margin_mobile pb-16 pt-8 md:px-margin_desktop">
             <button
               className="mb-6 hidden cursor-pointer items-center gap-2 text-label-sm text-on-surface-variant transition-colors hover:text-primary md:flex"
               onClick={() => navigate(selectedCategory ? `/daily-habits/${selectedCategory.id}` : "/daily-habits")}

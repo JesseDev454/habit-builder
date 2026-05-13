@@ -1,4 +1,7 @@
+// Analytics page:
+// presents weekly completion trends, category performance, and consistency heatmap data.
 import { useEffect, useMemo, useState } from "react";
+import AnimatedNumber from "../components/common/AnimatedNumber";
 import MaterialIcon from "../components/common/MaterialIcon";
 import StitchTopBar from "../components/stitch/StitchTopBar";
 import { StitchBottomNav, StitchFooter, StitchSidebar } from "../components/stitch/StitchNav";
@@ -28,6 +31,7 @@ const Analytics = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    // Load all analytics views in parallel so the page feels fast and cohesive.
     Promise.all([
       getAnalyticsSummary(),
       getWeeklyAnalytics(),
@@ -54,12 +58,13 @@ const Analytics = () => {
     () => [
       { label: "Total Habits", value: summary?.totalHabits ?? 0, icon: "checklist", tone: "text-primary" },
       { label: "Total Completions", value: summary?.totalCompletions ?? 0, icon: "task_alt", tone: "text-success" },
-      { label: "Completion Rate", value: `${summary?.completionRate ?? 0}%`, icon: "pie_chart", tone: "text-on-surface" },
+      { label: "Completion Rate", value: summary?.completionRate ?? 0, suffix: "%", icon: "pie_chart", tone: "text-on-surface" },
       { label: "Best Streak", value: summary?.longestStreak ?? 0, icon: "local_fire_department", tone: "text-tertiary" },
     ],
     [summary]
   );
 
+  // Top category is the strongest category this week by completion %, then XP earned.
   const topCategory = useMemo(
     () =>
       [...categories].sort(
@@ -81,7 +86,7 @@ const Analytics = () => {
         <div className="flex min-h-screen flex-1 flex-col md:ml-[280px]">
           <StitchTopBar />
 
-          <main className="mx-auto flex w-full max-w-container_max_width flex-1 flex-col p-margin_mobile md:p-margin_desktop">
+          <main className="animate-page-in mx-auto flex w-full max-w-container_max_width flex-1 flex-col p-margin_mobile md:p-margin_desktop">
             <header className="mb-8">
               <h1 className="mb-2 text-headline-lg text-on-surface">Analytics</h1>
               <p className="text-body-base text-on-surface-variant">See how consistent you have been this week.</p>
@@ -101,7 +106,9 @@ const Analytics = () => {
                       <MaterialIcon className="text-[100px]" name={card.icon} />
                     </div>
                     <p className="mb-2 text-label-sm text-on-surface-variant">{card.label}</p>
-                    <p className={`text-display-xl ${card.tone}`}>{card.value}</p>
+                    <p className={`text-display-xl ${card.tone}`}>
+                      <AnimatedNumber suffix={card.suffix} value={card.value} />
+                    </p>
                   </div>
                 ))}
               </div>
@@ -139,7 +146,9 @@ const Analytics = () => {
                   </p>
                   <div className="inline-flex items-center gap-1 rounded-full bg-surface/20 px-3 py-1">
                     <MaterialIcon className="text-sm" name="trending_up" />
-                    <span className="text-badge-xs">{topCategory?.weeklyCompletion ?? 0}% Success</span>
+                    <span className="text-badge-xs">
+                      <AnimatedNumber suffix="% Success" value={topCategory?.weeklyCompletion ?? 0} />
+                    </span>
                   </div>
                 </div>
 

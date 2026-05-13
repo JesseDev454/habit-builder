@@ -1,5 +1,8 @@
+// Profile page:
+// combines auth user info, progression stats, and recent badges in one personal summary screen.
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import AnimatedNumber from "../components/common/AnimatedNumber";
 import MaterialIcon from "../components/common/MaterialIcon";
 import StitchTopBar from "../components/stitch/StitchTopBar";
 import { StitchBottomNav, StitchSidebar } from "../components/stitch/StitchNav";
@@ -25,6 +28,7 @@ const Profile = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    // Load both profile stats and badge progress together for a complete profile view.
     Promise.all([getDashboardAnalytics(), getMyBadges()])
       .then(([dashboardData, badgeData]) => {
         setDashboard(dashboardData);
@@ -51,9 +55,9 @@ const Profile = () => {
   const statCards = useMemo(
     () => [
       { label: "Total XP", value: safeUser?.totalXP ?? 0, icon: "military_tech", tone: "text-primary" },
-      { label: "Best Streak", value: `${stats?.bestStreak ?? 0}`, helper: "days", icon: "local_fire_department", tone: "text-secondary" },
-      { label: "Total Habits", value: `${stats?.totalHabits ?? 0}`, icon: "task_alt", tone: "text-tertiary" },
-      { label: "Completions", value: `${stats?.totalCompletions ?? 0}`, icon: "done_all", tone: "text-on-surface" },
+      { label: "Best Streak", value: stats?.bestStreak ?? 0, helper: "days", icon: "local_fire_department", tone: "text-secondary" },
+      { label: "Total Habits", value: stats?.totalHabits ?? 0, icon: "task_alt", tone: "text-tertiary" },
+      { label: "Completions", value: stats?.totalCompletions ?? 0, icon: "done_all", tone: "text-on-surface" },
     ],
     [safeUser?.totalXP, stats?.bestStreak, stats?.totalCompletions, stats?.totalHabits]
   );
@@ -71,7 +75,7 @@ const Profile = () => {
         <div className="flex min-h-screen flex-1 flex-col md:ml-[280px]">
           <StitchTopBar />
 
-          <main className="mx-auto mb-20 w-full max-w-container_max_width flex-1 p-margin_mobile md:mb-0 md:p-margin_desktop">
+          <main className="animate-page-in mx-auto mb-20 w-full max-w-container_max_width flex-1 p-margin_mobile md:mb-0 md:p-margin_desktop">
             {error ? (
               <div className="mb-6 rounded-xl border border-error-container bg-surface-container-lowest p-4 text-body-base text-error">
                 {error}
@@ -84,7 +88,7 @@ const Profile = () => {
                 <img alt={`${safeUser?.name || "Hero"}'s Avatar`} className="relative z-10 h-32 w-32 rounded-full border-4 border-surface-container-lowest object-cover shadow-md" src={avatarSrc} />
                 <div className="absolute -bottom-2 -right-2 z-20 flex items-center gap-1 rounded-full border-2 border-surface-container-lowest bg-tertiary-fixed px-3 py-1 text-badge-xs text-on-tertiary-fixed shadow-sm">
                   <MaterialIcon className="text-[14px]" fill name="star" />
-                  Lvl {safeUser?.level ?? 1}
+                  Lvl <AnimatedNumber value={safeUser?.level ?? 1} />
                 </div>
               </div>
               <div className="z-10 flex-1 text-center md:text-left">
@@ -96,7 +100,8 @@ const Profile = () => {
                   </div>
                 </div>
                 <p className="text-right text-label-sm text-outline">
-                  {levelProgress?.xpIntoLevel ?? 0} / {progressMax} XP to Level {(safeUser?.level ?? 1) + 1}
+                  <AnimatedNumber value={levelProgress?.xpIntoLevel ?? 0} /> / <AnimatedNumber value={progressMax} /> XP to Level{" "}
+                  <AnimatedNumber value={(safeUser?.level ?? 1) + 1} />
                 </p>
               </div>
               <button className="z-10 hidden items-center gap-2 rounded-xl border border-outline-variant px-6 py-3 text-label-sm text-error transition-colors hover:border-error-container hover:bg-error-container md:flex" onClick={handleLogout} type="button">
@@ -111,7 +116,7 @@ const Profile = () => {
                   <MaterialIcon className={`absolute -bottom-4 -right-4 text-[80px] transition-colors ${statDecorClasses[card.label]}`} name={card.icon} />
                   <p className="relative z-10 mb-2 text-label-sm text-on-surface-variant">{card.label}</p>
                   <p className={`relative z-10 text-display-xl ${card.tone}`}>
-                    {card.value}
+                    <AnimatedNumber value={card.value} />
                     {card.helper ? <span className="ml-1 text-xl text-outline">{card.helper}</span> : null}
                   </p>
                 </div>

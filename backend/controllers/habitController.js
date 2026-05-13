@@ -1,3 +1,5 @@
+// Habit controller:
+// owns CRUD operations, completion logic, rewards, and streak updates.
 const Habit = require("../models/Habit");
 const HabitLog = require("../models/HabitLog");
 const User = require("../models/User");
@@ -26,10 +28,12 @@ const validFrequency = ["daily", "weekly"];
 const validTargetType = ["simple", "count"];
 const validDifficulty = ["easy", "medium", "hard"];
 
+// Small debugging endpoint used to verify the habit route group is reachable.
 const habitStatus = (req, res) => {
   res.json({ message: "Habit routes working" });
 };
 
+// Normalize raw frontend form input into a clean shape the database expects.
 const normalizeHabitInput = (input) => ({
   name: typeof input.name === "string" ? input.name.trim() : "",
   description: typeof input.description === "string" ? input.description.trim() : "",
@@ -42,6 +46,7 @@ const normalizeHabitInput = (input) => ({
   startDate: input.startDate || undefined,
 });
 
+// Guard against invalid habits before saving them to MongoDB.
 const validateHabitInput = (input) => {
   if (!input.name) return "Habit name is required";
   if (!input.category) return "Habit category is required";
@@ -52,12 +57,14 @@ const validateHabitInput = (input) => {
   return null;
 };
 
+// Always scope habit access to the logged-in user so users only touch their own data.
 const findOwnedHabit = (userId, habitId, includeArchived = true) => {
   const query = { _id: habitId, user: userId };
   if (!includeArchived) query.isArchived = false;
   return Habit.findOne(query);
 };
 
+// Create one new habit for the authenticated user.
 const createHabit = async (req, res, next) => {
   try {
     const habitData = normalizeHabitInput(req.body);
@@ -74,6 +81,7 @@ const createHabit = async (req, res, next) => {
   }
 };
 
+// Bulk-create habits, mainly useful for onboarding/template flows.
 const createManyHabits = async (req, res, next) => {
   try {
     const { habits } = req.body;
@@ -102,6 +110,7 @@ const createManyHabits = async (req, res, next) => {
   }
 };
 
+// Fetch either active or archived habits for the current user.
 const getHabits = async (req, res, next) => {
   try {
     const query = { user: req.user._id };
@@ -119,6 +128,7 @@ const getHabits = async (req, res, next) => {
   }
 };
 
+// Return today's active habits and whether each one is already completed for today.
 const getTodayHabits = async (req, res, next) => {
   try {
     const habits = await Habit.find({ user: req.user._id, isArchived: false }).sort({ createdAt: -1 }).lean();
@@ -145,6 +155,7 @@ const getTodayHabits = async (req, res, next) => {
   }
 };
 
+// Fetch a single habit detail page payload.
 const getHabitById = async (req, res, next) => {
   try {
     const habit = await findOwnedHabit(req.user._id, req.params.id);
@@ -159,6 +170,7 @@ const getHabitById = async (req, res, next) => {
   }
 };
 
+// Update only the fields the app allows the user to edit.
 const updateHabit = async (req, res, next) => {
   try {
     const habit = await findOwnedHabit(req.user._id, req.params.id);
@@ -190,6 +202,7 @@ const updateHabit = async (req, res, next) => {
   }
 };
 
+// Archive a habit instead of hard-deleting it so progress history stays intact.
 const archiveHabit = async (req, res, next) => {
   try {
     const habit = await findOwnedHabit(req.user._id, req.params.id);
@@ -207,6 +220,7 @@ const archiveHabit = async (req, res, next) => {
   }
 };
 
+// Complete a habit once for the current day and award all related progression rewards.
 const completeHabit = async (req, res, next) => {
   try {
     const habit = await findOwnedHabit(req.user._id, req.params.id, false);
@@ -229,10 +243,12 @@ const completeHabit = async (req, res, next) => {
       });
     }
 
+    // Rewards are driven from habit difficulty.
     const xpEarned = getXPForDifficulty(habit.difficulty);
     const coinsEarned = getCoinsForDifficulty(habit.difficulty);
     const previousLevel = req.user.level || 1;
     const previousDateKey = habit.lastCompletedDateKey;
+    // Daily habits use streak logic; weekly habits simply stay active without daily resets.
     const streakResult =
       habit.frequency === "daily"
         ? calculateDailyStreak({
@@ -245,6 +261,7 @@ const completeHabit = async (req, res, next) => {
             newCurrentStreak: Math.max(habit.currentStreak || 0, 1),
           };
 
+    // The log is the source of truth for "this habit was completed today".
     const log = await HabitLog.create({
       user: req.user._id,
       habit: habit._id,
@@ -338,6 +355,7 @@ const completeHabit = async (req, res, next) => {
   }
 };
 
+// Fetch recent completion history for a specific habit.
 const getHabitLogs = async (req, res, next) => {
   try {
     const habit = await findOwnedHabit(req.user._id, req.params.id);

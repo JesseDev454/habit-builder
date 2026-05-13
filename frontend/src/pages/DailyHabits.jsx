@@ -1,5 +1,8 @@
+// Daily Habits page:
+// shows one card per category and supports quick search-driven filtering.
 import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import AnimatedNumber from "../components/common/AnimatedNumber";
 import MaterialIcon from "../components/common/MaterialIcon";
 import StitchTopBar from "../components/stitch/StitchTopBar";
 import { StitchBottomNav, StitchFooter, StitchSidebar } from "../components/stitch/StitchNav";
@@ -32,6 +35,7 @@ const DailyHabits = () => {
   const [activeSearch, setActiveSearch] = useState("");
 
   useEffect(() => {
+    // Search is treated as a temporary quick-filter passed through route state.
     const incomingSearch = location.state?.habitSearchQuery;
 
     if (!incomingSearch) {
@@ -44,6 +48,7 @@ const DailyHabits = () => {
   }, [location.pathname, location.state, navigate]);
 
   useEffect(() => {
+    // Load both category analytics and habits so cards can show real counts + search matches.
     const loadCategories = async () => {
       try {
         setLoading(true);
@@ -64,6 +69,7 @@ const DailyHabits = () => {
   }, []);
 
   const categoryCards = useMemo(() => {
+    // Merge category metadata with live backend totals.
     const map = new Map(categories.map((category) => [category.slug, category]));
     const habitNamesByCategory = habits.reduce((accumulator, habit) => {
       const key = String(habit.category || "")
@@ -116,7 +122,7 @@ const DailyHabits = () => {
         <main className="relative flex min-h-screen w-full flex-1 flex-col pb-24 md:ml-[280px] md:pb-0">
           <StitchTopBar />
 
-          <div className="mx-auto flex-1 w-full max-w-container_max_width px-margin_mobile py-8 md:px-margin_desktop">
+          <div className="animate-page-in mx-auto flex-1 w-full max-w-container_max_width px-margin_mobile py-8 md:px-margin_desktop">
             <div className="mb-10 text-center md:text-left">
               <h2 className="mb-2 text-headline-lg text-on-background">Daily Habits</h2>
               <p className="text-body-base text-on-surface-variant">
@@ -150,15 +156,19 @@ const DailyHabits = () => {
                     </div>
                     <span className="flex items-center gap-1 rounded-full bg-surface-container-highest px-3 py-1 text-badge-xs text-on-surface-variant">
                       <MaterialIcon className="text-[14px]" name="local_fire_department" />
-                      {category.bestStreak} days
+                      <AnimatedNumber suffix=" days" value={category.bestStreak} />
                     </span>
                   </div>
                   <h3 className="mb-1 text-title-md text-on-background">{category.shortName}</h3>
                   <p className="mb-6 flex-1 text-sm text-on-surface-variant">{category.description}</p>
                   <div className="flex flex-col gap-3">
                     <div className="flex items-center justify-between text-label-sm">
-                      <span className="text-on-surface-variant">{category.habitCount} habits</span>
-                      <span className="font-bold text-primary">{category.completionPercent}%</span>
+                      <span className="text-on-surface-variant">
+                        <AnimatedNumber suffix=" habits" value={category.habitCount} />
+                      </span>
+                      <span className="font-bold text-primary">
+                        <AnimatedNumber suffix="%" value={category.completionPercent} />
+                      </span>
                     </div>
                     <div className="h-2 w-full overflow-hidden rounded-full bg-surface-container-highest">
                       <div className="h-full rounded-full bg-primary transition-all duration-1000 ease-out" style={{ width: `${category.completionPercent}%` }} />

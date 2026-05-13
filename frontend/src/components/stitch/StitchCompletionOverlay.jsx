@@ -1,3 +1,6 @@
+// Completion overlay:
+// celebrates normal completions, level-ups, and badge unlocks in one reusable popup.
+import AnimatedNumber from "../common/AnimatedNumber";
 import MaterialIcon from "../common/MaterialIcon";
 import { getBadgeIconName, getBadgeTone } from "../../utils/stitch";
 
@@ -34,14 +37,14 @@ const StitchCompletionOverlay = ({ open, rewards, onClose }) => {
         </h3>
         <div className="relative z-10 mb-4 flex flex-wrap justify-center gap-2">
           <span className="flex items-center gap-1 rounded-full bg-tertiary-fixed px-3 py-1 text-label-sm font-bold text-on-tertiary-fixed shadow-sm">
-            <MaterialIcon className="text-sm" name="stars" /> +{rewards?.xpEarned || 0} XP
+            <MaterialIcon className="text-sm" name="stars" /> <AnimatedNumber prefix="+" suffix=" XP" value={rewards?.xpEarned || 0} />
           </span>
           <span className="flex items-center gap-1 rounded-full bg-surface-container px-3 py-1 text-label-sm text-on-surface shadow-sm">
             <MaterialIcon className="text-sm text-tertiary" name="local_fire_department" /> Streak updated
           </span>
           {leveledUp ? (
             <span className="flex items-center gap-1 rounded-full bg-primary-container px-3 py-1 text-label-sm font-bold text-on-primary-container shadow-sm">
-              <MaterialIcon className="text-sm" fill name="star" /> Level {rewards?.newLevel || 1}
+              <MaterialIcon className="text-sm" fill name="star" /> Level <AnimatedNumber value={rewards?.newLevel || 1} />
             </span>
           ) : null}
         </div>

@@ -1,3 +1,5 @@
+// Streak utility:
+// determines whether a completion keeps a streak alive, repeats the same day, or starts over.
 const { getDayDifference } = require("./dateUtils");
 
 const calculateDailyStreak = ({ previousDateKey, currentDateKey, currentStreak = 0 }) => {

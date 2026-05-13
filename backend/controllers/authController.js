@@ -1,6 +1,9 @@
+// Auth controller:
+// handles registration, login, and returning the currently signed-in user.
 const User = require("../models/User");
 const generateToken = require("../utils/generateToken");
 
+// This helper removes sensitive fields and keeps the frontend response shape consistent.
 const userResource = (user) => ({
   _id: user._id,
   name: user.name,
@@ -12,6 +15,7 @@ const userResource = (user) => ({
   selectedGoals: user.selectedGoals,
 });
 
+// Register a new user, validate inputs, then return a JWT plus safe user data.
 const registerUser = async (req, res, next) => {
   try {
     const { name, email, password, confirmPassword } = req.body;
@@ -50,6 +54,7 @@ const registerUser = async (req, res, next) => {
   }
 };
 
+// Log an existing user in by checking email + password.
 const loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -73,6 +78,7 @@ const loginUser = async (req, res, next) => {
   }
 };
 
+// Return the authenticated user that the auth middleware attached to req.user.
 const getMe = async (req, res) => {
   res.status(200).json({ user: userResource(req.user) });
 };

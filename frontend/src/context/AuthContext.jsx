@@ -1,14 +1,18 @@
+// Auth context:
+// gives the whole frontend access to the current user, token, and auth actions.
 import { createContext, useCallback, useEffect, useMemo, useState } from "react";
 import { getCurrentUser, loginUser, registerUser } from "../api/authApi";
 
 export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
+  // Keep auth state in memory, but also restore the token from localStorage on refresh.
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(() => localStorage.getItem("habitquest_token"));
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // On first load, try to restore the previous session from localStorage.
     const restoreUser = async () => {
       const storedToken = localStorage.getItem("habitquest_token");
 
@@ -35,6 +39,7 @@ export const AuthProvider = ({ children }) => {
     restoreUser();
   }, []);
 
+  // Save token + user after login/register so the rest of the app can use them immediately.
   const persistSession = useCallback((data) => {
     localStorage.setItem("habitquest_token", data.token);
     setToken(data.token);
@@ -58,6 +63,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   }, []);
 
+  // Used after profile-changing actions so the UI can refresh the signed-in user.
   const refreshUser = useCallback(async () => {
     if (!localStorage.getItem("habitquest_token")) return null;
     const data = await getCurrentUser();
@@ -69,6 +75,7 @@ export const AuthProvider = ({ children }) => {
     setUser((currentUser) => ({ ...currentUser, ...nextUser }));
   }, []);
 
+  // Memoize the context value so children do not re-render more than necessary.
   const value = useMemo(
     () => ({
       user,

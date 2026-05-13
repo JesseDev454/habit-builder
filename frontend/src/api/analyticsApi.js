@@ -1,3 +1,5 @@
+// Analytics API helpers:
+// these endpoints power dashboards, charts, category summaries, and habit detail stats.
 import api from "./axios";
 
 const getErrorMessage = (error) =>
@@ -12,6 +14,7 @@ const request = async (promise) => {
   }
 };
 
+// High-level analytics calls grouped by the page that uses them.
 export const getAnalyticsSummary = () => request(api.get("/analytics/summary"));
 
 export const getDashboardAnalytics = () => request(api.get("/analytics/dashboard"));

@@ -1,3 +1,5 @@
+// Analytics controller:
+// turns raw habit + log data into dashboard cards, charts, category summaries, and profile stats.
 const Habit = require("../models/Habit");
 const HabitLog = require("../models/HabitLog");
 const UserBadge = require("../models/UserBadge");
@@ -7,6 +9,7 @@ const { getLevelProgress } = require("../utils/levelUtils");
 
 const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
+// HabitQuest reports weekly analytics using a Monday-starting week.
 const getWeekStart = (date = new Date()) => {
   const value = startOfDay(date);
   const day = value.getDay();
@@ -15,6 +18,7 @@ const getWeekStart = (date = new Date()) => {
   return value;
 };
 
+// Build the seven calendar dates that make up the current analytics week.
 const getWeekDates = (date = new Date()) => {
   const weekStart = getWeekStart(date);
   return Array.from({ length: 7 }, (_, index) => {
@@ -26,6 +30,7 @@ const getWeekDates = (date = new Date()) => {
 
 const sum = (values = []) => values.reduce((total, value) => total + value, 0);
 
+// Convert the backend level utility shape into a frontend-friendly response shape.
 const mapLevelProgress = (totalXP = 0) => {
   const progress = getLevelProgress(totalXP);
 
@@ -39,6 +44,7 @@ const mapLevelProgress = (totalXP = 0) => {
   };
 };
 
+// Trim populated badge documents down to the fields the UI actually needs.
 const serializeBadge = (userBadge) => ({
   _id: userBadge.badge?._id,
   name: userBadge.badge?.name,
@@ -48,6 +54,7 @@ const serializeBadge = (userBadge) => ({
   unlockedAt: userBadge.unlockedAt,
 });
 
+// Recent badges power the dashboard/profile "recent glory" sections.
 const getRecentBadges = async (userId, limit = 3) => {
   const userBadges = await UserBadge.find({ user: userId })
     .populate("badge")
@@ -57,6 +64,7 @@ const getRecentBadges = async (userId, limit = 3) => {
   return userBadges.filter((entry) => entry.badge).map(serializeBadge);
 };
 
+// Turn grouped completion rows into chart-ready weekday data.
 const buildWeeklySeries = (rows, dates) => {
   const countMap = new Map(rows.map((row) => [row._id, row.completions]));
 
@@ -67,6 +75,7 @@ const buildWeeklySeries = (rows, dates) => {
   }));
 };
 
+// Aggregate completions for the current week.
 const getWeeklySeries = async (match, date = new Date()) => {
   const dates = getWeekDates(date);
   const dateKeys = dates.map((entry) => getDateKey(entry));
@@ -78,6 +87,7 @@ const getWeeklySeries = async (match, date = new Date()) => {
   return buildWeeklySeries(rows, dates);
 };
 
+// Aggregate heatmap data for the last N days.
 const getHeatmapSeries = async (match, days = 90) => {
   const safeDays = Math.min(Math.max(Number(days) || 90, 1), 180);
   const today = startOfDay();
@@ -102,6 +112,7 @@ const getHeatmapSeries = async (match, days = 90) => {
   }));
 };
 
+// Identify the best and weakest habits to support insight cards.
 const getBestAndWeakestHabits = (activeHabits, completionMap) => {
   if (activeHabits.length === 0) return { bestHabit: null, weakestHabit: null };
 
@@ -118,6 +129,7 @@ const getBestAndWeakestHabits = (activeHabits, completionMap) => {
   return { bestHabit: sorted[0] || null, weakestHabit: weakest[0] || null };
 };
 
+// Count completions and XP earned per habit.
 const getHabitCompletionMap = async (userId, habitIds) => {
   if (!habitIds.length) return new Map();
 
@@ -137,6 +149,7 @@ const getHabitCompletionMap = async (userId, habitIds) => {
   );
 };
 
+// Tell the frontend which habits are already completed for today.
 const getTodayStatusMap = async (userId, habitIds, dateKey = getDateKey()) => {
   if (!habitIds.length) return new Map();
 
@@ -149,6 +162,7 @@ const getTodayStatusMap = async (userId, habitIds, dateKey = getDateKey()) => {
   return new Map(logs.map((log) => [log.habit.toString(), log]));
 };
 
+// Merge today's completion state into the raw habit documents.
 const withTodayStatus = (habits, todayStatusMap) =>
   habits.map((habit) => {
     const log = todayStatusMap.get(habit._id.toString());
@@ -159,6 +173,7 @@ const withTodayStatus = (habits, todayStatusMap) =>
     };
   });
 
+// Build one category card row for the Daily Habits hub and related dashboards.
 const getCategoryStatsRow = ({ category, habits, weeklyLogs, completionMap }) => {
   const habitIds = new Set(habits.map((habit) => habit._id.toString()));
   const weeklyCount = weeklyLogs.filter((log) => habitIds.has(log.habit.toString())).length;
@@ -181,6 +196,7 @@ const getCategoryStatsRow = ({ category, habits, weeklyLogs, completionMap }) =>
   };
 };
 
+// Dashboard analytics power the main signed-in home screen.
 const getDashboardAnalytics = async (req, res, next) => {
   try {
     const dateKey = getDateKey();
@@ -227,6 +243,7 @@ const getDashboardAnalytics = async (req, res, next) => {
   }
 };
 
+// Summary analytics feed the Analytics page and profile totals.
 const getAnalyticsSummary = async (req, res, next) => {
   try {
     const weekStart = getWeekStart();
@@ -243,6 +260,7 @@ const getAnalyticsSummary = async (req, res, next) => {
       getHabitCompletionMap(req.user._id, habitIds),
     ]);
 
+    // Completion rate = completions this week / possible completions this week.
     const completionRate = activeHabits.length
       ? Math.min(100, Math.round((completionsThisWeek / (activeHabits.length * 7)) * 100))
       : 0;
@@ -266,6 +284,7 @@ const getAnalyticsSummary = async (req, res, next) => {
   }
 };
 
+// Simple 7-day series used for the weekly bar chart.
 const getWeeklyAnalytics = async (req, res, next) => {
   try {
     const weekly = await getWeeklySeries({ user: req.user._id });
@@ -275,6 +294,7 @@ const getWeeklyAnalytics = async (req, res, next) => {
   }
 };
 
+// Heatmap endpoint for the recent consistency view.
 const getHeatmapData = async (req, res, next) => {
   try {
     const heatmap = await getHeatmapSeries({ user: req.user._id }, req.query.days);
@@ -284,6 +304,7 @@ const getHeatmapData = async (req, res, next) => {
   }
 };
 
+// Build category cards from the user's real habit data.
 const getCategoryAnalytics = async (req, res, next) => {
   try {
     const habits = await Habit.find({ user: req.user._id, isArchived: false }).sort({ createdAt: -1 });
@@ -318,6 +339,7 @@ const getCategoryAnalytics = async (req, res, next) => {
   }
 };
 
+// Return one full category dashboard, including habits and consistency info.
 const getSingleCategoryAnalytics = async (req, res, next) => {
   try {
     const categoryMeta = getCategoryMeta(req.params.category);
@@ -386,6 +408,7 @@ const getSingleCategoryAnalytics = async (req, res, next) => {
   }
 };
 
+// Habit detail analytics power the single-habit page charts and stat cards.
 const getHabitStats = async (req, res, next) => {
   try {
     const habit = await Habit.findOne({ _id: req.params.id, user: req.user._id, isArchived: false });

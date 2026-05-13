@@ -1,3 +1,5 @@
+// Auth API helpers:
+// small wrappers that keep auth requests and error handling consistent.
 import api from "./axios";
 
 const getErrorMessage = (error) =>
@@ -12,6 +14,7 @@ export const registerUser = async (formData) => {
   }
 };
 
+// Login returns both the user object and the JWT token.
 export const loginUser = async (formData) => {
   try {
     const response = await api.post("/auth/login", formData);
@@ -21,6 +24,7 @@ export const loginUser = async (formData) => {
   }
 };
 
+// Used on refresh to rebuild the signed-in session from the saved token.
 export const getCurrentUser = async () => {
   try {
     const response = await api.get("/auth/me");

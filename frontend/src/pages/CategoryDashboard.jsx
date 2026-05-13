@@ -1,6 +1,9 @@
+// Category dashboard:
+// focuses the user on one habit category and its streak/progress stats.
 import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
+import AnimatedNumber from "../components/common/AnimatedNumber";
 import MaterialIcon from "../components/common/MaterialIcon";
 import StitchCompletionOverlay from "../components/stitch/StitchCompletionOverlay";
 import StitchTopBar from "../components/stitch/StitchTopBar";
@@ -25,6 +28,7 @@ const CategoryDashboard = () => {
 
   const fallbackMeta = findHabitCategory(categorySlug);
 
+  // Reload whenever the route category changes.
   const loadCategory = async () => {
     try {
       setLoading(true);
@@ -45,6 +49,7 @@ const CategoryDashboard = () => {
 
   const categoryMeta = categoryData?.category || fallbackMeta;
   const categoryHabits = categoryData?.habits || [];
+  // "Top habit" powers the insight card on the right-hand side.
   const topHabit = useMemo(
     () =>
       [...categoryHabits].sort(
@@ -55,6 +60,7 @@ const CategoryDashboard = () => {
     [categoryHabits]
   );
 
+  // Completing from this page should refresh both the category list and the user's top-level stats.
   const handleComplete = async (habitId) => {
     try {
       setCompletingId(habitId);
@@ -78,7 +84,7 @@ const CategoryDashboard = () => {
         <main className="flex-1 pb-24 md:ml-[280px] md:pb-8">
           <StitchTopBar />
 
-          <div className="mx-auto max-w-container_max_width px-margin_mobile pt-8 md:px-margin_desktop">
+          <div className="animate-page-in mx-auto max-w-container_max_width px-margin_mobile pt-8 md:px-margin_desktop">
             <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
               <div>
                 <button
@@ -114,15 +120,17 @@ const CategoryDashboard = () => {
 
             <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-4">
               {[
-                ["Active Habits", categoryData?.activeHabits ?? 0, "code", "text-primary"],
-                ["Weekly Completion", `${categoryData?.weeklyCompletion ?? 0}%`, "trending_up", "text-secondary"],
-                ["Best Streak", `${categoryData?.bestStreak ?? 0} days`, "local_fire_department", "text-tertiary"],
-                ["XP Earned", `${categoryData?.xpEarned ?? 0} XP`, "star", "text-primary"],
-              ].map(([label, value, icon, tone]) => (
+                ["Active Habits", categoryData?.activeHabits ?? 0, "code", "text-primary", "", ""],
+                ["Weekly Completion", categoryData?.weeklyCompletion ?? 0, "trending_up", "text-secondary", "", "%"],
+                ["Best Streak", categoryData?.bestStreak ?? 0, "local_fire_department", "text-tertiary", "", " days"],
+                ["XP Earned", categoryData?.xpEarned ?? 0, "star", "text-primary", "", " XP"],
+              ].map(([label, value, icon, tone, prefix, suffix]) => (
                 <div className="group relative overflow-hidden rounded-xl bg-surface-container-lowest p-6 shadow-[0px_4px_20px_rgba(15,23,42,0.05)] transition-shadow hover:shadow-md" key={label}>
                   <MaterialIcon className={`absolute -bottom-4 -right-4 rotate-[-15deg] text-[80px] text-surface-container transition-transform duration-500 group-hover:scale-110 ${tone}`} name={icon} />
                   <p className="relative z-10 mb-2 text-label-sm text-on-surface-variant">{label}</p>
-                  <p className={`relative z-10 text-display-xl ${tone}`}>{value}</p>
+                  <p className={`relative z-10 text-display-xl ${tone}`}>
+                    <AnimatedNumber prefix={prefix} suffix={suffix} value={value} />
+                  </p>
                 </div>
               ))}
             </div>
@@ -154,11 +162,13 @@ const CategoryDashboard = () => {
                               {habit.frequency === "daily" ? "Daily" : "Weekly"}
                             </span>
                             {habit.completedToday ? (
-                              <span className="text-badge-xs text-secondary">+{xp} XP</span>
+                              <span className="text-badge-xs text-secondary">
+                                <AnimatedNumber prefix="+" suffix=" XP" value={xp} />
+                              </span>
                             ) : (
                               <span className="flex items-center gap-1 text-badge-xs text-primary">
                                 <MaterialIcon className="text-[14px]" name="local_fire_department" />
-                                {habit.currentStreak || 0} Day Streak
+                                <AnimatedNumber suffix=" Day Streak" value={habit.currentStreak || 0} />
                               </span>
                             )}
                           </div>

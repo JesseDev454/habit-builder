@@ -1,3 +1,5 @@
+// App routes:
+// public pages live at the top, while protected pages require authentication.
 import { Route, Routes } from "react-router-dom";
 import AppShell from "./components/layout/AppShell";
 import AdminRoute from "./components/layout/AdminRoute";
@@ -19,16 +21,19 @@ import Challenges from "./pages/Challenges";
 import EpicQuests from "./pages/EpicQuests";
 import Notifications from "./pages/Notifications";
 import Profile from "./pages/Profile";
+import Settings from "./pages/Settings";
 import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 import DemoState from "./pages/DemoState";
 
 const App = () => (
   <Routes>
+    {/* Public marketing/auth routes */}
     <Route path="/" element={<Landing />} />
     <Route path="/register" element={<Register />} />
     <Route path="/login" element={<Login />} />
     <Route path="/demo/:state" element={<DemoState />} />
+    {/* Standalone protected pages that already render their own full layout */}
     <Route
       path="/onboarding"
       element={
@@ -110,6 +115,7 @@ const App = () => (
       }
     />
 
+    {/* Nested authenticated shell for pages that share the dashboard-style chrome */}
     <Route
       element={
         <ProtectedRoute>
@@ -122,6 +128,8 @@ const App = () => (
       <Route path="/achievements" element={<Achievements />} />
       <Route path="/challenges" element={<Challenges />} />
       <Route path="/notifications" element={<Notifications />} />
+      <Route path="/settings" element={<Settings />} />
+      {/* Admin view stays protected by both auth and admin-role checks */}
       <Route
         path="/admin"
         element={
@@ -132,6 +140,7 @@ const App = () => (
       />
     </Route>
 
+    {/* Fallback for any unknown URL */}
     <Route path="*" element={<NotFound />} />
   </Routes>
 );

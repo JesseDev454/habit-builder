@@ -1,5 +1,8 @@
+// Level utility:
+// central source of truth for converting total XP into level/progress information.
 const levelThresholds = [0, 100, 250, 500, 900, 1400, 2000, 2800, 3700, 4700];
 
+// Find the highest level whose threshold the user has already reached.
 const getLevelFromXP = (totalXP = 0) => {
   const xp = Math.max(Number(totalXP) || 0, 0);
 
@@ -12,6 +15,7 @@ const getLevelFromXP = (totalXP = 0) => {
   return 1;
 };
 
+// Return all values the frontend needs to render XP bars and "next level" messaging.
 const getLevelProgress = (totalXP = 0) => {
   const xp = Math.max(Number(totalXP) || 0, 0);
   const level = getLevelFromXP(xp);

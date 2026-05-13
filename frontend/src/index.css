@@ -248,6 +248,18 @@ a {
   -webkit-tap-highlight-color: transparent;
 }
 
+@keyframes pageEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes popIn {
   0% {
     opacity: 0;
@@ -258,4 +270,30 @@ a {
     opacity: 1;
     transform: scale(1);
   }
+}
+
+.animate-page-in {
+  animation: pageEnter 320ms ease-out;
+}
+
+.motion-card {
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease,
+    background-color 220ms ease;
+}
+
+.motion-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
 }

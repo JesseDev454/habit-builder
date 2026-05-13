@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import AnimatedNumber from "../components/common/AnimatedNumber";
 import MaterialIcon from "../components/common/MaterialIcon";
 
 const Landing = () => {
@@ -65,13 +66,15 @@ const Landing = () => {
                   <MaterialIcon className="text-2xl" fill name="person" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h3 className="text-title-md text-on-surface">Level 12 Hero</h3>
+                  <h3 className="text-title-md text-on-surface">
+                    Level <AnimatedNumber value={12} /> Hero
+                  </h3>
                   <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-surface-container-highest">
                     <div className="h-full w-3/4 rounded-full bg-primary" />
                   </div>
                 </div>
                 <div className="shrink-0 whitespace-nowrap rounded-full bg-tertiary-container px-2 py-1 text-badge-xs text-on-tertiary-container shadow-sm">
-                  +50 XP
+                  <AnimatedNumber prefix="+" suffix=" XP" value={50} />
                 </div>
               </div>
 
@@ -200,24 +203,30 @@ const Landing = () => {
                   <div className="mb-8 flex items-start justify-between">
                     <div className="min-w-0">
                       <h3 className="text-title-md text-on-surface">Daily Progress</h3>
-                      <p className="mt-1 text-label-sm text-on-surface-variant">Level 12 Hero</p>
+                      <p className="mt-1 text-label-sm text-on-surface-variant">
+                        Level <AnimatedNumber value={12} /> Hero
+                      </p>
                     </div>
                     <div className="flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full bg-tertiary-fixed px-3 py-1 text-badge-xs text-on-tertiary-fixed">
                       <MaterialIcon className="text-[14px]" name="local_fire_department" />
-                      6 Day Streak
+                      <AnimatedNumber suffix=" Day Streak" value={6} />
                     </div>
                   </div>
 
                   <div className="space-y-6">
                     <div className="flex items-end gap-2">
-                      <span className="text-display-xl leading-none text-primary">420</span>
+                      <span className="text-display-xl leading-none text-primary">
+                        <AnimatedNumber value={420} />
+                      </span>
                       <span className="mb-1 whitespace-nowrap text-label-sm text-primary">XP Earned Today</span>
                     </div>
 
                     <div className="space-y-2">
                       <div className="flex justify-between text-label-sm">
                         <span className="text-on-surface-variant">Level 12 Progress</span>
-                        <span className="font-bold text-primary">84%</span>
+                        <span className="font-bold text-primary">
+                          <AnimatedNumber suffix="%" value={84} />
+                        </span>
                       </div>
                       <div className="h-3 w-full overflow-hidden rounded-full bg-surface-container-highest">
                         <div className="relative h-full w-[84%] overflow-hidden rounded-full bg-primary">

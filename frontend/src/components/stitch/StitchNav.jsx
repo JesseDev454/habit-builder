@@ -33,6 +33,20 @@ const DesktopNavLink = ({ activeKey, item }) => (
   </Link>
 );
 
+const FooterNavLink = ({ active, icon, label, to }) => (
+  <Link
+    className={
+      active
+        ? "flex items-center gap-3 rounded-xl bg-primary-container px-4 py-3 text-on-primary-container shadow-sm transition-all scale-[1.02]"
+        : "flex items-center gap-3 rounded-xl px-4 py-3 text-on-surface-variant transition-colors hover:scale-[1.02] hover:bg-surface-container-high hover:text-primary"
+    }
+    to={to}
+  >
+    <MaterialIcon fill={active} name={icon} />
+    <span className="font-label-sm text-label-sm">{label}</span>
+  </Link>
+);
+
 export const StitchSidebar = ({
   activeKey,
   brandVariant = "circle",
@@ -97,13 +111,7 @@ export const StitchSidebar = ({
         </Link>
 
         <div className="mt-auto space-y-2 border-t border-outline-variant/30 pt-4">
-          <button
-            className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-on-surface-variant transition-colors hover:scale-[1.02] hover:bg-surface-container-high hover:text-primary"
-            type="button"
-          >
-            <MaterialIcon name="settings" />
-            <span className="font-label-sm text-label-sm">Settings</span>
-          </button>
+          <FooterNavLink active={activeKey === "settings"} icon="settings" label="Settings" to="/settings" />
           <button
             className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-error transition-colors hover:scale-[1.02] hover:bg-error-container"
             onClick={handleLogout}

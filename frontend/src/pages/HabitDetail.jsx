@@ -112,7 +112,7 @@ const HabitDetail = () => {
       </div>
 
       <div className="grid gap-5 md:grid-cols-4">
-        <StatCard icon={Code2} label="XP reward" value={`+${xpByDifficulty[habit.difficulty] || 10}`} helper="Per completion" accent="var(--color-xp)" />
+        <StatCard icon={Code2} label="XP reward" value={xpByDifficulty[habit.difficulty] || 10} prefix="+" helper="Per completion" accent="var(--color-xp)" />
         <StatCard icon={Flame} label="Current streak" value={stats?.currentStreak ?? habit.currentStreak ?? 0} helper="Days" accent="var(--color-streak)" />
         <StatCard icon={Trophy} label="Best streak" value={stats?.longestStreak ?? habit.longestStreak ?? 0} helper="Personal best" accent="var(--color-primary)" />
         <StatCard icon={CalendarCheck2} label="Completions" value={stats?.totalCompletions ?? habit.totalCompletions ?? logs.length} helper={`${stats?.completionsThisWeek ?? 0} this week`} accent="var(--color-success)" />
