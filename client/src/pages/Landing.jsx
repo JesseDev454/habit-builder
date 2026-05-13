@@ -7,8 +7,26 @@ const Landing = () => {
   return (
     <div className="min-h-screen bg-background text-on-background">
       <div className="md:hidden">
-        <header className="sticky top-0 z-40 flex h-16 items-center justify-center bg-surface-container-low px-margin_mobile text-headline-lg-mobile font-black text-primary shadow-sm backdrop-blur-md">
-          HabitQuest
+        <header className="sticky top-0 z-40 bg-surface-container-low shadow-sm backdrop-blur-md">
+          <div className="flex h-16 w-full items-center justify-between px-margin_mobile">
+            <div className="text-headline-lg-mobile font-black text-primary">HabitQuest</div>
+            <div className="flex items-center gap-3">
+              <button
+                className="cursor-pointer text-label-sm text-on-surface-variant transition-colors hover:text-primary"
+                onClick={() => navigate("/login")}
+                type="button"
+              >
+                Login
+              </button>
+              <button
+                className="rounded-lg bg-primary px-3 py-2 text-label-sm text-on-primary shadow-[0px_4px_20px_rgba(15,23,42,0.05)] transition-transform hover:scale-[1.02]"
+                onClick={() => navigate("/register")}
+                type="button"
+              >
+                Start Your Quest
+              </button>
+            </div>
+          </div>
         </header>
 
         <main className="mx-auto flex w-full max-w-[28rem] flex-1 flex-col gap-8 px-margin_mobile py-8">
@@ -124,7 +142,7 @@ const Landing = () => {
 
       <div className="hidden min-h-screen flex-col md:flex">
         <header className="sticky top-0 z-40 bg-surface-container-low shadow-sm backdrop-blur-md">
-          <div className="mx-auto flex h-16 max-w-container_max_width items-center justify-between px-margin_desktop">
+          <div className="flex h-16 w-full items-center justify-between px-margin_desktop">
             <div className="text-headline-lg-mobile font-black text-primary">HabitQuest</div>
             <div className="flex items-center gap-4">
               <button

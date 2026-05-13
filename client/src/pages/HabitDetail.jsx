@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { CalendarCheck2, Code2, Flame, Trophy } from "lucide-react";
 import toast from "react-hot-toast";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -10,8 +10,9 @@ import LoadingSkeleton from "../components/common/LoadingSkeleton";
 import StatCard from "../components/common/StatCard";
 import Heatmap from "../components/analytics/Heatmap";
 import WeeklyChart from "../components/analytics/WeeklyChart";
-import { archiveHabit, getHabitById, getHabitLogs } from "../api/habitApi";
+import { archiveHabit, completeHabit, getHabitById, getHabitLogs } from "../api/habitApi";
 import { getHabitStats } from "../api/analyticsApi";
+import useAuth from "../hooks/useAuth";
 
 const xpByDifficulty = {
   easy: 10,
@@ -27,31 +28,33 @@ const formatTarget = (habit) => {
 const HabitDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { updateUser } = useAuth();
   const [habit, setHabit] = useState(null);
   const [logs, setLogs] = useState([]);
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showArchiveModal, setShowArchiveModal] = useState(false);
   const [archiving, setArchiving] = useState(false);
+  const [completing, setCompleting] = useState(false);
+
+  const loadHabit = useCallback(async () => {
+    try {
+      setLoading(true);
+      const [habitData, logData, statsData] = await Promise.all([getHabitById(id), getHabitLogs(id), getHabitStats(id)]);
+      setHabit(habitData.habit);
+      setLogs(logData.logs || []);
+      setStats(statsData.stats);
+    } catch (error) {
+      toast.error(error.message || "Could not load habit.");
+      navigate("/dashboard");
+    } finally {
+      setLoading(false);
+    }
+  }, [id, navigate]);
 
   useEffect(() => {
-    const loadHabit = async () => {
-      try {
-        setLoading(true);
-        const [habitData, logData, statsData] = await Promise.all([getHabitById(id), getHabitLogs(id), getHabitStats(id)]);
-        setHabit(habitData.habit);
-        setLogs(logData.logs || []);
-        setStats(statsData.stats);
-      } catch (error) {
-        toast.error(error.message || "Could not load habit.");
-        navigate("/dashboard");
-      } finally {
-        setLoading(false);
-      }
-    };
-
     loadHabit();
-  }, [id, navigate]);
+  }, [loadHabit]);
 
   const handleArchive = async () => {
     try {
@@ -64,6 +67,20 @@ const HabitDetail = () => {
     } finally {
       setArchiving(false);
       setShowArchiveModal(false);
+    }
+  };
+
+  const handleComplete = async () => {
+    try {
+      setCompleting(true);
+      const data = await completeHabit(id);
+      if (data?.user) updateUser(data.user);
+      toast.success(data?.message || "Habit completed successfully");
+      await loadHabit();
+    } catch (error) {
+      toast.error(error.message || "Could not complete habit.");
+    } finally {
+      setCompleting(false);
     }
   };
 
@@ -83,6 +100,9 @@ const HabitDetail = () => {
           {habit.description ? <p className="mt-2 max-w-2xl text-sm text-[var(--color-secondary)]">{habit.description}</p> : null}
         </div>
         <div className="flex flex-wrap gap-3">
+          <Button disabled={stats?.completedToday} loading={completing} onClick={handleComplete}>
+            {stats?.completedToday ? "Completed Today" : "Complete Habit"}
+          </Button>
           <Link to={`/habits/${habit._id}/edit`}><Button>Edit habit</Button></Link>
           <Button onClick={() => setShowArchiveModal(true)} variant="outline">Archive</Button>
         </div>
@@ -98,15 +118,23 @@ const HabitDetail = () => {
       <div className="grid gap-5 lg:grid-cols-[1fr_0.8fr]">
         <Card>
           <h2 className="font-display text-xl font-extrabold">Completion trend</h2>
-          <p className="mt-1 text-sm text-[var(--color-secondary)]">Chart visuals remain static until the analytics sprint.</p>
-          <WeeklyChart />
+          <p className="mt-1 text-sm text-[var(--color-secondary)]">Track how often this habit has been completed over the current week.</p>
+          {stats?.weeklyCompletions?.length ? (
+            <WeeklyChart data={stats.weeklyCompletions} />
+          ) : (
+            <p className="mt-6 text-sm text-[var(--color-secondary)]">No completion trend yet for this habit.</p>
+          )}
         </Card>
         <Card>
           <div className="mb-4 flex items-center gap-2">
             <CalendarCheck2 className="h-5 w-5 text-[var(--color-success)]" />
             <h2 className="font-display text-xl font-extrabold">Consistency heatmap</h2>
           </div>
-          <Heatmap />
+          {stats?.heatmap?.length ? (
+            <Heatmap data={stats.heatmap} title="" />
+          ) : (
+            <p className="text-sm text-[var(--color-secondary)]">No consistency data yet for this habit.</p>
+          )}
         </Card>
       </div>
 

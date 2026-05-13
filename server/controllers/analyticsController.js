@@ -159,7 +159,7 @@ const withTodayStatus = (habits, todayStatusMap) =>
     };
   });
 
-const getCategoryStatsRow = ({ category, habits, weeklyLogs, completionMap, weekStart }) => {
+const getCategoryStatsRow = ({ category, habits, weeklyLogs, completionMap }) => {
   const habitIds = new Set(habits.map((habit) => habit._id.toString()));
   const weeklyCount = weeklyLogs.filter((log) => habitIds.has(log.habit.toString())).length;
   const weeklyCompletion = habits.length
@@ -178,7 +178,6 @@ const getCategoryStatsRow = ({ category, habits, weeklyLogs, completionMap, week
     xpEarned: sum(
       habits.map((habit) => completionMap.get(habit._id.toString())?.xpEarned || 0)
     ),
-    recentSince: weekStart,
   };
 };
 
@@ -311,7 +310,6 @@ const getCategoryAnalytics = async (req, res, next) => {
           habits: categoryHabits,
           weeklyLogs,
           completionMap,
-          weekStart,
         })
       ),
     });
@@ -356,7 +354,6 @@ const getSingleCategoryAnalytics = async (req, res, next) => {
       habits: categoryHabits,
       weeklyLogs,
       completionMap,
-      weekStart,
     });
 
     return res.status(200).json({

@@ -1,4 +1,4 @@
-import { createContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useEffect, useMemo, useState } from "react";
 import { getCurrentUser, loginUser, registerUser } from "../api/authApi";
 
 export const AuthContext = createContext(null);
@@ -35,39 +35,39 @@ export const AuthProvider = ({ children }) => {
     restoreUser();
   }, []);
 
-  const persistSession = (data) => {
+  const persistSession = useCallback((data) => {
     localStorage.setItem("habitquest_token", data.token);
     setToken(data.token);
     setUser(data.user);
     return data;
-  };
+  }, []);
 
-  const register = async (formData) => {
+  const register = useCallback(async (formData) => {
     const data = await registerUser(formData);
     return persistSession(data);
-  };
+  }, [persistSession]);
 
-  const login = async (formData) => {
+  const login = useCallback(async (formData) => {
     const data = await loginUser(formData);
     return persistSession(data);
-  };
+  }, [persistSession]);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     localStorage.removeItem("habitquest_token");
     setToken(null);
     setUser(null);
-  };
+  }, []);
 
-  const refreshUser = async () => {
+  const refreshUser = useCallback(async () => {
     if (!localStorage.getItem("habitquest_token")) return null;
     const data = await getCurrentUser();
     setUser(data.user);
     return data.user;
-  };
+  }, []);
 
-  const updateUser = (nextUser) => {
+  const updateUser = useCallback((nextUser) => {
     setUser((currentUser) => ({ ...currentUser, ...nextUser }));
-  };
+  }, []);
 
   const value = useMemo(
     () => ({

@@ -4,6 +4,7 @@ const User = require("../models/User");
 const { checkAndAwardBadges } = require("../utils/badgeUtils");
 const { updateChallengeProgress } = require("./challengeController");
 const { createNotification } = require("./notificationController");
+const { normalizeCategoryName } = require("../utils/categoryUtils");
 const { endOfDay, getDateKey, startOfDay } = require("../utils/dateUtils");
 const { getLevelFromXP, getLevelProgress } = require("../utils/levelUtils");
 const { calculateDailyStreak } = require("../utils/streakUtils");
@@ -32,7 +33,7 @@ const habitStatus = (req, res) => {
 const normalizeHabitInput = (input) => ({
   name: typeof input.name === "string" ? input.name.trim() : "",
   description: typeof input.description === "string" ? input.description.trim() : "",
-  category: typeof input.category === "string" ? input.category.trim() : "",
+  category: typeof input.category === "string" ? normalizeCategoryName(input.category) : "",
   frequency: input.frequency || "daily",
   targetType: input.targetType || "simple",
   targetValue: input.targetValue === undefined || input.targetValue === null ? 1 : Number(input.targetValue),

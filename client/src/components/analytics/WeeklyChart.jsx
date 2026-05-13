@@ -1,7 +1,6 @@
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { weeklyProgress } from "../../data/mockData";
 
-const WeeklyChart = ({ data = weeklyProgress }) => (
+const WeeklyChart = ({ data = [] }) => (
   <div className="h-64 w-full">
     <ResponsiveContainer>
       <BarChart data={data}>

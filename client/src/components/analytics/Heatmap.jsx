@@ -1,10 +1,8 @@
-import { heatmapData } from "../../data/mockData";
-
 const shades = ["bg-surface-container-highest", "bg-primary/20", "bg-primary/40", "bg-primary/70", "bg-primary"];
 
 const getShade = (count = 0) => shades[Math.min(count, shades.length - 1)];
 
-const Heatmap = ({ data = heatmapData, title = "Calendar heatmap" }) => (
+const Heatmap = ({ data = [], title = "Calendar heatmap" }) => (
   <div>
     {title ? <h3 className="mb-3 font-display text-lg font-extrabold text-text-primary">{title}</h3> : null}
     <div className="grid grid-cols-7 gap-2">
