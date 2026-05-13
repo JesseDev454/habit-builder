@@ -14,6 +14,7 @@ import {
   getDifficultyXp,
   getHabitIcon,
 } from "../utils/stitch";
+import { buildHabitSearchPath } from "../utils/search";
 
 const mobileAvatar =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuCrxGlLbyt5tGxzM2rSp1rAzpSJG8G447Pu5Kuz9LvmkuXr5TwhbGwJWmPrm-bM23whE8cTDqHSj48i7og3dn7DU2wYCzGMwsfY95NcRN1MRbc7_wAEJsxjNG1gkAYl6d6n0KRavW_Z4QObEkmawAtpibYqE3YV3GZgA0OTKAgCtlzKuZLkOBx5Vodqsn5XPpNMgNvr-GlQbFE0nM4WFhqVh-OgcyMZ_jF7eVLpEGaN_f8kl4pJzrn3kbAQaV83wnXEqcFBy7pwDpJ1";
@@ -42,6 +43,7 @@ const Dashboard = () => {
   const [error, setError] = useState("");
   const [completingId, setCompletingId] = useState(null);
   const [overlayRewards, setOverlayRewards] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const loadDashboard = useCallback(async () => {
     try {
@@ -105,6 +107,11 @@ const Dashboard = () => {
 
   const goToHabit = (habitId) => {
     navigate(`/habits/${habitId}`);
+  };
+
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+    navigate(buildHabitSearchPath(searchQuery));
   };
 
   return (
@@ -259,10 +266,16 @@ const Dashboard = () => {
             <header className="sticky top-0 z-40 bg-surface/90 shadow-sm backdrop-blur-md">
               <div className="mx-auto flex h-16 max-w-container_max_width items-center justify-between px-margin_mobile md:px-margin_desktop">
                 <div className="hidden max-w-[28rem] flex-1 items-center md:flex">
-                  <div className="relative w-full">
+                  <form className="relative w-full" onSubmit={handleSearchSubmit}>
                     <MaterialIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-lg text-on-surface-variant" name="search" />
-                    <input className="w-full rounded-full border border-surface-container-high bg-surface-container-lowest py-2 pl-10 pr-4 text-label-sm shadow-sm outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20" placeholder="Search quests, habits..." type="text" />
-                  </div>
+                    <input
+                      className="w-full rounded-full border border-surface-container-high bg-surface-container-lowest py-2 pl-10 pr-4 text-label-sm shadow-sm outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
+                      placeholder="Search quests, habits..."
+                      type="text"
+                      value={searchQuery}
+                      onChange={(event) => setSearchQuery(event.target.value)}
+                    />
+                  </form>
                 </div>
                 <div className="ml-auto flex items-center gap-4">
                   <button className="relative cursor-pointer rounded-full p-2 text-on-surface-variant transition-colors duration-150 hover:bg-surface-container-highest hover:text-primary" type="button">

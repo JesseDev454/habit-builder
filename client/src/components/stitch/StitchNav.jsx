@@ -36,12 +36,13 @@ export const StitchSidebar = ({
   activeKey,
   brandVariant = "circle",
   avatarSrc,
-  levelLabel = "Level 12 Hero",
+  levelLabel,
   ctaLabel = "New Quest",
   ctaTo = "/habits/new",
 }) => {
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
+  const resolvedLevelLabel = levelLabel || `Level ${user?.level ?? 1} Hero`;
 
   const handleLogout = () => {
     logout();
@@ -56,7 +57,7 @@ export const StitchSidebar = ({
             <h1 className="font-headline-lg text-headline-lg font-black tracking-tight text-primary">
               HabitQuest
             </h1>
-            <p className="mt-1 text-sm text-on-surface-variant">{levelLabel}</p>
+            <p className="mt-1 text-sm text-on-surface-variant">{resolvedLevelLabel}</p>
           </div>
         ) : (
           <div className="mb-8 flex items-center gap-4">
@@ -75,7 +76,7 @@ export const StitchSidebar = ({
               <h1 className="font-headline-lg-mobile text-headline-lg-mobile font-black tracking-tight text-primary">
                 HabitQuest
               </h1>
-              <p className="text-label-sm text-on-surface-variant">{levelLabel}</p>
+              <p className="text-label-sm text-on-surface-variant">{resolvedLevelLabel}</p>
             </div>
           </div>
         )}

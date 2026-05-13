@@ -1,6 +1,8 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { StitchBottomNav, StitchSidebar } from "../stitch/StitchNav";
 import MaterialIcon from "../common/MaterialIcon";
+import { buildHabitSearchPath } from "../../utils/search";
 
 const avatarSrc =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuCv4ugk_G95eEwaEV4_8BP66NZr0cuvImbDtpF1OBcItmX3O3UkQjNh6SUgjHUpFBxnpf1w9KWJ32oDMSnCni393Jf9Ys6BPk5BfZSjB2TAoszINNHpa_9R_dPv7yUo8k9Q1-Cd4GFlkmVOgUmeOEr8swDlEdVNwwHcaWKY_vgI6ctGnZvrGGLkrSn7NC0SGEt_yhTW2jyAB5qVRscTJGe364ZjY2SEdBk9eJsKYxZXzXe_iOXA_hStcT3_js93oQ78BLp2fe_0zJ2m";
@@ -31,8 +33,15 @@ const getMobileActiveKey = (pathname) => {
 
 const AppShell = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
   const desktopActiveKey = getDesktopActiveKey(location.pathname);
   const mobileActiveKey = getMobileActiveKey(location.pathname);
+
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+    navigate(buildHabitSearchPath(searchQuery));
+  };
 
   return (
     <div className="min-h-screen bg-background text-on-background">
@@ -44,14 +53,16 @@ const AppShell = () => {
             <div className="mx-auto flex h-16 max-w-container_max_width items-center justify-between px-margin_mobile md:px-margin_desktop">
               <div className="text-headline-lg-mobile font-black text-primary md:hidden">HabitQuest</div>
               <div className="hidden max-w-[28rem] flex-1 items-center md:flex">
-                <div className="relative w-full">
+                <form className="relative w-full" onSubmit={handleSearchSubmit}>
                   <MaterialIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-lg text-on-surface-variant" name="search" />
                   <input
                     className="w-full rounded-full border border-surface-container-high bg-surface-container-lowest py-2 pl-10 pr-4 text-label-sm shadow-sm outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
                     placeholder="Search quests, habits..."
                     type="text"
+                    value={searchQuery}
+                    onChange={(event) => setSearchQuery(event.target.value)}
                   />
-                </div>
+                </form>
               </div>
               <div className="ml-auto flex items-center gap-4">
                 <button className="relative cursor-pointer rounded-full p-2 text-on-surface-variant transition-colors duration-150 hover:bg-surface-container-highest hover:text-primary" type="button">

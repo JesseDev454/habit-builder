@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import MaterialIcon from "../components/common/MaterialIcon";
 import { StitchBottomNav, StitchFooter, StitchSidebar } from "../components/stitch/StitchNav";
 import { getCategoryAnalytics } from "../api/analyticsApi";
+import { getHabits } from "../api/habitApi";
 import { habitCategories } from "../data/habitCategories";
+import { normalizeSearchText } from "../utils/search";
 
 const avatarSrc =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuAws1WUkG-HvtpFqLZODaa_C5RbDJsumtQlsngw-BMdRAA0TRQYRYL6oqsYKTIeGSvQLwRxNPQbIgRozdzWbHCkZ8yHzJ7OWgpUS_DFzmhXZ-xnfdAxqNj7UNgV8m4qPFCVqaRoc7H0i_3TphGMBV8jiWN7qVFtLOM9djwSjWYJhf8-bCzsrdz5koNxQbmAy1tPaLOcibV04_s2ee3MibaFwIvdq32aHmiawuchZgtnWqWx8l5A9TyLWHFOcZBH7mh42saXHvKg4Haq";
@@ -22,20 +24,29 @@ const cardStyles = {
 
 const DailyHabits = () => {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [categories, setCategories] = useState([]);
+  const [habits, setHabits] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [searchQuery, setSearchQuery] = useState(searchParams.get("search") || "");
+
+  useEffect(() => {
+    setSearchQuery(searchParams.get("search") || "");
+  }, [searchParams]);
 
   useEffect(() => {
     const loadCategories = async () => {
       try {
         setLoading(true);
         setError("");
-        const data = await getCategoryAnalytics();
-        setCategories(data.categories || []);
+        const [categoryData, habitData] = await Promise.all([getCategoryAnalytics(), getHabits()]);
+        setCategories(categoryData.categories || []);
+        setHabits(habitData.habits || []);
       } catch (loadError) {
         setError(loadError.message || "Could not load category progress.");
         setCategories([]);
+        setHabits([]);
       } finally {
         setLoading(false);
       }
@@ -46,19 +57,60 @@ const DailyHabits = () => {
 
   const categoryCards = useMemo(() => {
     const map = new Map(categories.map((category) => [category.slug, category]));
+    const habitNamesByCategory = habits.reduce((accumulator, habit) => {
+      const key = String(habit.category || "")
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
 
-    return habitCategories.map((category) => {
-      const liveCategory = map.get(category.id);
+      if (!accumulator[key]) {
+        accumulator[key] = [];
+      }
 
-      return {
-        ...category,
-        habitCount: liveCategory?.habitCount ?? 0,
-        bestStreak: liveCategory?.bestStreak ?? 0,
-        completionPercent: liveCategory?.weeklyCompletion ?? 0,
-        styles: cardStyles[category.id],
-      };
-    });
-  }, [categories]);
+      accumulator[key].push(habit.name || "");
+      return accumulator;
+    }, {});
+    const normalizedQuery = normalizeSearchText(searchParams.get("search") || "");
+
+    return habitCategories
+      .map((category) => {
+        const liveCategory = map.get(category.id);
+        const habitNames = habitNamesByCategory[category.id] || [];
+
+        return {
+          ...category,
+          habitCount: liveCategory?.habitCount ?? 0,
+          bestStreak: liveCategory?.bestStreak ?? 0,
+          completionPercent: liveCategory?.weeklyCompletion ?? 0,
+          habitNames,
+          styles: cardStyles[category.id],
+        };
+      })
+      .filter((category) => {
+        if (!normalizedQuery) {
+          return true;
+        }
+
+        const haystack = normalizeSearchText(
+          [category.name, category.shortName, category.description, ...category.habitNames].join(" ")
+        );
+
+        return haystack.includes(normalizedQuery);
+      });
+  }, [categories, habits, searchParams]);
+
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+    const trimmedQuery = searchQuery.trim();
+
+    if (!trimmedQuery) {
+      setSearchParams({});
+      return;
+    }
+
+    setSearchParams({ search: trimmedQuery });
+  };
 
   return (
     <div className="min-h-screen bg-background text-on-background">
@@ -72,10 +124,16 @@ const DailyHabits = () => {
             </div>
             <div className="hidden flex-1 md:block" />
             <div className="flex items-center gap-4">
-              <div className="relative hidden sm:block">
+              <form className="relative hidden sm:block" onSubmit={handleSearchSubmit}>
                 <MaterialIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" name="search" />
-                <input className="w-48 rounded-xl border border-transparent bg-surface-container-highest py-2 pl-10 pr-4 text-body-base transition-all outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 lg:w-64" placeholder="Search quests..." type="text" />
-              </div>
+                <input
+                  className="w-48 rounded-xl border border-transparent bg-surface-container-highest py-2 pl-10 pr-4 text-body-base transition-all outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 lg:w-64"
+                  placeholder="Search quests..."
+                  type="text"
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.target.value)}
+                />
+              </form>
               <button className="flex h-10 w-10 items-center justify-center rounded-full text-on-surface-variant transition-colors hover:bg-surface-container-highest hover:text-primary" type="button">
                 <MaterialIcon name="notifications" />
               </button>
@@ -91,7 +149,11 @@ const DailyHabits = () => {
           <div className="mx-auto flex-1 w-full max-w-container_max_width px-margin_mobile py-8 md:px-margin_desktop">
             <div className="mb-10 text-center md:text-left">
               <h2 className="mb-2 text-headline-lg text-on-background">Daily Habits</h2>
-              <p className="text-body-base text-on-surface-variant">Choose a habit category to view progress.</p>
+              <p className="text-body-base text-on-surface-variant">
+                {searchParams.get("search")
+                  ? `Showing results for "${searchParams.get("search")}".`
+                  : "Choose a habit category to view progress."}
+              </p>
             </div>
 
             {error ? (
@@ -138,6 +200,12 @@ const DailyHabits = () => {
                 </button>
               ))}
             </div>
+
+            {!loading && !error && categoryCards.length === 0 ? (
+              <div className="mt-6 rounded-xl bg-surface-container-lowest p-6 text-body-base text-on-surface-variant shadow-[0px_4px_20px_rgba(15,23,42,0.05)]">
+                No habit categories matched your search yet.
+              </div>
+            ) : null}
 
             {loading ? (
               <p className="mt-6 text-body-base text-on-surface-variant">Loading category progress...</p>
