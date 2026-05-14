@@ -40,6 +40,7 @@ const Register = () => {
         name: form.name.trim(),
         email: form.email.trim(),
         password: form.password,
+        confirmPassword: form.confirmPassword,
       });
       toast.success("Account created.");
       navigate("/dashboard");

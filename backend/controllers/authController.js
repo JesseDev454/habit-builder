@@ -65,7 +65,9 @@ const loginUser = async (req, res, next) => {
 
     const user = await User.findOne({ email: email.toLowerCase().trim() });
 
-    if (!user || !(await user.matchPassword(password))) {
+    // Guard against missing/corrupted password records so login returns a clean auth error
+    // instead of a server error.
+    if (!user || !user.password || !(await user.matchPassword(password))) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
